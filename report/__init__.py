@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
-# movie_api = http://www.omdbapi.com/?t={avengers}&apikey=632bcaee
+
 
 app = Flask(__name__)
 app.secret_key  = "key_whatever"

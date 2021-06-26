@@ -3,6 +3,8 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired,Length, EqualTo, ValidationError
 from report.models import User
 
+#these are the respective forms using a flask extension, it genrates the html view too
+
 class CreateAccount(FlaskForm):
     username = StringField('Username',
                              validators=[DataRequired(),
