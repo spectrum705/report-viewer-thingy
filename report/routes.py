@@ -24,7 +24,7 @@ def create():
         db.session.commit()
         flash(f'Woohoo! Welcome {form.username.data} !', 'success')
         return  redirect(url_for("login"))
-    return render_template("create.html", title='Register', form = form, grade = grades)
+    return render_template("create.html", title='Register', form = form)
 
 @app.route("/", methods= ["POST", "GET"])        
 def login():

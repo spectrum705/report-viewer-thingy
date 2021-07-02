@@ -1,12 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,400;0,500;0,700;0,900;1,400&display=swap");
+
+body {
+  color: #fff;
+  font-family: "Red Hat Display", sans-serif;
+  background-color: #b1bfd8;
+  height: 100%;
+  background-image: linear-gradient(315deg, #b1bfd8 0%, #6782b4 74%);
+  background-repeat: no-repeat;
+}
+/* navbar */
+.bg-glass {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.search-button {
+  background-color: transparent;
+  border-radius: 0.3rem;
+  color: #fff;
+  padding: 0 1rem;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.6s all;
+  border: 1px solid #fff;
+}
+.search-button:hover {
+  background-color: #ffffff33;
+}
 
 hr.solid {
-    border-top: 3px solid #bbb;
-  }
+  border-top: 3px solid #bbb;
+}
 
 .myCardIndex {
-padding-top: 250px;
-padding-left: 330px;
-
+  padding-top: 250px;
+  padding-left: 330px;
 }
 .myCardResult {
   /* padding-top: 30px;
@@ -14,45 +42,36 @@ padding-left: 330px;
   margin-top: 20px;
   margin-left: 70px;
   margin-right: 100px;
-  
-  
 }
-.poster{
-  float:left;
-  padding: 10px
-}
-.content{
-  float:right;
+.poster {
+  float: left;
   padding: 10px;
-
+}
+.content {
+  float: right;
+  padding: 10px;
 }
 
-.addButton{
-
-margin-left: 300px;
-}
-
-.details{
-
+.details {
   padding: 25px;
 }
 
-.container{
-
- padding-top: 80px;
-  padding-left: 350px;
+.container {
+  padding-top: 80px;
+  text-align: center;
+  /* padding-left: 350px; */
 }
 /* -------- for grid card view (responsive)*/
 
-.grid { 
+.grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 20px;
   align-items: start;
-  }
+}
 .grid > article {
   border: 1px solid #ccc;
-  box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
 }
 .grid > article img {
   max-width: 100%;
@@ -63,7 +82,145 @@ margin-left: 300px;
 .text > button {
   background: gray;
   border: 0;
-  color: white;
   padding: 10px;
   width: 100%;
-  }
+}
+.glass-container {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+/* Login Page */
+.hero-icon {
+  width: 2rem;
+}
+.user-title-text {
+  text-transform: capitalize;
+}
+/* Teacher View */
+.teacher-container {
+  display: flex;
+  flex-direction: column;
+  /* color: black; */
+}
+.label-text {
+  color: #fff;
+}
+.upload-form {
+  padding: 0;
+}
+/* Student View */
+.student-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  height: 100%;
+}
+.user-collection-text {
+  float: left;
+}
+.no-content-info-text {
+  font-size: 1rem;
+  margin-top: 2rem;
+  align-self: center;
+}
+.content-container {
+  display: flex;
+  margin-top: 2%;
+  margin-bottom: 5%;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+#remember {
+  float: none;
+}
+/* error */
+.error-text {
+  color: rgb(255, 235, 235);
+  padding: 0.3rem 0.9rem;
+  background: rgba(255, 35, 35, 0.281);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Want to create one? --it says this */
+.route-action-text {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.route-action-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 900;
+}
+.route-action-link:hover {
+  color: #ddd;
+}
+/* Text */
+.title-text {
+  color: #eee;
+  font-weight: bold;
+}
+/* Input Styles */
+label {
+  color: #eee;
+}
+input[type="password"],
+input[type="text"] {
+  border-radius: 5px;
+  width: 100%;
+  border: none;
+  padding: 0.3rem 0.5rem;
+}
+input[type="text"]:focus-visible,
+input[type="password"]:focus-visible {
+  outline: none;
+}
+
+/* Action Button */
+input[type="submit"] {
+  color: #fff;
+  font-weight: 700;
+  padding: 0.5rem 2rem;
+  border: none;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 1.5s all;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+input[type="submit"]:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border-radius: 1.5rem;
+}
+input[type="submit"]:active {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border-radius: 1.5rem;
+}

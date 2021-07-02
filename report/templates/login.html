@@ -2,8 +2,13 @@
 
     {% block content %}
 
-    <div class= "container">
-        <h1>Login</h1>
+    <div class= "content-container">
+        <div class="glass-container">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
+              </svg>
+      
+        <h1 class="title-text">Login</h1>
         <form method="POST" action = "">
             
             {{form.hidden_tag()}}
@@ -13,7 +18,7 @@
                 {{form.username(class="is-invalid")}}
                     <div class="invalid-feedback">
                         {% for error in form.username.errors %}
-                          <span class="is-invalid">
+                          <span class="is-invalid error-text">
                             {{error}}
                           </span> 
                           {% endfor %}
@@ -30,7 +35,7 @@
                 {{form.password(class="is-invalid")}}
                     <div class="invalid-feedback">
                         {% for error in form.password.errors %}
-                          <span>
+                          <span class="error-text">
                             {{error}}
                           </span> 
                           {% endfor %}
@@ -40,7 +45,7 @@
                    {{form.password}}
                 {% endif %}
             </div>
-            -->
+            
 
             <div class="form-check addButton">
                 {{form.remember(class="form-check-input")}}
@@ -53,11 +58,12 @@
                     <div>
 
                 <small class= "text-muted">
-                    want to create one?? <a href="{{url_for('create')}}">Login</a>
+                    <span class="route-action-text">Want to create an account?</span> <a href="{{url_for('create')}}" class="route-action-link"> Create</a>
                 </small>
             </div>
 
         </form>
+    </div>
     </div>
 
 

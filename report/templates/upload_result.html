@@ -1,21 +1,22 @@
  {% extends "base.html" %}
 {% block content %}
-<h3> {{current_user.username}}'s collection </h3>
+<div class="content-container teacher-container glass-container">
+<h3> <span class="user-title-text">{{current_user.username}}</span>'s collection </h3>
     {% if student %}
     {% for each in student %}
-    <div class="card" style="width: 18rem;">
+    <div class="glass-container" style="width: 18rem;">
         <div class="card-body">  
             
             <h5 class="card-title">{{each.username}}</h5>
             
             <hr class="solid">
-            <div class="form-check form-switch"> 
+            <div class="form-check form-switch upload-form"> 
                 <!-- add to upload the result file here -->
                 <form method="post"   action="#"> 
-                    <label class="form-check-label" for="addToDb">Upload Result</label>
-                    <input type="hidden" name="student_id" value="{{each.id}}" />
+                    <label class="form-check-label label-text" for="addToDb">Upload Result</label>
+                    <input type="hidden" name="student_id" value="{{each.id}}"  />
 
-                    <input type="submit" value="upload"  class="btn btn-primary" name="dropIt">
+                    <input type="submit" value="Upload"  class="btn btn-primary" name="dropIt">
  
                 </form>
             </div>
@@ -26,5 +27,6 @@
     {% else %}
     <h1 class="center"> No one here yet</h1>
     {% endif %}
+    </div>
 {% endblock %} 
 

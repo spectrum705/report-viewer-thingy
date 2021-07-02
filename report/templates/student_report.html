@@ -2,9 +2,10 @@
  
  {% extends "base.html" %}
  {% block content %}
- <h3  style="padding-left: 15px;"> {{current_user.username}}'s collection </h3>
+ <div class="content-container student-container glass-container">
+ <h3 class="user-collection-text"> {{current_user.username}}'s collection </h3>
   {% if collection %}
-  <main class="grid" style="padding: 15px;">
+  <main class="grid" >
       {% for post in collection %}
       <article>
         <img src={{post.poster}} alt="poster">
@@ -23,10 +24,10 @@
       </article>
       {% endfor %}
       {% else %}
-      <h3  style="padding-top: 180px; text-align:center"> There's nothing to Show here.</h3>
+      <h3 class="no-content-info-text"> There's nothing to Show here.</h3>
       {% endif %}
-
+      
+    </main>
     
-  </main>
-
+  </div>
   {% endblock %}
