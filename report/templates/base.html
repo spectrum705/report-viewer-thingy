@@ -16,9 +16,6 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <!-- <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-              </li> -->
             
                 {% if current_user.is_authenticated %}
                   {% if current_user.userType == "student" %}
@@ -60,10 +57,7 @@
              
               
             </ul>
-            <form class="d-flex" method="post">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="movieName">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            
           </div>
         </div>
       </nav>

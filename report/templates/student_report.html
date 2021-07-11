@@ -2,26 +2,24 @@
  
  {% extends "base.html" %}
  {% block content %}
- <h3  style="padding-left: 15px;"> {{current_user.username}}'s collection </h3>
-  {% if collection %}
+ <h3  style="padding-left: 15px;"> {{current_user.username}}'s Report Page </h3>
+  {% if file %}
   <main class="grid" style="padding: 15px;">
-      {% for post in collection %}
+
       <article>
-        <img src={{post.poster}} alt="poster">
         <div class="text">
-          <h3>{{post.name}}</h3>
-          <h6 class="card-subtitle mb-2 text-muted card-link ">{{post.genre}}</h6>
-           <h6 class="card-subtitle mb-2 text-muted">{{post.rating}}</h6>
-          <p>{{post.plot[0:100]+"...."}}</p>        
-          <form method="post" action="{{url_for('delete',post_id=post.id)}}">
-              <label class="form-check-label" for="addToDb" style="color: red;">Watched already?</label>
-            
-              <!-- <input type="hidden" value = {{post.id}} name="post_id"> -->
-              <input type="submit" value="Drop"  class="btn btn-danger" name="dropIt">
+          <h3>some detail here</h3>
+          <h6 class="card-subtitle mb-2 text-muted card-link ">{{current_user.username}}</h6>
+           <h6 class="card-subtitle mb-2 text-muted">some detail here</h6>
+          <p>download the result</p>        
+          <form action="{{url_for('download',getId = current_user.id, attach = True)}}" method ="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+            <input type="submit" value="Download"></input>
           </form>
         </div>
       </article>
-      {% endfor %}
+      
       {% else %}
       <h3  style="padding-top: 180px; text-align:center"> There's nothing to Show here.</h3>
       {% endif %}

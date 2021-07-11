@@ -2,7 +2,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired,Length, EqualTo, ValidationError
 from report.models import User
+from flask_wtf.file import FileField,FileAllowed
 
+#will delete this later
 class CreateAccount(FlaskForm):
     username = StringField('Username',
                              validators=[DataRequired(),
@@ -33,3 +35,18 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
 
     submit = SubmitField('Login')
+
+
+class UploadForm(FlaskForm):
+
+    resultFile = FileField(label ='upload the result', validators= [FileAllowed(['pdf', 'jpg'])] )
+    submit = SubmitField('upload')
+class UpdateForm(FlaskForm):
+    csrf = True
+    username = StringField('Username')
+    theClass = StringField('Class')
+    userType = StringField('User Type')
+
+    submit = SubmitField('Update user')
+
+

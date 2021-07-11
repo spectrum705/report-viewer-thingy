@@ -74,38 +74,19 @@
                 <div>
 
                     <label> Select the class you belong to </label>  
-                        <form method="post" name="theClass">
-
-                            <select> 
+                     
+                            <select method="post" name="theClass"> 
                             {% for class in grade %} 
                             <option value = "{{class}}"> {{class}}   
                             </option>  
                             {% endfor %}
-                        </form>
+                      
                        
                         </select> 
                 </div>
 
     
             </div>
-<!--             
-            <div>
-                <p>Select your account type ::</p>
-  
-            <div>
-                <input type="radio" id="TeacherHere" name="accountType" value="teacher"
-                    checked>
-                <label for="huey">Teacher</label>
-            </div>
-            
-            <div>
-                <input type="radio" id="dewey" name="accountType" value="student">
-                <label for="dewey">Student</label>
-            </div>
-
-            </div> -->
-
-
 
 
         <div class= "col addButton details">
