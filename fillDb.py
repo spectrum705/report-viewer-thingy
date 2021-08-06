@@ -1,30 +1,25 @@
 from report import db, bcrypt
 from report.models import User
+import csv
 
+  
+# csv file name
 db.create_all()
-for i in range(1,7):
-    st_pwd = bcrypt.generate_password_hash( "sss"+str(i)).decode('utf-8')
-    st_usr = User (username = "student"+str(i), userType = "student",
-                 theClass = str(i), password=st_pwd )
+filename = "dummy.csv"
+# reading csv file
+with open(filename, 'r') as csvfile:
+    # creating a csv reader object
+    csvreader = csv.reader(csvfile)
     
-    te_pwd = bcrypt.generate_password_hash("ttt"+str(i)).decode('utf-8')
-    te_usr = User (username = "teacher"+str(i), userType = "teacher",
-                 theClass = str(i), password=te_pwd  )
-    
-    db.session.add(te_usr)
-    db.session.add(st_usr)
-    db.session.commit()
+    for row in csvreader:
+        if row[0] != 'username':
+            enc_password = bcrypt.generate_password_hash( "pass#"+row[0]).decode('utf-8')
+            usr = User (username = row[0], userType = row[2],
+                         theClass = str(row[1]), password=enc_password )
+            db.session.add(usr)
+            db.session.commit()
 
+            
+            print(f"name: {row[0]}, class: {row[1]}, type: {row[2]} added")
 
-
-admin_pwd = bcrypt.generate_password_hash("cardinal").decode('utf-8')
-admin = User (username = "cardinal", userType = "admin", password=admin_pwd  )
-db.session.add(admin)
-db.session.commit()
-print("users: " , User.query.all())
-print("dummy data created:")
-
-
-
-
-# from report.models import db, User
+     # from report.models import db, User
