@@ -6,9 +6,12 @@
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <input class="form-control me-2" type="search" placeholder="Enter the username to search" aria-label="Search" name="admin" >
     <button class="btn btn-outline-success" type="submit">Search</button>
+    <a class="nav-link" href= "{{url_for('create')}}" >Add New User</a>
+    <a class="nav-link" href= "{{url_for('updateDatabase')}}" >Update whole database</a>
+
+
   
   {% if result %}
-  
   <table class ="table">
         <thead>
           <tr>
@@ -74,16 +77,18 @@
                             {% endif %}
                     </td>
                     <td>
-                      <input type="hidden" name = "usrId" value="{{result.id}}">
+                      <!-- <input type="hidden" name = "usrId" value="{{result.id}}"> -->
+                      <a class="nav-link" href= "{{url_for('delete', id =result.id)}}" >delete this User</a>
+                      
                         {{form.submit(class = "btn btn-outline-primary")}}
                     </td>
                 </tr>
 
               </form>
+              {% else %}
+                <h1>Nothing found</h1>
+              {% endif %}
             </tbody>
           </table>
-  
-  {% else %}
-    <h1>Nothing found</h1>
-  {% endif %}
-{% endblock %}
+          
+          {% endblock %}

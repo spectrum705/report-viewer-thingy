@@ -9,15 +9,13 @@ class CreateAccount(FlaskForm):
     username = StringField('Username',
                              validators=[DataRequired(),
                             Length(min = 3, max= 15 ) ])
-    password = PasswordField('Password', 
+   
+    theClass =  StringField('class', 
                             validators = [DataRequired()])
     
-    confirm = PasswordField('Confirm',
-                            validators = [DataRequired(),
-                            EqualTo('password',"password don't match")]
-                            )
-
-    submit = SubmitField('Sign Up')
+    
+   
+    submit = SubmitField('confirm')
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
@@ -39,7 +37,7 @@ class LoginForm(FlaskForm):
 
 class UploadForm(FlaskForm):
 
-    resultFile = FileField(label ='upload the result', validators= [FileAllowed(['pdf', 'jpg'])] )
+    resultFile = FileField(label ='upload the result', validators= [FileAllowed(['pdf', 'jpg','csv'])] )
     submit = SubmitField('upload')
 class UpdateForm(FlaskForm):
     csrf = True
