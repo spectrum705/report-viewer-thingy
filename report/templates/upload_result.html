@@ -1,32 +1,49 @@
- {% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="content-container teacher-container glass-container">
-<h3> <span class="user-title-text">{{current_user.username}}</span>'s collection </h3>
-    {% if student %}
-    {% for each in student %}
-    <div class="glass-container" style="width: 18rem;">
-        <div class="card-body">  
-            
-            <h5 class="card-title">{{each.username}}</h5>
-            
-            <hr class="solid">
-            <div class="form-check form-switch upload-form"> 
-                <!-- add to upload the result file here -->
-                <form method="post"   action="#"> 
-                    <label class="form-check-label label-text" for="addToDb">Upload Result</label>
-                    <input type="hidden" name="student_id" value="{{each.id}}"  />
+  <h3>
+    <span class="user-title-text">{{current_user.username}}</span>'s Class
+  </h3>
+  <div class="grid-content">
+    {% if student %} {% for each in student %}
+    <div class="glass-container" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="card-title">{{each.username}}'s Result</h5>
 
-                    <input type="submit" value="Upload"  class="btn btn-primary" name="dropIt">
- 
-                </form>
+        <hr class="solid" />
+        <div class="form-check form-switch upload-form">
+          <!-- add to upload the result file here -->
+          <form method="post" action="#" enctype="multipart/form-data">
+            {{form.hidden_tag()}}
+            <input type="hidden" name="student_id" value="{{each.id}}" />
+            {% if form.resultFile.errors %}
+            {{form.resultFile(class="is-invalid")}}
+            <div class="invalid-feedback">
+              {% for error in form.resultFile.errors %}
+              <span class="is-invalid"> {{error}} </span>
+              {% endfor %} {{form.submit(class = "btn btn-primary")}}
             </div>
+            {% else %} {% if each.fileName %} {{form.resultFile}}
+            <div class="option-view-file">
+              <a
+                href="{{url_for('download', getId = each.id, attach = False)}}"
+                method
+                >View Uploaded File</a
+              >
+            </div>
+            <label>Upload new file</label>
+            {{form.submit(class = "btn btn-danger")}} {% else %}
+
+            <label>result not added</label>
+            {{form.resultFile}} {{form.submit(class = "btn btn-primary")}} {%
+            endif %} {% endif %}
+          </form>
         </div>
+      </div>
     </div>
-    {% endfor %}
+    {% endfor %} {% else %}
+  </div>
 
-    {% else %}
-    <h1 class="center"> No one here yet</h1>
-    {% endif %}
-    </div>
-{% endblock %} 
-
+  <h1 class="center">No one here yet</h1>
+  {% endif %}
+</div>
+{% endblock %}

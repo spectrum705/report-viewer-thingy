@@ -94,6 +94,13 @@ hr.solid {
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
+.grid-content {
+  display: grid;
+  gap: 4rem 2rem;
+  grid-template-columns: auto auto auto;
+}
+
+/* INPUT STYLES */
 /* Login Page */
 .hero-icon {
   width: 2rem;
@@ -177,6 +184,8 @@ hr.solid {
 /* Input Styles */
 label {
   color: #eee;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
 }
 input[type="password"],
 input[type="text"] {
@@ -190,10 +199,56 @@ input[type="password"]:focus-visible {
   outline: none;
 }
 
+/*  */
+.option-view-file > a {
+  text-decoration: none;
+  color: #eee;
+}
+.option-view-file {
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin: 1.5rem;
+  padding: 0.4rem 0.2rem;
+  background: rgba(201, 142, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
 /* Action Button */
+/* input[type="file"] {
+  font-style: italic;
+  margin-bottom: 2em;
+} */
+
+input[type="file"]::file-selector-button {
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s all;
+  padding: 0.4em 0.6em;
+  cursor: pointer;
+  border-radius: 0.1em;
+  background: rgba(124, 252, 124, 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: rgba(124, 252, 124, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
 input[type="submit"] {
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 1px;
   color: #fff;
-  font-weight: 700;
+  /* font-weight: 700; */
+  margin-top: 1rem;
   padding: 0.5rem 2rem;
   border: none;
   transition: cubic-bezier(0.075, 0.82, 0.165, 1) 1.5s all;

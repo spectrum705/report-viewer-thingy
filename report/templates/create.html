@@ -1,131 +1,82 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-    {% block content %}
+<div class="content-container">
+  <div class="glass-container">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6 hero-icon"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"
+      />
+    </svg>
+    <h1 class="title-text">Add New User</h1>
 
-    <div  class= "content-container">
-        <div class="glass-container">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
-              </svg>
-        <h1  class="title-text" >Create Account</h1>
-        <form method="POST" action = "">
-            
-            {{form.hidden_tag()}}
-            <div class="col details"s>
-                {{form.username.label}}
-                {% if form.username.errors %}
-                {{form.username(class="is-invalid")}}
-                    <div class="invalid-feedback">
-                        {% for error in form.username.errors %}
-                          <span class="is-invalid">
-                            {{error}}
-                          </span> 
-                          {% endfor %}
+    <form method="POST" action="">
+      {{form.hidden_tag()}}
+      <div class="col details" s>
+        {{form.username.label}} {% if form.username.errors %}
+        {{form.username(class="is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.username.errors %}
+          <span class="is-invalid"> {{error}} </span>
+          {% endfor %}
+        </div>
+        {% else %} {{form.username}} {% endif %}
+      </div>
+      <div class="col details">
+        {{form.theClass.label}} {% if form.theClass.errors %}
+        {{form.theClass(class="is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.theClass.errors %}
+          <span> {{error}} </span>
+          {% endfor %}
+        </div>
+        {% else %} {{form.theClass}} {% endif %}
+      </div>
+      <div class="col align-self-start details">
+        <div>
+          <p class="account-type-text">Select your account type</p>
 
-                    </div>
-                {% else %}
-                   {{form.username}}
-                {% endif %}
-            </div>
-            <div class= "col details">
-                {{form.password.label}}
-                {% if form.password.errors %}
-                {{form.password(class="is-invalid")}}
-                    <div class="invalid-feedback">
-                        {% for error in form.password.errors %}
-                          <span>
-                            {{error}}
-                          </span> 
-                          {% endfor %}
+          <div>
+            <input
+              type="radio"
+              id="TeacherHere"
+              name="accountType"
+              value="teacher"
+              checked
+            />
+            <label for="teacher">Teacher</label>
+          </div>
 
-                    </div>
-                {% else %}
-                   {{form.password}}
-                {% endif %}
-            </div>
-            <div class= "col align-self-start details">
-                {{form.confirm.label}}
-                {% if form.confirm.errors %}
-                {{form.confirm(class="is-invalid")}}
-                    <div class="invalid-feedback">
-                        {% for error in form.confirm.errors %}
-                          <span>
-                            {{error}}
-                          </span> 
-                        {% endfor %}
+          <div>
+            <input
+              type="radio"
+              id="studentHere"
+              name="accountType"
+              value="student"
+            />
+            <label for="student">Student</label>
+          </div>
+        </div>
+      </div>
 
-                    </div>
-                {% else %}
-                   {{form.confirm}}
-                {% endif %}
-                <div>
-                    <p class="account-type-text">Select your account type</p>
-      
-                <div>
-                    <input type="radio" id="TeacherHere" name="accountType" value="teacher"
-                        checked>
-                    <label for="teacher">Teacher</label>
-                </div>
-                
-                <div>
-                    <input type="radio" id="studentHere" name="accountType" value="student">
-                    <label for="student">Student</label>
-                </div>
-    
-                </div>
-
-
-                <div>
-
-                    <label> Select the class you belong to </label>  
-                        <form method="post" name="theClass">
-
-                            <select> 
-                            {% for class in grade %} 
-                            <option value = "{{class}}"> {{class}}   
-                            </option>  
-                            {% endfor %}
-                        </form>
-                       
-                        </select> 
-                </div>
-
-    
-            </div>
-<!--             
-            <div>
-                <p>Select your account type ::</p>
-  
-            <div>
-                <input type="radio" id="TeacherHere" name="accountType" value="teacher"
-                    checked>
-                <label for="huey">Teacher</label>
-            </div>
-            
-            <div>
-                <input type="radio" id="dewey" name="accountType" value="student">
-                <label for="dewey">Student</label>
-            </div>
-
-            </div> -->
-
-
-
-
-        <div class= "col addButton details">
-            {{form.submit(class = "btn btn-outline-secondary")}}
-        </div>    
-                    <div>
-
-                <small class= "text-muted">
-                    <span class="route-action-text">Have an account?</span> <a href="{{url_for('login')}}" class="route-action-link">Login</a>
-                </small>
-            </div>
-
-        </form>
-    </div>
-    </div>
-
-
+      <div class="col addButton details">
+        {{form.submit(class = "btn btn-outline-secondary")}}
+      </div>
+      <div>
+        <small class="text-muted">
+          <a href="{{url_for('admin')}}">click</a>
+        </small>
+      </div>
+    </form>
+  </div>
+</div>
 
 {% endblock %}

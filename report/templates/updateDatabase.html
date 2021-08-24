@@ -1,0 +1,54 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+                <form method="post"   action="#" enctype="multipart/form-data"> 
+                    {{form.hidden_tag()}}
+                  
+                    <form method="post"   action="#" enctype="multipart/form-data"> 
+                        {{form.hidden_tag()}}
+                            {% if form.resultFile.errors %}
+                                {{form.resultFile(class="is-invalid")}}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.resultFile.errors %}
+                                            <span class="is-invalid">
+                                                {{error}}
+                                            </span> 
+                                        {% endfor %}
+                                        {{form.submit(class = "btn btn-primary")}}          
+                                    </div>
+                                {% else %}
+                                        
+                                        <label>Upload the csv file</label>
+                                        {{form.resultFile}}
+                                        {{form.submit(class = "btn btn-primary")}}
+                                {% endif %}       
+                               
+                    </form> 
+                   
+                    <h3 style="padding-top: 4em;">Please Make sure the following</h3>
+                    <ul>
+                        <li>
+                            the admin account is presnt in the file(admin's class field can be blank)
+                        </li>
+                        <li>
+                            the file extension should be "csv" with the follwing fields in order.
+                            <ul>
+                                <li>
+                                    "username"  "theClass"  "userType"
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            the details of both students and teachers should be in the same csv file.
+                        </li>
+                        
+
+
+
+                    </ul>
+                    
+   
+{% endblock %} 
+
+

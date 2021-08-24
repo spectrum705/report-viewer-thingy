@@ -1,22 +1,39 @@
 from report import db, bcrypt
 from report.models import User
-
-#do python3 fillDb.py to make test users (7 teachers and students)
-
-for i in range(1,7):
-    enc_password = bcrypt.generate_password_hash( "sss"+str(i)).decode('utf-8')
-    usr = User (username = "student"+str(i), userType = "student",
-                 theClass = str(i), password=enc_password )
-    db.session.add(usr)
-    db.session.commit()
-
-
-for i in range(1,7):
+import csv,os
+from pathlib import Path
   
-    enc_password = bcrypt.generate_password_hash("ttt"+str(i)).decode('utf-8')
-    usr = User (username = "teacher"+str(i), userType = "teacher",
-                 theClass = str(i), password=enc_password  )
-    db.session.add(usr)
-    db.session.commit()
+# csv file name
+def createDb():
+    folder = Path("report/school_data")
+    data_file = folder/"all_data.csv"
+    # filename = "all_data.csv"
+    db.drop_all()
+    db.create_all()
+    # reading csv file
+    with open(data_file, 'r') as csvfile:
+        # creating a csv reader object
+        csvreader = csv.reader(csvfile)
+        #example of entry in file 
+        #username theClass userType
+        #student1   7      student
+        for row in csvreader:
+            if row[0].lower() != 'username':
+                enc_password = bcrypt.generate_password_hash( "pass#"+row[0].lower()).decode('utf-8')
+                usr = User(username = row[0].lower(), userType = row[2].lower(),
+                            theClass = str(row[1]), password=enc_password )
+                db.session.add(usr)
 
-print("users: " , User.query.all())
+                
+                print(f"name: {row[0]}, class: {row[1]}, type: {row[2]} added")
+        db.session.commit()
+    os.remove(data_file)
+    return True
+# from report.models import db, User
+# from report import db, bcrypt
+# db.drop_all()
+# db.create_all()
+# pwd = bcrypt.generate_password_hash( "test").decode('utf-8')
+# usr =User(username ="kami", userType = "admin", theClass = "", password=pwd )
+# db.session.add(usr)
+# db.session.commit()

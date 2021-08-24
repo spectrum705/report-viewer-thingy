@@ -8,25 +8,16 @@ def load_user(user_id):
     #this is our database model of a user, made more changes will upload later
 
 class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    username = db.Column(db.String(20), nullable = False,unique=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
+    username = db.Column(db.String(20), nullable = False)
     password = db.Column(db.String(20), nullable=False)
     userType = db.Column(db.String(10), nullable=False)
-    theClass = db.Column(db.String)
-  
-
+    theClass = db.Column(db.String())
+    fileName = db.Column(db.String())
+    fileData = db.Column(db.LargeBinary)
 
     
     def __repr__(self):
-        return f"User('{self.username}','{self.id}',{self.userType}, {self.theClass})@"
-
-
-class Report(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    whichStudent = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
-    # uploader = db.Column(db.String(20), nullable=False)
-    file = db.Column(db.String(),  nullable=False)
-    # userType = db.Column(db.String(10), nullable=False)
-
+        return f"User('{self.username}','{self.id}',{self.userType}, {self.theClass}, {self.fileName})"
 
 
