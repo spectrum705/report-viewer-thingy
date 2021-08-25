@@ -42,7 +42,7 @@
       </div>
       <div class="col align-self-start details">
         <div>
-          <p class="account-type-text">Select your account type</p>
+          <p class="account-type-text">Select user's account type</p>
 
           <div>
             <input
@@ -67,12 +67,30 @@
         </div>
       </div>
 
-      <div class="col addButton details">
+      <div
+        class="col addButton details"
+        data-bs-toggle="tooltip"
+        data-bs-placement="bottom"
+        title="Click to confirm add this user to the database."
+      >
         {{form.submit(class = "btn btn-outline-secondary")}}
       </div>
       <div>
         <small class="text-muted">
-          <a href="{{url_for('admin')}}">click</a>
+          <a
+            href="{{url_for('admin')}}"
+            class="
+              option-view-file
+              text-decoration-none text-white
+              px-3
+              py-2
+              function-button
+            "
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Go back to admin page."
+            >Go back</a
+          >
         </small>
       </div>
     </form>

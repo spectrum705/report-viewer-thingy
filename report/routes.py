@@ -41,7 +41,7 @@ def admin():
                     db.session.commit()
                     print("after update:",updateUsr.username)
                     # print("got user id:", request.form["userId"])
-                    flash("data updated", "info")
+                    flash("Data Updated Successfully", "success")
         except:
             return render_template("error.html")
     else:
@@ -97,7 +97,7 @@ def login():
             # theClass = User.query.filter_by(username=form.username.data).first()
             if user and bcrypt.check_password_hash(user.password, form.password.data):# and theClass.theClass == request.form["theClass"]:
                 login_user(user,remember = form.remember.data)
-                flash("you are logged in ", "success")
+                flash("Logged in Successfully", "success")
                 if current_user.userType == "teacher":
                     return redirect(url_for("uploadResult"))
 
@@ -166,10 +166,10 @@ def uploadResult():
                 studentReport.fileName = studentReport.username+"_result." + str(form.resultFile.data.filename).split('.')[1]#resultFile
                 studentReport.fileData = form.resultFile.data.read()
                 db.session.commit()
-                flash("File upload successful", "success ")
+                flash("File Successfully Uploaded.", "success ")
                 print("file uploaded:" )
             else:
-                flash("no file selected", "danger")
+                flash("Please select a file.", "danger")
         studentList = User.query.filter_by(userType="student", theClass = current_user.theClass).all()  
         if current_user.userType == "teacher":
             return render_template("upload_result.html", title="upload result", 

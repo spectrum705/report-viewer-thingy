@@ -2,17 +2,23 @@
 
 {% block content %}
 
-<form class="d-flex"  name="search" method="post" action="{{url_for('admin')}}">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <input class="form-control me-2" type="search" placeholder="Enter the username to search" aria-label="Search" name="admin" >
-    <button class="btn btn-outline-success" type="submit">Search</button>
-    <a class="nav-link" href= "{{url_for('create')}}" >Add New User</a>
-    <a class="nav-link" href= "{{url_for('updateDatabase')}}" >Update whole database</a>
+<form class="d-flex flex-column  align-content-center text-center full-container"  name="search" method="post" action="{{url_for('admin')}}">
+  <div class="d-flex ">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <input class="form-control me-2 p-3 option-view-file bg-light" type="search" placeholder="Enter username to search" aria-label="Search" name="admin" >
+    <button class="btn btn-outline-success" type="submit"><img src="../static/search-light.svg" alt="search"></button>
+  </div>  
+  <div class="d-flex mx-auto mb-5">
+    <a class="function-button text-decoration-none option-view-file p-3 text-white my-1 mx-2 " href= "{{url_for('create')}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Click to add a new user to the database.">Add New User</a>
+    <a class="function-button text-decoration-none option-view-file p-3 text-white my-1 mx-2" href= "{{url_for('updateDatabase')}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Click to update the whole database." >Update whole database</a>
+  </div>
 
 
   
   {% if result %}
-  <table class ="table">
+  
+  <table class ="table table-striped text-white">
         <thead>
           <tr>
             <th scope="col">Name</th>
@@ -78,15 +84,18 @@
                     </td>
                     <td>
                       <!-- <input type="hidden" name = "usrId" value="{{result.id}}"> -->
-                      <a class="nav-link" href= "{{url_for('delete', id =result.id)}}" >delete this User</a>
-                      
-                        {{form.submit(class = "btn btn-outline-primary")}}
+                      <div class="align-items-center d-md-block"> 
+
+                        {{form.submit(class = "btn btn-outline-primary mt-0 mb-0 ")}}
+                        <a class="function-button text-decoration-none option-view-file px-3 py-2 text-white mx-1 " href= "{{url_for('delete', id =result.id)}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Click to delete user from the database."  >Delete</a>
+                        
+                      </div>
                     </td>
                 </tr>
 
               </form>
               {% else %}
-                <h1>Nothing found</h1>
+                <h1>Nothing found.</h1>
               {% endif %}
             </tbody>
           </table>

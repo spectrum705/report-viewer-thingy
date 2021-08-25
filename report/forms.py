@@ -45,6 +45,6 @@ class UpdateForm(FlaskForm):
     theClass = StringField('Class')
     userType = StringField('User Type')
 
-    submit = SubmitField('Update user')
+    submit = SubmitField('Update')
 
 
