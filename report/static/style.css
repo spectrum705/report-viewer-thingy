@@ -125,7 +125,7 @@ hr.solid {
 }
 
 .details {
-  padding: 25px;
+  padding: 12px;
 }
 
 .container {
@@ -408,6 +408,9 @@ input[type="submit"]:active {
 /* ADMIN PAGE */
 .full-container {
   height: 100vh;
+}
+.ninety-container {
+  height: 90vh;
 }
 .function-button {
   transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) all;
