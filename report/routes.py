@@ -1,4 +1,6 @@
+from multiprocessing import dummy
 from flask import render_template,request,url_for,redirect , session, flash, send_file
+from sqlalchemy import null
 from report import app, db, bcrypt
 from flask_wtf.csrf import CSRFProtect
 from requests import sessions
@@ -10,6 +12,85 @@ from flask_login import login_user, current_user, logout_user, login_required
 from fillDb import createDb
 
 csrf = CSRFProtect(app)
+# create student dummy data json file
+student_dummy_data = [
+   { 1: [
+                {"id": 1, "name": "John", "marks": [
+                                    {"test_1":{"maths": null, "english": null, "science": null}},
+                                    {"test_2":{"maths": null, "english": null, "science": null}},
+                                 ]
+                },
+                
+                 {"id": 2, "name": "tim", "marks": [
+                                                {"test_1":{"maths": null, "english": null, "science": null}},
+                                                {"test_2":{"maths": null, "english": null, "science": null}},]
+                }   
+         ]
+   },
+   
+   
+    { 2: [
+                {"id": 1, "name": "tewo", "marks": [
+                                                {"test_1":{"maths": null, "english": null, "science": null}},
+                                                {"test_2":{"maths": null, "english": null, "science": null}},]
+                },
+                
+                 {"id": 2, "name": "naruto", "marks": [
+                                                    {"test_1":{"maths": null, "english": null, "science": null}},
+                                                    {"test_2":{"maths": null, "english": null, "science": null}},]
+                },
+                  {"id": 3, "name": "thre", "marks": [
+                                                {"test_1":{"maths": null, "english": null, "science": null}},
+                                                {"test_2":{"maths": null, "english": null, "science": null}},]
+                },
+                   {"id": 4, "name": "four", "marks": [
+                                                {"test_1":{"maths": null, "english": null, "science": null}},
+                                                {"test_2":{"maths": null, "english": null, "science": null}},]
+                },
+            
+                   
+                ]
+   },
+   
+   
+   
+   
+ ]
+                    
+                    
+                    
+     
+
+@app.route('/', methods=['GET', 'POST'])
+def upload_marks_page():
+    grade = 2
+    subject="maths"
+    test = "test_1"
+    student_list=student_dummy_data[grade-1][2]
+    # print(student_list)
+    if request.method == 'POST':
+        for student in student_list:
+            print(f"Name:{student['name']}, Marks_from:{request.form[str(student['id'])]}")
+    
+    return render_template('upload_marks.html', subject=subject, test=test, grade=grade, student_list=student_list)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #admin page to edit user data
 @app.route("/admin", methods = ["POST", "GET"])
 @login_required
@@ -78,7 +159,7 @@ def create():
 
 
 #home page  for login
-@app.route("/", methods= ["POST", "GET"])        
+@app.route("/login", methods= ["POST", "GET"])        
 def login():
     try:
         if current_user.is_authenticated:
@@ -200,19 +281,19 @@ def save_file(result_file):
 def updateDatabase():
     form = UploadForm()
     if current_user.userType == "admin":
-        try:
-            if form.validate_on_submit():
-                save_file(form.resultFile.data)
-                # flash("Please wait till we comeplete adding everything...", "success")
-                createDb()
-                flash("Database Creation Complete ! ", "success")
-                print("file uploaded:" )
-                return redirect(url_for("admin"))
-            
-            else:
-                flash("Please select the file. After uploading it takes a while, So please wait...", "danger")   
-        except:
-            return render_template("error.html")
+        # try:
+        if form.validate_on_submit():
+            save_file(form.resultFile.data)
+            # flash("Please wait till we comeplete adding everything...", "success")
+            createDb()
+            flash("Database Creation Complete ! ", "success")
+            print("file uploaded:" )
+            return redirect(url_for("admin"))
+        
+        else:
+            flash("Please select the file. After uploading it takes a while, So please wait...", "danger")   
+        # except:
+        #     return render_template("error.html")
         return render_template("updateDatabase.html", form = form)
     
 
