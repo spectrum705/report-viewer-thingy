@@ -72,7 +72,8 @@ def upload_marks_page():
         for student in student_list:
             print(f"Name:{student['name']}, Marks_from:{request.form[str(student['id'])]}")
     
-    return render_template('upload_marks.html', subject=subject, test=test, grade=grade, student_list=student_list)
+    # return render_template('upload_marks.html', subject=subject, test=test, grade=grade, student_list=student_list)
+    return render_template('class_test.html')
 
 
 
