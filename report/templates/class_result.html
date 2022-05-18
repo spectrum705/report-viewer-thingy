@@ -1,34 +1,22 @@
 {% block content %}
 <!-- make a table -->
-<table class="table table-bordered table-hover" border="2">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Adminssion Number</th>
-      <th>Subjects </th>
-      <!-- <th>Marks</th>
-      <th>Date</th> -->
-    </tr>
-  </thead>
-  <tbody>
-    <!-- {% for student in student_list %} -->
-    <tr>
-      <td>{{row.grade}}</td>
-      <td>{{row.subject}}</td>
-      <td>
-          <table>
-            <td>english</td>
-            
-
+<table border="4" bordercolor="black">   
+  <tr>  
+      <th>Name</th>  
+      <th>id</th>
+      <th>Science
+          <table border="2" bordercolor="black">  
+              <tr>  
+                  <td>Test-1</td>
+                  <td>Test-2</td>
+                  <td>Test-3</td>   
+                  <td>Test-4</td>
+              </tr>  
+        
           </table>
-
-      </td>
-      <td>{{row.marks}}</td>
-      <td>{{row.date}}</td>
-    </tr>
-    <!-- {% endfor %} -->
-  </tbody>
-
+      </th>
+  </tr>  
+</table>
 
 
 

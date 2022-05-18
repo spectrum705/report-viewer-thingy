@@ -113,7 +113,7 @@ def upload_marks_page(grade, subject, test_name):
 def class_result(grade):
     student_list = student_dummy_data[grade]["students"]
     print(student_list)
-    return "got marks" 
+    return render_template('class_result.html')
     # return  jsonify(student_dummy_data[grade]["students"])
     # return(jsonify({student_list}))
     # return (student_dummy_data)
