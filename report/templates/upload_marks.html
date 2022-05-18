@@ -16,7 +16,7 @@
 
 
 <div class="limiter">
-    <h1>class {{grade}} {{subject}} {{test}} form</h1>
+    <h1>class {{grade}} {{subject}} {{test_name}} form</h1>
     <div class="container-table100">
         <div class="wrap-table100">
             <div class="table100 ver1 m-b-110">
@@ -39,14 +39,14 @@
                         <tbody>
                             {% for student in student_list %}
                             <tr class="row100 body">
-                                <td class="cell100 column1">{{student["id"]}}</td>
+                                <td class="cell100 column1">{{student["admission_no"]}}</td>
                                 <td class="cell100 column2">000</td>
                                 <td class="cell100 column2">{{student["name"]}} </td>
                                 <td class="cell100 column3"> 
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
                                         <!-- need to fingur id -->
-                                        <input type="number"  name="{{student['id']}}" style="border:3px; border-style:solid; border-color:#0e0035; padding: 1em;">
+                                        <input type="number"  name="{{student['admission_no']}}" style="border:3px; border-style:solid; border-color:#0e0035; padding: 1em;">
                                     </td>
                                 </tr>
                                 {% endfor %}

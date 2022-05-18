@@ -1,5 +1,7 @@
+import json
 from multiprocessing import dummy
-from flask import render_template,request,url_for,redirect , session, flash, send_file
+from re import S
+from flask import jsonify, render_template, render_template_string,request,url_for,redirect , session, flash, send_file
 from sqlalchemy import null
 from report import app, db, bcrypt
 from flask_wtf.csrf import CSRFProtect
@@ -13,80 +15,109 @@ from fillDb import createDb
 
 csrf = CSRFProtect(app)
 # create student dummy data json file
-student_dummy_data = [
-   { 1: [
-                {"id": 1, "name": "John", "marks": [
-                                    {"test_1":{"maths": null, "english": null, "science": null}},
-                                    {"test_2":{"maths": null, "english": null, "science": null}},
-                                 ]
-                },
-                
-                 {"id": 2, "name": "tim", "marks": [
-                                                {"test_1":{"maths": null, "english": null, "science": null}},
-                                                {"test_2":{"maths": null, "english": null, "science": null}},]
-                }   
+
+student_dummy_data = {
+   "class_1":{ "students": [
+               
+                    {"admission_no": 1, "name": "tewo", "marks": {
+                                                    "test_1":{"maths": null, "english": null, "science": null},
+                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                    },
+                    
+                    {"admission_no": 2, "name": "naruto", "marks": {
+                                                    "test_1":{"maths": null, "english": null, "science": null},
+                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                    },
          ]
    },
    
    
-    { 2: [
-                {"id": 1, "name": "tewo", "marks": [
-                                                {"test_1":{"maths": null, "english": null, "science": null}},
-                                                {"test_2":{"maths": null, "english": null, "science": null}},]
-                },
+     "class_2":{"students": [
+         
+                    {"admission_no": 1, "name": "tewo", "marks": {
+                                                    "test_1":{"maths": null, "english": null, "science": null},
+                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                    },
+                    
+                    {"admission_no": 2, "name": "naruto", "marks": {
+                                                    "test_1":{"maths": null, "english": null, "science": null},
+                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                    },
                 
-                 {"id": 2, "name": "naruto", "marks": [
-                                                    {"test_1":{"maths": null, "english": null, "science": null}},
-                                                    {"test_2":{"maths": null, "english": null, "science": null}},]
-                },
-                  {"id": 3, "name": "thre", "marks": [
-                                                {"test_1":{"maths": null, "english": null, "science": null}},
-                                                {"test_2":{"maths": null, "english": null, "science": null}},]
-                },
-                   {"id": 4, "name": "four", "marks": [
-                                                {"test_1":{"maths": null, "english": null, "science": null}},
-                                                {"test_2":{"maths": null, "english": null, "science": null}},]
-                },
-            
-                   
+                    {"admission_no": 3, "name": "thre", "marks": {
+                                                    "test_1":{"maths": null, "english": null, "science": null},
+                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                    },
+                
+                    {"admission_no": 4, "name": "four", "marks": {
+                                                    "test_1":{"maths": null, "english": null, "science": null},
+                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                    },                   
                 ]
    },
    
    
-   
-   
- ]
+}
                     
-                    
-                    
+teacher_dummy_data={
+    "teacher_1":{
+                "teacher_id": 1,
+                "password":"pass#teacher_1",
+                "classes":["class_1-english",                              
+                         ]      
+                },
+    
+    "teacher_2":{
+                "teacher_id": 2,
+                "password":"pass#teacher_2",
+                 "classes":["class_1-english", 
+                            "class_2-science",              
+                         ]                     
+                }  
+}
+    
+    
+@app.route('/')
+def class_test():
+    username="teacher_2" #get from login id
+    teacher_subjects=teacher_dummy_data[username]["classes"]
+    test_list=["test_1","test_2", "test_3", "test_4"]	
+    
+    return render_template('class_navigation.html', classes=teacher_subjects, test_list=test_list)
+        
      
 
-@app.route('/', methods=['GET', 'POST'])
-def upload_marks_page():
-    grade = 2
-    subject="maths"
-    test = "test_1"
-    student_list=student_dummy_data[grade-1][2]
+@app.route('/marks_entry/<grade>/<subject>/<test_name>', methods=['GET', 'POST'])
+def upload_marks_page(grade, subject, test_name):
+    # grade = "class_2" #get it from teacher's user data
+    # subject="maths" #get it from nav page
+    # test_name = "test_1" #get it from nav page
+    # # student_list=student_dummy_data[grade-1]["class_2"]
+    student_list  = student_dummy_data[grade]["students"]
     # print(student_list)
     if request.method == 'POST':
-        for student in student_list:
-            print(f"Name:{student['name']}, Marks_from:{request.form[str(student['id'])]}")
+        for student in student_dummy_data[grade]["students"]:
+            # print(f"Name:{student['name']}, Marks_from:{request.form[str(student['admission_no'])]}")
+            student['marks'][test_name][subject] = request.form[str(student['admission_no'])] 
+
+        return redirect(url_for('class_result', grade=grade))
+        # for student in student_dummy_data[grade]["students"]:
+        #     print("---------------------")
+        #     print(f"Name: {student['name']} Score:{student['marks'][test_name][subject]}")            
+        #     print("---------------------")
+            
+    return render_template('upload_marks.html', subject=subject, test_name=test_name, grade=grade, student_list=student_list)
+    #return render_template('class_test.html')
+
+@app.route('/class_result/<grade>')
+def class_result(grade):
+    student_list = student_dummy_data[grade]["students"]
+    print(student_list)
+    return "got marks" 
+    # return  jsonify(student_dummy_data[grade]["students"])
+    # return(jsonify({student_list}))
+    # return (student_dummy_data)
     
-    # return render_template('upload_marks.html', subject=subject, test=test, grade=grade, student_list=student_list)
-    return render_template('class_test.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -122,7 +153,7 @@ def admin():
 
                     db.session.commit()
                     print("after update:",updateUsr.username)
-                    # print("got user id:", request.form["userId"])
+                    # print("got user admission_no:", request.form["userId"])
                     flash("Data Updated Successfully", "success")
         except:
             return render_template("error.html")
@@ -204,7 +235,7 @@ def login():
 @login_required
 def download(getId, attach):
     # print( request.args.get("attach"))
-    # print("download_stud-id:",request.form["student_id"])
+    # print("download_stud-admission_no:",request.form["student_id"])
     user = User.query.filter_by(id = getId).first() 
     print(attach)
     print(user)
