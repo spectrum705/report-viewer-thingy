@@ -3,6 +3,9 @@ html {
   height: 100%;
   background-color: #f8f8f8;
 }
+ul {
+  list-style: none; 
+}
 
 body {
   overflow: hidden;
@@ -12,6 +15,8 @@ body {
   background-color: #ffffff;
   font-family: "Roboto", sans-serif;
   color: #555555;
+  padding-left: 145px;
+
 }
 
 a {
