@@ -1,13 +1,12 @@
+import random 
 from mongoengine import *
+import os
 
-
-
-# DB_URI = add URI here
+# DB_URI = os.environ['DB_URI']
 connect(host=DB_URI)
 
 
 
-             
 teacher_dummy_data={
     "teacher_1":{
                 "teacher_id": 1,
@@ -26,47 +25,25 @@ teacher_dummy_data={
 }
     # mongoengine data model 
     
-class Classes(EmbeddedDocument):
-    classes=ListField(StringField(max_length=20))
 
-class Teacher(EmbeddedDocument):
-    
-    teacher_id=IntField(primary_key=True)
+class Teachers(Document):
+    _id=IntField(primary_key=True)
+    name=StringField(max_length=20, required=True)
     password = StringField(max_length=20, required=True)
-    classes=EmbeddedDocumentField(Classes)
-    
-class TeacherList(Document):
-   EmbeddedDocumentField(Teacher)
-    
+    classes=ListField(DictField())
+        
+# teacher_dummy_data={
+#               { "name":#"teacher_1"
+#                   "teacher_id": 1,
+#                 "password":"pass#teacher_1",
+#                 "classes":["class_1-english",                              
+#                          ]      
+#                 },
+# }
 
 
-             
-teacher_dummy_data={
-    "teacher_1":{
-                "teacher_id": 1,
-                "password":"pass#teacher_1",
-                "classes":["class_1-english",                              
-                         ]      
-                },
+# find a way to make a variable attriute in teacher_list
+teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_1":"english"}, {"class_2":"science"}])
+teacher.save()
     
-    "teacher_2":{
-                "teacher_id": 2,
-                "password":"pass#teacher_2",
-                 "classes":["class_1-english", 
-                            "class_2-science",              
-                         ]                     
-                }  
-}
-
-classes=Classes(classes=["class_1-english", "class_2-science"])
-teacher=Teacher(teacher_id=1, password="pass#teacher_1", classes=classes)
-teacher_list=TeacherList(name=teacher)
-teacher_list.save()
-    
-    
-    
-    
-teacher_list.save()
-    
-    
-    
+user= Teachers.objects(name="teacher_1")    

@@ -15,14 +15,17 @@
   {% for class in classes %}
   <li>
     <div  class="menu">
-      <h2 class="menu-title menu-title_2nd">{{class.split('-')[0] }} </h2>
+      {% for key, value in class.items() %}
+      <h2 class="menu-title menu-title_2nd">{{key }} - {{value}} </h2>
       <ul class="menu-dropdown">
         {% for test in test_list %}
-               <a href="{{url_for('upload_marks_page',  grade=class.split('-')[0], subject=class.split('-')[1], test_name=test)}}">           
-                 <li> {{test}}</li>
-              </a> 
+        <a href="{{url_for('upload_marks_page',  grade=key, subject=value, test_name=test)}}">           
+          <li> {{test}}</li>
+        </a> 
+
 
         {% endfor %}
+      {% endfor %}
       </ul>
     </div>
   </li>

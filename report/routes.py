@@ -21,12 +21,18 @@ student_dummy_data = {
                
                     {"admission_no": 1, "name": "tewo", "marks": {
                                                     "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                                                    "test_2":{"maths": null, "english": null, "science": null},
+                                                    "test_3":{"maths": null, "english": null, "science": null},
+                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    }
                     },
                     
                     {"admission_no": 2, "name": "naruto", "marks": {
                                                     "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                                                    "test_2":{"maths": null, "english": null, "science": null},
+                                                    "test_3":{"maths": null, "english": null, "science": null},
+                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    }
                     },
          ]
    },
@@ -36,22 +42,34 @@ student_dummy_data = {
          
                     {"admission_no": 1, "name": "tewo", "marks": {
                                                     "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                                                    "test_2":{"maths": null, "english": null, "science": null},
+                                                    "test_3":{"maths": null, "english": null, "science": null},
+                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    }
                     },
                     
                     {"admission_no": 2, "name": "naruto", "marks": {
                                                     "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                                                    "test_2":{"maths": null, "english": null, "science": null},
+                                                    "test_3":{"maths": null, "english": null, "science": null},
+                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    }
                     },
                 
                     {"admission_no": 3, "name": "thre", "marks": {
                                                     "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                                                    "test_2":{"maths": null, "english": null, "science": null},
+                                                    "test_3":{"maths": null, "english": null, "science": null},
+                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    }
                     },
                 
                     {"admission_no": 4, "name": "four", "marks": {
                                                     "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},}
+                                                    "test_2":{"maths": null, "english": null, "science": null},
+                                                    "test_3":{"maths": null, "english": null, "science": null},
+                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    }
                     },                   
                 ]
    },
@@ -63,15 +81,15 @@ teacher_dummy_data={
     "teacher_1":{
                 "teacher_id": 1,
                 "password":"pass#teacher_1",
-                "classes":["class_1-english",                              
+                "classes":[{"class_1":"english"}                              
                          ]      
                 },
     
     "teacher_2":{
                 "teacher_id": 2,
                 "password":"pass#teacher_2",
-                 "classes":["class_1-english", 
-                            "class_2-science",              
+                 "classes":[{"class_1":"english"}, 
+                            {"class_2":"science"},              
                          ]                     
                 }  
 }
@@ -112,8 +130,11 @@ def upload_marks_page(grade, subject, test_name):
 @app.route('/class_result/<grade>')
 def class_result(grade):
     student_list = student_dummy_data[grade]["students"]
+    test_list=["test_1","test_2", "test_3", "test_4"]	
+    subject_list=student_dummy_data[grade]["students"][0]["marks"]["test_1"].keys()
+
     print(student_list)
-    return render_template('class_result.html')
+    return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subject_list)
     # return  jsonify(student_dummy_data[grade]["students"])
     # return(jsonify({student_list}))
     # return (student_dummy_data)
