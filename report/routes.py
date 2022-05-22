@@ -1,12 +1,12 @@
 import json
 from multiprocessing import dummy
-from re import S
+import random
 from flask import jsonify, render_template, render_template_string,request,url_for,redirect , session, flash, send_file
 from sqlalchemy import null
 from report import app, db, bcrypt
 from flask_wtf.csrf import CSRFProtect
 from requests import sessions
-from report.models import User
+from report.models import Teachers, Students, Marks
 import os
 from io import BytesIO
 from report.forms import CreateAccount, LoginForm, UploadForm, UpdateForm
@@ -95,23 +95,27 @@ teacher_dummy_data={
 }
     
     
-@app.route('/')
-def class_test():
-    username="teacher_2" #get from login id
-    teacher_subjects=teacher_dummy_data[username]["classes"]
+@app.route('/class_navigation')
+def class_navigation():
+    print(session["user"])
+    username= session["user"]["name"] #get from login idp
+    print('username logged:', username)
+    
+    # teacher_subjects=teacher_dummy_data[username]["classes"]
+    teacher_subjects=Teachers.objects(_id =username["_id"]).first().classes
     test_list=["test_1","test_2", "test_3", "test_4"]	
     
-    return render_template('class_navigation.html', classes=teacher_subjects, test_list=test_list)
+    colours=["menu-title", "menu-title menu-title_2nd", "menu-title menu-title_3rd", "menu-title menu-title_4th"]
+    
+    return render_template('class_navigation.html',color=random.choice(colours), classes=teacher_subjects, test_list=test_list)
         
      
 
 @app.route('/marks_entry/<grade>/<subject>/<test_name>', methods=['GET', 'POST'])
 def upload_marks_page(grade, subject, test_name):
-    # grade = "class_2" #get it from teacher's user data
-    # subject="maths" #get it from nav page
-    # test_name = "test_1" #get it from nav page
-    # # student_list=student_dummy_data[grade-1]["class_2"]
-    student_list  = student_dummy_data[grade]["students"]
+    
+    # student_list  = student_dummy_data[grade]["students"]
+    student_list = Students.objects(standard=grade)
     # print(student_list)
     if request.method == 'POST':
         for student in student_dummy_data[grade]["students"]:
@@ -212,40 +216,54 @@ def create():
 
 
 #home page  for login
-@app.route("/login", methods= ["POST", "GET"])        
+@app.route("/", methods= ["POST", "GET"])        
 def login():
-    try:
-        if current_user.is_authenticated:
-            if current_user.userType == "teacher":
-                return redirect(url_for("uploadResult"))
+    # try:
+    # if current_user.is_authenticated:
+    #     if current_user.userType == "teacher":
+    #         return redirect(url_for("uploadResult"))
 
-            elif current_user.userType == "student":
-                    return redirect(url_for("studentReport"))
+    #     elif current_user.userType == "student":
+    #             return redirect(url_for("studentReport"))
 
-            elif current_user.userType == "admin":
-                return redirect(url_for("admin"))
+    #     elif current_user.userType == "admin":
+    #         return redirect(url_for("admin"))
 
-        form = LoginForm()
-        if form.validate_on_submit():
-            user = User.query.filter_by(username=form.username.data).first()
-            # theClass = User.query.filter_by(username=form.username.data).first()
-            if user and bcrypt.check_password_hash(user.password, form.password.data):# and theClass.theClass == request.form["theClass"]:
-                login_user(user,remember = form.remember.data)
-                flash("Logged in Successfully", "success")
-                if current_user.userType == "teacher":
-                    return redirect(url_for("uploadResult"))
+    form = LoginForm()
+    if form.validate_on_submit():
+        # user = User.query.filter_by(username=form.username.data).first()
+        # # theClass = User.query.filter_by(username=form.username.data).first()
+        # if user and bcrypt.check_password_hash(user.password, form.password.data):# and theClass.theClass == request.form["theClass"]:
+        #     login_user(user,remember = form.remember.data)
+        #     flash("Logged in Successfully", "success")
+        #     if current_user.userType == "teacher":
+        #         return redirect(url_for("uploadResult"))
 
-                elif current_user.userType == "admin":
-                    return redirect(url_for("admin"))
-            
-                else:
-                    return redirect(url_for("studentReport"))
-                
-                        
-            else:
-                flash("Wrong username or password, check again.", "danger") 
-    except:
-        return render_template("error.html")
+        #     elif current_user.userType == "admin":
+        #         return redirect(url_for("admin"))
+        
+        #     else:
+        #         return redirect(url_for("studentReport"))
+
+        user = Teachers.objects(name=form.username.data.lower().strip()).first()
+       
+
+        # print("urs:",form.username.data)
+        # print("pwd:", form.password.data)
+        # print("userinDb",user)
+        # print("pwd:",user.password)
+        if user is not None and form.password.data.strip() == user.password:
+            session["user"] = user.to_json()#form.username.data
+
+            login_user(user)
+            # print("logged", current_user.username)
+            flash("you are logged in ", "success")
+            return redirect(url_for("class_navigation"))            
+                    
+        else:
+            flash("Wrong username or password, check again.", "danger") 
+    # except:
+    #     return render_template("error.html")
   
     return render_template("login.html", title='Login', form = form)
 

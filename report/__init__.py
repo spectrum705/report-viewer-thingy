@@ -5,15 +5,20 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
+import mongoengine as db
 
 
 
 app = Flask(__name__)
+DB_URI =  "mongodb+srv://admin:cYMQqPCVdtZV3Nk0@ourcluster.xjtv1.mongodb.net/test?retryWrites=true&w=majority"
+db.connect(host=DB_URI)
+app = Flask(__name__)
+
+CSRFProtect(app)
 
 app.secret_key  = "key_whatever"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 app.config["WTF_CSRF_ENABLED"] = True
-db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)

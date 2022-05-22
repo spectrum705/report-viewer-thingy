@@ -16,7 +16,7 @@
   <li>
     <div  class="menu">
       {% for key, value in class.items() %}
-      <h2 class="menu-title menu-title_2nd">{{key }} - {{value}} </h2>
+      <h2 class="{{color}}">{{key }} - {{value}} </h2>
       <ul class="menu-dropdown">
         {% for test in test_list %}
         <a href="{{url_for('upload_marks_page',  grade=key, subject=value, test_name=test)}}">           

@@ -2,7 +2,7 @@ from tokenize import String
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired,Length, EqualTo, ValidationError
-from report.models import User
+from report.models import Teachers
 from flask_wtf.file import FileField,FileAllowed
 
 #will delete this later
@@ -18,7 +18,7 @@ class CreateAccount(FlaskForm):
    
     submit = SubmitField('confirm')
     def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
+        user = Teachers.objects(name=username.data).first()
         if user:
             raise ValidationError('Username taken, think of another.')        
 
