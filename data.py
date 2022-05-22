@@ -87,7 +87,7 @@ def createDb():
                 student.save()
                 
                 print(f"name: {row[1]}, class: {row[2]}, added")
-    # os.remove(data_file)
+    os.remove(data_file)
     return True
 
 

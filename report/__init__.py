@@ -10,7 +10,7 @@ import mongoengine as db
 
 
 app = Flask(__name__)
-DB_URI =  "mongodb+srv://admin:cYMQqPCVdtZV3Nk0@ourcluster.xjtv1.mongodb.net/test?retryWrites=true&w=majority"
+DB_URI =  ""
 db.connect(host=DB_URI)
 app = Flask(__name__)
 
