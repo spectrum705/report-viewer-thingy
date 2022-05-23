@@ -11,7 +11,6 @@ from report.models import Teachers, Students, Marks
 
 # connect(host=DB_URI)
 # mongoengine data model 
-DB_URI =  ""
 connect(host=DB_URI)
 
 # class Teachers(Document):
@@ -71,9 +70,9 @@ student_dummy_data = {
 # csv file name
 def createDb():
     # learn about relative path and absolute path
-    # folder = Path("report\school_data")
-    # data_file = folder+"\student_dummy_data.csv"
-    data_file = r"C:\Users\SHUBHAM\Desktop\report-viewer-thingy\report\school_data\student_dummy_data.csv"
+    folder = Path("report/school_data")
+    data_file = folder/"student_dummy_data.csv"
+    # data_file = r"C:\Users\SHUBHAM\Desktop\report-viewer-thingy\report\school_data\student_dummy_data.csv"
     with open(data_file, 'r') as csvfile:
         # creating a csv reader object
         csvreader = csv.reader(csvfile)
@@ -87,7 +86,7 @@ def createDb():
                 student.save()
                 
                 print(f"name: {row[1]}, class: {row[2]}, added")
-    os.remove(data_file)
+    # os.remove(data_file)
     return True
 
 

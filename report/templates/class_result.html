@@ -1,61 +1,56 @@
-<!-- make a table -->
-<style>
-    table,
-    th,
-    td {
-        border: 2px solid black;
-        /* border-collapse: collapse; */
-        padding: 15px;
-        width: auto;      
-}
+
+ 
+ <!-- make a table -->
+<link rel="stylesheet" href="{{ url_for('static',filename='class_result.css') }}" />
+<style type="text/css">
+
 </style>
 
-<style>
-    table,
-    th,
-    td {
-        border: 2px solid black;
-        border-collapse: collapse;
-        padding: 15px;
-    }
-</style>
+<body style="margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;">
 
-<table>
-    
+    <h1>{{grade}} Result</h1>
+    <div class="tableFixHead">
+        <table>
+           
+<thead>
+    <tr>
         <th rowspan="2">Name</th>
         <th rowspan="2">id</th>
         {% for subject in subject_list %}
         <th colspan="4"> {{subject}}</th>
         {% endfor %}
-        
-        <tr>
-            {% for subject in subject_list %}
-            <td>Test-1 (50)</td>
-            <td>Test-2 (50)</td>
-            <td>Test-3 (50)</td>
-            <td>Test-4 (50)</td>
-            {% endfor %}
-        </tr>
-    
-        
-     {% for student in student_list %}
-    <tr>
-        <!-- name and id -->
-        <td>{{student.name}}</td>
-        <td>{{student.admission_no}}</td>
-
-   
-            {% for subject in subject_list %}
-                {% for test in test_list %}
-                <td>{{student['marks'][test][subject]}}</td>
-             
-                {% endfor %}
-            {% endfor %}
-
     </tr>
-    {% endfor %}
+    
+    <tr >
+        {% for subject in subject_list %}
+        <th>Test-1 (50)</th>
+        <th>Test-2 (50)</th>
+        <th>Test-3 (50)</th>
+        <th>Test-4 (50)</th>
+        {% endfor %}
+    </tr>
+</thead>
+    
 
-</table>
 
 
+                {% for student in student_list %}
+                <tr>
 
+                    <td>{{student.name}}</td>
+                    <td>{{student.admission_no}}</td>
+
+
+                    {% for subject in subject_list %}
+                    {% for test in test_list %}
+                    <td>{{student['marks'][test][subject]}}</td>
+
+                    {% endfor %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+        </table>
+
+</body>
+</div>

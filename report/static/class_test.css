@@ -1,21 +1,29 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
 html {
-  height: 100%;
-  background-color: #f8f8f8;
+  height: 75%;
+  background-color:hsla(218, 100%, 73%, 0.326);
+  margin-top: 3%;
 }
 ul {
   list-style: none; 
 }
 
+.container{
+  /* left: 50% !important;
+  right: auto !important; */
+  text-align: center !important;
+  transform: translate(15%,0) !important;
+}
 body {
   overflow: hidden;
   height: 100%;
   width: 1000px;
-  margin: 0 auto;
+  margin: auto;
   background-color: #ffffff;
-  font-family: "Roboto", sans-serif;
+  font-family: Lato-Bold;
+
   color: #555555;
-  padding-left: 145px;
+  /* padding-left: 145px; */
 
 }
 
@@ -36,7 +44,7 @@ a {
 
 .menu-title {
   display: block;
-  width: 150px;
+  width:  300px;
   height: 40px;
   padding: 12px 0 0;
   background: #9dc852;
@@ -95,19 +103,19 @@ a {
 }
 
 .menu-title_2nd {
-  background: #4e96b3;
+  background: #6c7ae0;
 }
 
 .menu-title_2nd:hover {
-  background: #3e86a3;
+  background: hsl(233, 63%, 56%);
 }
 
 .menu-title_2nd:before {
-  border-top-color: #4e96b3;
+  border-top-color: #6c7ae0;
 }
 
 .menu-title_2nd:hover:before {
-  border-top-color: #3e86a3;
+  border-top-color: hsl(233, 63%, 56%);
 }
 
 .menu-title_3rd {
@@ -149,6 +157,7 @@ a {
   background: #ebebeb;
   z-index: 100;
   transition: 0.5s padding, 0.5s background;
+
 }
 
 .menu-dropdown:after {
@@ -188,9 +197,9 @@ a {
   transition: 0.5s height cubic-bezier(0.73, 0.32, 0.34, 1.5), 0.5s padding cubic-bezier(0.73, 0.32, 0.34, 1.5), 0.5s margin cubic-bezier(0.73, 0.32, 0.34, 1.5), 0.5s 0.2s color, 0.2s background-color;
 }
 
-.menu-dropdown > *:hover {
+/* .menu-dropdown > *:hover {
   background: rgba(0, 0, 0, 0.1);
-}
+} */
 
 .menu:not(:hover) > .menu-dropdown > * {
   visibility: hidden;

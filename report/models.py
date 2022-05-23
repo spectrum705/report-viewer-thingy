@@ -27,6 +27,8 @@ class Teachers(db.Document, UserMixin):
     def __repr__(self):
         return f"User('{self.name}','{self._id}',{self.classes})"
     
+    
+# make a subject field for this
 
 
 class Marks(db.EmbeddedDocument):

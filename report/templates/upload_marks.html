@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
 
 
-<link rel="stylesheet" href="{{ url_for('static',filename='table.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static',filename='upload_marks.css') }}" />
 
 
 
@@ -39,21 +39,29 @@
                         <tbody>
                             {% for student in student_list %}
                             <tr class="row100 body">
-                                <td class="cell100 column1">{{student["admission_no"]}}</td>
+                                <td class="cell100 column1">{{student["_id"]}}</td>
                                 <td class="cell100 column2">000</td>
                                 <td class="cell100 column2">{{student["name"]}} </td>
                                 <td class="cell100 column3"> 
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
                                         <!-- need to fingur id -->
-                                        <input type="number"  name="{{student['admission_no']}}" style="border:3px; border-style:solid; border-color:#0e0035; padding: 1em;">
+                                        <input type="number"  name="{{student['_id']}}" style="border:3px; border-style:solid; border-color:#0e0035; padding: 1em;">
                                     </td>
                                 </tr>
                                 {% endfor %}
                                 
                             </tbody>
                         </table>
-                        <button type="submit" class="btn">Upload marks</button>
+                        <div class="text-right">
+                            <button
+                              type="submit"
+                              class="btn"
+                              style="background-color: #6C7AE0; color: aliceblue"
+                            >
+                              Upload Marks
+                            </button>
+                          </div>
                     </form> 
                     </div>
             </div>

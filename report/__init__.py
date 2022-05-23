@@ -10,7 +10,6 @@ import mongoengine as db
 
 
 app = Flask(__name__)
-DB_URI =  ""
 db.connect(host=DB_URI)
 app = Flask(__name__)
 

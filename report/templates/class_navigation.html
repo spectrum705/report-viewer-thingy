@@ -1,42 +1,53 @@
+<style>
+  h1 {
+    text-align: center;
+    font-size: 40px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+</style>  
+
+
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static',filename='class_test.css') }}" />
+<br><h1>ENTER HEADING HERE</h1>
+<div class="container">  
+  <ul class="hList">
+    <!-- <li>
+      <a href="#click" class="menu">
+        <h2 class="menu-title">Maths</h2>
+        <ul class="menu-dropdown">
+          <li>Test 1</li>
+          <li>Test 2</li>
+          
+        </ul>
+      </a>
+    </li> -->
+    {% for class in classes %}
+    <li>
+      <div  class="menu">
+        {% for key, value in class.items() %}
+        <h2 class="menu-title menu-title_2nd">{{key }} - {{value}} </h2>
+        <ul class="menu-dropdown">
+          {% for test in test_list %}
+          <a href="{{url_for('upload_marks_page',  standard=key, subject=value, test_name=test)}}">           
+           <li> {{test}}</li>
 
-<ul class="hList">
-  <!-- <li>
-    <a href="#click" class="menu">
-      <h2 class="menu-title">Maths</h2>
-      <ul class="menu-dropdown">
-        <li>Test 1</li>
-        <li>Test 2</li>
-      
-      </ul>
-    </a>
-  </li> -->
-  {% for class in classes %}
-  <li>
-    <div  class="menu">
-      {% for key, value in class.items() %}
-      <h2 class="{{color}}">{{key }} - {{value}} </h2>
-      <ul class="menu-dropdown">
-        {% for test in test_list %}
-        <a href="{{url_for('upload_marks_page',  grade=key, subject=value, test_name=test)}}">           
-          <li> {{test}}</li>
-        </a> 
-
-
-        {% endfor %}
-      {% endfor %}
-      </ul>
-    </div>
-  </li>
-  {% endfor %}
-  <!-- <li>
-    <a href="#click" class="menu">
-      <h2 class="menu-title menu-title_3rd">Science</h2>
-      <ul class="menu-dropdown">
-        <li>Test 1</li>
-        <li>Test 2</li>
-      </ul>
+          </a> 
+          
+          
+          {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+    </li>
+    {% endfor %}
+    <!-- <li>
+      <a href="#click" class="menu">
+        <h2 class="menu-title menu-title_3rd">Science</h2>
+        <ul class="menu-dropdown">
+          <li>Test 1</li>
+          <li>Test 2</li>
+        </ul>
     </a>
   </li>
   <li>
@@ -50,3 +61,4 @@
   </li> -->
 </ul>  
 {% endblock %}
+</div>

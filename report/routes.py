@@ -20,18 +20,18 @@ student_dummy_data = {
    "class_1":{ "students": [
                
                     {"admission_no": 1, "name": "tewo", "marks": {
-                                                    "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},
-                                                    "test_3":{"maths": null, "english": null, "science": null},
-                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    "test_1":{"maths": None, "english": None, "science": None},
+                                                    "test_2":{"maths": None, "english": None, "science": None},
+                                                    "test_3":{"maths": None, "english": None, "science": None},
+                                                    "test_4":{"maths": None, "english": None, "science": None}
                                                     }
                     },
                     
                     {"admission_no": 2, "name": "naruto", "marks": {
-                                                    "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},
-                                                    "test_3":{"maths": null, "english": null, "science": null},
-                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    "test_1":{"maths": None, "english": None, "science": None},
+                                                    "test_2":{"maths": None, "english": None, "science": None},
+                                                    "test_3":{"maths": None, "english": None, "science": None},
+                                                    "test_4":{"maths": None, "english": None, "science": None}
                                                     }
                     },
          ]
@@ -41,34 +41,34 @@ student_dummy_data = {
      "class_2":{"students": [
          
                     {"admission_no": 1, "name": "tewo", "marks": {
-                                                    "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},
-                                                    "test_3":{"maths": null, "english": null, "science": null},
-                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    "test_1":{"maths": None, "english": None, "science": None},
+                                                    "test_2":{"maths": None, "english": None, "science": None},
+                                                    "test_3":{"maths": None, "english": None, "science": None},
+                                                    "test_4":{"maths": None, "english": None, "science": None}
                                                     }
                     },
                     
                     {"admission_no": 2, "name": "naruto", "marks": {
-                                                    "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},
-                                                    "test_3":{"maths": null, "english": null, "science": null},
-                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    "test_1":{"maths": None, "english": None, "science": None},
+                                                    "test_2":{"maths": None, "english": None, "science": None},
+                                                    "test_3":{"maths": None, "english": None, "science": None},
+                                                    "test_4":{"maths": None, "english": None, "science": None}
                                                     }
                     },
                 
                     {"admission_no": 3, "name": "thre", "marks": {
-                                                    "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},
-                                                    "test_3":{"maths": null, "english": null, "science": null},
-                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    "test_1":{"maths": None, "english": None, "science": None},
+                                                    "test_2":{"maths": None, "english": None, "science": None},
+                                                    "test_3":{"maths": None, "english": None, "science": None},
+                                                    "test_4":{"maths": None, "english": None, "science": None}
                                                     }
                     },
                 
                     {"admission_no": 4, "name": "four", "marks": {
-                                                    "test_1":{"maths": null, "english": null, "science": null},
-                                                    "test_2":{"maths": null, "english": null, "science": null},
-                                                    "test_3":{"maths": null, "english": null, "science": null},
-                                                    "test_4":{"maths": null, "english": null, "science": null}
+                                                    "test_1":{"maths": None, "english": None, "science": None},
+                                                    "test_2":{"maths": None, "english": None, "science": None},
+                                                    "test_3":{"maths": None, "english": None, "science": None},
+                                                    "test_4":{"maths": None, "english": None, "science": None}
                                                     }
                     },                   
                 ]
@@ -97,12 +97,14 @@ teacher_dummy_data={
     
 @app.route('/class_navigation')
 def class_navigation():
-    print(session["user"])
-    username= session["user"]["name"] #get from login idp
-    print('username logged:', username)
-    
+    print(session["user"]["id"])
+    # print('username logged:', username)
+    # username="teacher_1" 
     # teacher_subjects=teacher_dummy_data[username]["classes"]
-    teacher_subjects=Teachers.objects(_id =username["_id"]).first().classes
+    username= session["user"]["name"] #get from login idp
+    
+    teacher_subjects=Teachers.objects(_id =session["user"]["id"]).first().classes
+    # print(Teachers.objects(_id =).first().classes)
     test_list=["test_1","test_2", "test_3", "test_4"]	
     
     colours=["menu-title", "menu-title menu-title_2nd", "menu-title menu-title_3rd", "menu-title menu-title_4th"]
@@ -111,35 +113,45 @@ def class_navigation():
         
      
 
-@app.route('/marks_entry/<grade>/<subject>/<test_name>', methods=['GET', 'POST'])
-def upload_marks_page(grade, subject, test_name):
+@app.route('/marks_entry/<standard>/<subject>/<test_name>', methods=['GET', 'POST'])
+def upload_marks_page(standard, subject, test_name):
     
-    # student_list  = student_dummy_data[grade]["students"]
-    student_list = Students.objects(standard=grade)
+    # student_list  = student_dummy_data[standard]["students"]
+    student_list = Students.objects(standard=standard)
     # print(student_list)
     if request.method == 'POST':
-        for student in student_dummy_data[grade]["students"]:
+        for student in  Students.objects(standard=standard):
             # print(f"Name:{student['name']}, Marks_from:{request.form[str(student['admission_no'])]}")
-            student['marks'][test_name][subject] = request.form[str(student['admission_no'])] 
+            student['marks'][test_name][subject] = request.form[str(student['_id'])] 
+            # class Page(Document):
+            #     comments = ListField(EmbeddedDocumentField(Comment))
 
-        return redirect(url_for('class_result', grade=grade))
-        # for student in student_dummy_data[grade]["students"]:
+            # comment1 = Comment(content='Good work!')
+            # comment2 = Comment(content='Nice article!')
+            # page = Page(comments=[comment1, comment2])
+            
+            
+            
+            
+            
+        return redirect(url_for('class_result', standard=standard))
+        # for student in student_dummy_data[standard]["students"]:
         #     print("---------------------")
         #     print(f"Name: {student['name']} Score:{student['marks'][test_name][subject]}")            
         #     print("---------------------")
             
-    return render_template('upload_marks.html', subject=subject, test_name=test_name, grade=grade, student_list=student_list)
+    return render_template('upload_marks.html', subject=subject, test_name=test_name, standard=standard, student_list=student_list)
     #return render_template('class_test.html')
 
-@app.route('/class_result/<grade>')
-def class_result(grade):
-    student_list = student_dummy_data[grade]["students"]
+@app.route('/class_result/<standard>')
+def class_result(standard):
+    student_list = student_dummy_data[standard]["students"]
     test_list=["test_1","test_2", "test_3", "test_4"]	
-    subject_list=student_dummy_data[grade]["students"][0]["marks"]["test_1"].keys()
+    subject_list=student_dummy_data[standard]["students"][0]["marks"]["test_1"].keys()
 
     print(student_list)
-    return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subject_list)
-    # return  jsonify(student_dummy_data[grade]["students"])
+    return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subject_list, standard=standard)
+    # return  jsonify(student_dummy_data[standard]["students"])
     # return(jsonify({student_list}))
     # return (student_dummy_data)
     
