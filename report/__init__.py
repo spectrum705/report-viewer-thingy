@@ -22,7 +22,6 @@ app = Flask(__name__)
 
 
 
-# DB_URI =  "mongodb+srv://admin:7CDSdrXdRURavnYF@ourcluster.xjtv1.mongodb.net/test?retryWrites=true&w=majority"
 
 db.connect(host=DB_URI)
 pymongo_client = MongoClient(DB_URI)
