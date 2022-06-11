@@ -1,7 +1,9 @@
 .btn {
     color: black;
 }
-
+html{
+    Zoom: 90%;
+}
 @font-face {
     font-family: Lato-Regular;
     src: url(../fonts/Lato/Lato-Regular.ttf)
@@ -152,7 +154,7 @@ iframe {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 73px 30px
+    padding: 5% 4%
 }
 
 .wrap-table100 {
@@ -219,6 +221,8 @@ td {
 .table100-body {
     max-height: 500px;
     overflow:scroll;
+    overflow-x: hidden;
+
 }
 
 .table100.ver1 th {
@@ -16263,7 +16267,7 @@ pre code {
 
 .pre-scrollable {
     max-height: 340px;
-    overflow-y: scroll
+    overflow-y: scroll;
 }
 
 .container {
@@ -24776,3 +24780,46 @@ a.text-dark:hover {
 .invisible {
     visibility: hidden !important
 }
+
+#input-border{
+    border: 5px solid #ccc;
+    border-radius: 10px;
+    padding: 2px;
+    width: 100%;
+}
+
+/* Works on Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: blue orange;
+  }
+  
+  /* Works on Chrome, Edge, and Safari */
+  /* *::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: orange;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: blue;
+    border-radius: 20px;
+    border: 3px solid orange;
+  } */
+ 
+  *::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+  }
+  *::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  *::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(45deg, #00aeff, #a68eff);
+    border-radius: 10px;
+      -webkit-box-shadow: rgba(0,0,0,.12) 0 3px 13px 1px;
+  }
+  

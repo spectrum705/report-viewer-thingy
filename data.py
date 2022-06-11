@@ -1,70 +1,11 @@
 import random 
-from mongoengine import *
 import os
-# from report import db
 import csv,os
 from pathlib import Path
-from report.models import Teachers, Students, Marks
-  
-
-# DB_URI = os.environ['DB_URI']
-
-# connect(host=DB_URI)
-# mongoengine data model 
-connect(host=DB_URI)
-
-# class Teachers(Document):
-#     _id=IntField(primary_key=True)
-#     name=StringField(max_length=20, required=True)
-#     password = StringField(max_length=20, required=True)
-#     classes=ListField(DictField())
-#     isAdmin=BooleanField()
-
-
-    
-
-
-student_dummy_data = {
-   "class_1":{ "students": [
-               
-                    {"admission_no": 1, "name": "tewo", "marks": {
-                                                    "test_1":{"maths": None, "english": None, "science": None},
-                                                    "test_2":{"maths": None, "english": None, "science": None},
-                                                    "test_3":{"maths": None, "english": None, "science": None},
-                                                    "test_4":{"maths": None, "english": None, "science": None}
-                                                    }
-                    },
-                    
-                    {"admission_no": 2, "name": "naruto", "marks": {
-                                                    "test_1":{"maths": None, "english": None, "science": None},
-                                                    "test_2":{"maths": None, "english": None, "science": None},
-                                                    "test_3":{"maths": None, "english": None, "science": None},
-                                                    "test_4":{"maths": None, "english": None, "science": None}
-                                                    }
-                    },
-         ]
-   },}
-
-# class Marks(EmbeddedDocument):
-#     test_1=DictField()
-#     test_2=DictField()
-#     test_3=DictField()
-#     test_4=DictField()
-
-# class Students(Document):
-#     _id=StringField(primary_key=True) #enter admission no here
-#     name=StringField( required=True)
-#     standard = StringField(required=True)
-#     marks=EmbeddedDocumentField(Marks)
-    
-
-# marks=Marks(test_1={"maths": None, "english": None, "science": null},)
-# student=Students(name="tewo",_id=random.randint(1,100000),standard="class_1",marks=marks)
-# student.save()
-
-# making a subject list for all classes
-
-
+from pytest import mark
+from report.models import Teachers, Students, Marks#, Subjects
+from report.helper import subject_list
+from report import db
 
 
 # csv file name
@@ -76,26 +17,41 @@ def createDb():
     with open(data_file, 'r') as csvfile:
         # creating a csv reader object
         csvreader = csv.reader(csvfile)
-        #username theClass userType
-        #student1   7      student
+    #    write example of row
         for row in csvreader:
             if row[0].lower() != 'admission number':
                 # enc_password = bcrypt.generate_password_hash( "pass#"+row[0].lower()).decode('utf-8')
-                # usr = User(username = row[0].lower(), userType = row[2].lower()
-                student = Students(_id= str(row[0]), name=row[1], standard=row[2] ,marks=Marks(test_1={"maths": None, "english": None, "science": None, "social studies":None, "hindi":None}, test_2={"maths": None, "english": None, "science": None, "social studies":None, "hindi":None}, test_3={"maths": None, "english": None, "science": None, "social studies":None, "hindi":None}, test_4={"maths": None, "english": None, "science": None, "social studies":None, "hindi":None}))
+                # {"admission_no": 4, "name": "four", "marks": {
+                    #                                 "maths":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
+                    #                                 "english":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
+                    #                                 "science":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
+                    #                                 }
+                    # }, 
+                    # restructure the db
+                # student = Students(_id= int(row[0]), name=row[1], standard=row[2] ,marks=Marks(test_1=subject_list[row[2]],test_2=subject_list[row[2]],test_3=subject_list[row[2]],test_4=subject_list[row[2]]))
+                student = Students(_id= int(row[0]), name=row[1], standard=row[2] )
+                marks=Marks()
+                for subject in subject_list[row[2]]:
+                    # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
+                    marks[subject]={"test_1":12, "test_2":31, "test_3":32, "test_4":41, "grade":None}
+                                        
+                student.marks= marks
+
+                
+                
                 student.save()
                 
                 print(f"name: {row[1]}, class: {row[2]}, added")
     # os.remove(data_file)
     return True
 
-
-
+Teachers.drop_collection()
+Students.drop_collection()
 createDb()
-teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"}])
+teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
 teacher.save()
 
-teacher=Teachers(name="teacher_2",_id=random.randint(1,100000),password="pass#teacher_2",classes=[{"class_9":"maths"}])
+teacher=Teachers(name="teacher_2",_id=random.randint(1,100000),password="pass#teacher_2",classes=[{"class_9":"maths"}], isAdmin=True)
 teacher.save()
 
 teacher=Teachers(name="teacher_3",_id=random.randint(1,100000),password="pass#teacher_3",classes=[{"class_9":"social studies"}])
@@ -106,3 +62,5 @@ teacher.save()
 
 teacher=Teachers(name="teacher_5",_id=random.randint(1,100000),password="pass#teacher_5",classes=[{"class_9":"Hindi"}])
 teacher.save()
+
+

@@ -16,10 +16,10 @@
 
 
 <div class="limiter">
-    <h1>class {{grade}} {{subject}} {{test_name}} form</h1>
+    <h2 style="margin-left:5%; margin-top: 1%;">{{standard}} {{subject}} {{test_name}} form</h2>
     <div class="container-table100">
         <div class="wrap-table100">
-            <div class="table100 ver1 m-b-110">
+            <div class="table100 ver1 m-b-110" style="margin-bottom: 10px;">
                 <div class="table100-head">
                     <table>
                         <thead>
@@ -41,30 +41,31 @@
                             <tr class="row100 body">
                                 <td class="cell100 column1">{{student["_id"]}}</td>
                                 <td class="cell100 column2">000</td>
-                                <td class="cell100 column2">{{student["name"]}} </td>
-                                <td class="cell100 column3"> 
+                                <td class="cell100 column3">{{student["name"]}} </td>
+                                <td class="cell100 column4" > 
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                        <div  id="input-border">
+                                            <input type="number"  name="{{student['id']}}" style="border:3px; border-style:solid; border-color:#0e0035; padding: 1em;">
+                                        </div>
 
-                                        <!-- need to fingur id -->
-                                        <input type="number"  name="{{student['_id']}}" style="border:3px; border-style:solid; border-color:#0e0035; padding: 1em;">
                                     </td>
                                 </tr>
                                 {% endfor %}
                                 
                             </tbody>
                         </table>
-                        <div class="text-right">
-                            <button
-                              type="submit"
-                              class="btn"
-                              style="background-color: #6C7AE0; color: aliceblue"
-                            >
-                              Upload Marks
-                            </button>
-                          </div>
-                    </form> 
                     </div>
-            </div>
+                </div>
+                <div class="text-right">
+                    <button
+                      type="submit"
+                      class="btn"
+                      style="background-color: #6C7AE0; color: aliceblue"
+                    >
+                      Upload Marks
+                    </button>
+                  </div>
+            </form> 
             
         </div>
     </div>

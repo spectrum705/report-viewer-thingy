@@ -5,15 +5,15 @@ h1{
     font-size:25px;
 }
     .tableFixHead tbody {
-        display: block;
+        /* display: block; */
         width: 100%;
         overflow: auto;
         height: 450px;
     }
 
-    .tableFixHead thead  {
+    /* .tableFixHead thead  {
         display: block;
-    }
+    } */
 
     .tableFixHead th,
     .tableFixHead td {
@@ -23,6 +23,7 @@ h1{
 
     th {
         background: #ABDD93;
+
     }
 
     table {
@@ -34,6 +35,9 @@ h1{
         border: 3px;
         width: 100%;
         padding: 0 50px 0 50px;
+        table-layout: auto;
+        
+        
     }
 
     th {
@@ -51,6 +55,14 @@ h1{
     }
 
    
-    tr:hover {background-color: hsl(233, 63%, 56%);;
-    color: white;}
+    tr:hover {background-color: hsl(31, 100%, 94%);
+    }
     /* #EFFFFD; */
+
+    thead {
+        position: sticky;
+        top: 5;}
+a{
+    text-decoration : none;
+    color : black
+}

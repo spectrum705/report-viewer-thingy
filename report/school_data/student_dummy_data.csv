@@ -1,169 +1,31 @@
-username,theClass,userType
-kami,,admin
-student2,2,student
-student3,3,student
-student4,4,student
-teacher5,5,teacher
-jiraya,10a,teacher
-minato,7a,teacher
-teacher3,3,teacher
-teacher4,4,teacher
-student5,5,student
-kakashi,7a,student
-obito,7a,student
-rin,7a,student
-kid4,7a,student
-kid5,7a,student
-kid6,7a,student
-kid7,7a,student
-kid8,7a,student
-kid9,7a,student
-kid10,7a,student
-kid11,7a,student
-kid12,7a,student
-kid13,7a,student
-kid14,7a,student
-kid15,7a,student
-kid16,7a,student
-kid17,7a,student
-kid18,7a,student
-kid19,7a,student
-kid20,7a,student
-kid21,7a,student
-kid22,7a,student
-kid23,7a,student
-kid24,7a,student
-kid25,7a,student
-kid26,7a,student
-kid27,7a,student
-kid28,7a,student
-kid29,7a,student
-kid30,7a,student
-kid31,7a,student
-kid32,7a,student
-kid33,7a,student
-kid34,7a,student
-kid35,7a,student
-kid36,7a,student
-kid37,7a,student
-kid38,7a,student
-kid39,7a,student
-kid40,7a,student
-kid41,7a,student
-kid42,7a,student
-kid43,7a,student
-kid44,7a,student
-kid45,7a,student
-kid46,4c,student
-kid47,4c,student
-kid48,4c,student
-kid49,4c,student
-kid50,4c,student
-kid51,4c,student
-kid52,4c,student
-kid53,4c,student
-kid54,4c,student
-kid55,4c,student
-kid56,4c,student
-kid57,4c,student
-kid58,4c,student
-kid59,4c,student
-kid60,4c,student
-kid61,4c,student
-kid62,4c,student
-kid63,4c,student
-kid64,2d,student
-kid65,2d,student
-kid66,2d,student
-kid67,2d,student
-kid68,2d,student
-kid69,2d,student
-kid70,2d,student
-kid71,2d,student
-kid72,2d,student
-kid73,2d,student
-kid74,2d,student
-kid75,2d,student
-kid76,2d,student
-kid77,2d,student
-kid78,2d,student
-kid79,2d,student
-kid80,2d,student
-kid81,2d,student
-kid82,2d,student
-kid83,2d,student
-kid84,2d,student
-kid85,2d,student
-kid86,2d,student
-kid87,2d,student
-kid88,2d,student
-kid89,2d,student
-kid90,2d,student
-kid91,2d,student
-kid92,2d,student
-kid93,2d,student
-kid94,2d,student
-kid95,2d,student
-kid96,2d,student
-kid97,2d,student
-kid98,2d,student
-kid99,1,student
-kid100,1,student
-kid101,1,student
-kid102,1,student
-kid103,1,student
-kid104,1,student
-kid105,1,student
-kid106,1,student
-kid107,1,student
-kid108,1,student
-kid109,1,student
-kid110,1,student
-kid111,1,student
-kid112,1,student
-kid113,1,student
-kid114,1,student
-kid115,1,student
-kid116,1,student
-kid117,1,student
-kid118,1,student
-kid119,1,student
-kid120,1,student
-kid121,1,student
-kid122,1,student
-kid123,1,student
-kid124,1,student
-kid125,1,student
-kid126,1,student
-kid127,1,student
-kid128,1,student
-kid129,1,student
-kid130,1,student
-kid131,1,student
-kid132,1,student
-kid133,1,student
-kid134,1,student
-kid135,1,student
-kid136,10a,student
-kid137,10a,student
-kid138,10a,student
-kid139,10a,student
-kid140,10a,student
-kid141,10a,student
-kid142,10a,student
-kid143,10a,student
-kid144,10a,student
-kid145,10a,student
-kid146,10a,student
-kid147,10a,student
-kid148,10a,student
-kid149,10a,student
-kid150,10a,student
-kid151,10a,student
-kid152,10a,student
-kid153,10a,student
-kid154,10a,student
-kid155,10a,student
-kid156,10a,student
-kid157,10a,student
-kid158,10a,student
+Admission Number,Name,Standard
+1039,ADITYA SINGH RAJPUTugfshgufheuh fh,class_9
+1040,AJAY KUMAR SONI,class_9
+1041,ALKA VERMA,class_9
+1830,KRITIKA KHANDEKAR,class_9
+1831,SHIVAM SINGH,class_8
+1832,SHI SINGH,class_8
+10323,ADITYA SINGH RAJPUTugfshgufheuh fh,class_9
+1042,AJAY KUMAR SONI,class_9
+1021,ALKA VERMA,class_9
+18332,KRITIKA KHANDEKAR,class_9
+18323,SHIVAM SINGH,class_8
+18323,SHI SINGH,class_8
+103987,ADITYA SINGH RAJPUTugfshgufheuh fh,class_9
+104087,AJAY KUMAR SONI,class_9
+104187,ALKA VERMA,class_9
+1838750,KRITIKA KHANDEKAR,class_9
+18381,SHIVAM SINGH,class_8
+18328,SHI SINGH,class_8
+103439,ADITYA SINGH RAJPUTugfshgufheuh fh,class_9
+10740,AJAY KUMAR SONI,class_9
+106341,ALKA VERMA,class_9
+1889530,KRITIKA KHANDEKAR,class_9
+18831,SHIVAM SINGH,class_8
+188032,SHI SINGH,class_8
+100039,ADITYA SINGH RAJPUTugfshgufheuh fh,class_9
+108540,AJAY KUMAR SONI,class_9
+1037941,ALKA VERMA,class_9
+183770,KRITIKA KHANDEKAR,class_9
+183231,SHIVAM SINGH,class_8
+1816832,SHI SINGH,class_8

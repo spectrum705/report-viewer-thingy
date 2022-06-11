@@ -1,10 +1,11 @@
 
+from re import sub
 from flask_login import UserMixin
 from report import db, login_manager
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Teachers.objects(myid=(user_id))
+    return Teachers.objects(_id=int(user_id))
 
     #this is our database model of a user, made more changes will upload later
 
@@ -26,20 +27,19 @@ class Teachers(db.Document, UserMixin):
         }
     def __repr__(self):
         return f"User('{self.name}','{self._id}',{self.classes})"
-    
-    
-# make a subject field for this
+   
 
-
-class Marks(db.EmbeddedDocument):
-    test_1=db.DictField()
-    test_2=db.DictField()
-    test_3=db.DictField()
-    test_4=db.DictField()
+class Marks(db.DynamicEmbeddedDocument):
+    pass
+    # test_1=db.DictField()
+    # test_2=db.DictField()
+    # test_3=db.DictField()
+    # test_4=db.DictField()
 
 class Students(db.Document):
     _id=db.IntField(primary_key=True) #enter admission no here
     name=db.StringField( required=True)
     standard = db.StringField(required=True)
     marks=db.EmbeddedDocumentField(Marks)
-    
+    isGraded=db.BooleanField
+    # roll_number=db.IntField(required=True)

@@ -1,0 +1,80 @@
+
+/* body {background-color : white ;font-family: 'Times New Roman', Times, serif;} */
+
+h1 {padding: 40px; text-align: center; font-size: 1.5em;}
+
+li a {text-decoration : none; color : black;
+/* make title */
+  font-family: 'open sans', sans-serif;
+  letter-spacing: 0.2em;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.thisNav{
+  border-radius: 20px;
+  width : 50%; 
+  margin : 40px auto;
+}
+
+/* 
+nav 
+{   
+  border-radius: 20px;
+  width : 50%; 
+  margin : 40px auto;
+
+} */
+
+span
+{
+  border-radius: 20px;
+  padding : 30px;
+  background : 	#7289da; 
+  color : white;
+  font-size : 1.2em;
+  font-variant : small-caps;
+  cursor : pointer;
+  display:block;
+}
+
+span::after 
+{
+  float: right;
+  right: 10%;
+  content: "+";
+}
+
+.slide
+{
+  clear:both;
+  /* width:260px; */
+  height:0px;
+  overflow: hidden;
+  text-align: center;
+  transition: height .4s ease;
+  background: #fff0db;
+  border-radius: 20px;
+  
+}
+ul 
+{
+  list-style: none; 
+  padding-inline-start: 0px;
+}
+
+.slide li {padding :30px;}
+
+#touch {position: absolute; opacity: 0; height: 0px;}    
+
+#touch:checked + .slide {height: 300px;} 
+
+/* Screen larger than 600px? 2 column */
+@media (min-width: 600px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Screen larger than 900px? 3 columns */
+@media (min-width: 900px) {
+  .cards { grid-template-columns: repeat(3, 1fr); }
+}

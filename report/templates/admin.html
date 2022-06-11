@@ -104,4 +104,18 @@
             </tbody>
           </table>
           
+          <link rel="stylesheet" href="{{ url_for('static',filename='admin_nav.css') }}" />
+          <nav class="thisNav">
+
+            <label for="touch"><span>ALL CLASSES</span></label>               
+            <input type="checkbox" id="touch"> 
+
+            <ul class="slide">
+              {% for class in classes%}
+              <li><a href="{{url_for('class_result',standard=class)}}">{{class}}</a></li> 
+              {% endfor %}
+            </ul>
+
+          </nav> 
+
           {% endblock %}

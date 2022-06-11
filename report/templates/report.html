@@ -1,0 +1,174 @@
+{% block content %}
+  <link rel="stylesheet" href="{{ url_for('static',filename='report.css') }}" />
+  <div class="container">
+    <div class="heading center_align">
+      <img src="https://www.adityabirlaschools.com/ABHSS%20Nagda/images/logo.png" height="7%" width="6%">
+      <h2>THE ADITYA BIRLA PUBLIC SCHOOL, HIRMI</h2>
+    </div>
+    <h4>PROGRESS CARD - {{standard}} - {SESSION : 2022-2023}</h4>
+    <p id="roll_no">Roll no. : {{student.admission_no}}</p>
+    <p id="name">Name - {{student.name}}</p>
+    <br>
+    <br>
+    <br>
+    <div class="center_align">
+      <table >
+        <thead>
+          <tr>
+            <td rowspan="3" class="sub_width"> Subject</td>
+            <td colspan="3"> Term-1 </td>
+            <td colspan="3"> Term-2 </td>
+            <td colspan="2"> Grand Total </td>
+            <!-- <td rowspan="2"> Points </td> -->
+          </tr>
+          <tr>
+            <td> Internal</td>
+            <td> Half Yearly </td>
+            <td> Total </td>
+            <td> Internal</td>
+            <td> Annual Exam</td>
+            <td> Total </td>
+            <td rowspan="2">100</td>
+            <td rowspan="2">Grade</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>40</td>
+            <td>50</td>
+            <td>10</td>
+            <td>40</td>
+            <td>50</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for subject in subject_list %}
+
+          <tr>
+            <td> {{subject}}</td>
+
+            <td> {{student["marks"][subject]["test_1"]}} </td>
+            <td> {{student["marks"][subject]["test_2"]}}</td>
+            <td> {{student["marks"][subject]["test_1"] + student["marks"][subject]["test_2"]}} </td>
+            <td> {{student["marks"][subject]["test_3"]}} </td>
+            <td> {{student["marks"][subject]["test_4"]}} </td>
+            <td> {{student["marks"][subject]["test_3"] + student["marks"][subject]["test_4"]}}  </td>
+            <td> {{student["marks"][subject]["test_1"] + student["marks"][subject]["test_2"] +student["marks"][subject]["test_3"] + student["marks"][subject]["test_4"] }} </td>
+            <td> {{student.grade}}</td>
+            {% endfor %}
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+    <div class="table_2 center_align">
+      <table>
+
+        <tr>
+          <td colspan="2" rowspan="2" class="table2">Info. Tech</td>
+          <td colspan="2">Out of 25 Marks</td>
+          <td>50 </td>
+          <td colspan="2">Out of 25 Marks</td>
+          <td>50 </td>
+          <td>100</td>
+          <td>Grade</td>
+        </tr>
+        <tr>
+          <td> T1_Internal </td>
+          <td> T1_HalfYearly </td>
+          <td> T1_Total </td>
+          <td> T2_Internal </td>
+          <td> T2_HalfYearly </td>
+          <td> T2_Total </td>
+          <td>sub_total</td>
+          <td>sub_Grade</td>
+        </tr>
+      </table>
+    </div>
+    <!-- calc this -->
+    <p id="result">Result : Passed and Promoted to Class X</p>
+    <div id="pe">
+      <table>
+        <tr>
+          <td>CO-SCHOLASTIC</td>
+          <td>PE</td>
+          <td>Discipline</td>
+        </tr>
+        <tr>
+          <td>GRADE</td>
+          <td>GRADE</td>
+          <td>GRADE</td>
+        </tr>
+      </table>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <table>
+      <tr>
+        <td>Sign of Class Teacher</td>
+        <td>Sign of Exam I/C</td>
+        <td>Sign of Principal</td>
+      </tr>
+    </table>
+  </div>
+
+  </div>
+
+  <div class="container new-report">
+    <div class="heading center_align">
+      <img src="https://www.adityabirlaschools.com/ABHSS%20Nagda/images/logo.png" height="7%" width="6%">
+      <h1>THE ADITYA BIRLA PUBLIC SCHOOL, HIRMI</h1>
+      <img src="https://www.adityabirlaschools.com/ABHSS%20Nagda/images/logo.png" height="7%" width="6%">
+    </div>
+
+    <p>HCW Township, Hirmi, Dist : Baloda Bazar- Bhatapara (C.G) Pin : 493195</p>
+    <p>An ISO 9001:2015 Certified School</p>
+    <h3>PROGRESS CARD </h3>
+    <p>{SESSION : 2022-2023}</p>
+    <h4>{{standard}}</h4>
+    <h3>STUDENT PROFILE</h3>
+
+    <div class="center_align">
+      <table class="table_border">
+        <tr>
+          <td class="info">Name</td>
+          <td class="info">:</td>
+          <td class="info">{{student.name}}</td>
+        </tr>
+        <tr>
+          <td class="info">DoB</td>
+          <td class="info">:</td>
+          <td class="info">{{student.name}}</td>
+        </tr>
+        <tr>
+          <td class="info">Admission No.</td>
+          <td class="info">:</td>
+          <td class="info">{{student.id}}</td>
+        </tr>
+        <tr>
+          <td class="info">Mother's Name</td>
+          <td class="info">:</td>
+          <td class="info">{{student.name}}</td>
+        </tr>
+        <tr>
+          <td class="info">Father's Name</td>
+          <td class="info">:</td>
+          <td class="info">{{student.name}}</td>
+        </tr>
+        <tr>
+          <td class="info">Class Teacher's Name</td>
+          <td class="info">:</td>
+          <td class="info">{{student.name}}</td>
+        </tr>
+
+
+      </table>
+    </div>
+  </div>
+
+{% endblock %}

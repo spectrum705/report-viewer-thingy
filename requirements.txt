@@ -10,3 +10,5 @@ Flask-WTF==0.15.1
 requests==2.24.0
 mongoengine
 dnspython
+pymongo
+python-dotenv

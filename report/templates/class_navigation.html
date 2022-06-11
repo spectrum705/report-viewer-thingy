@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
   h1 {
     text-align: center;
     font-size: 40px;
@@ -7,21 +7,11 @@
 </style>  
 
 
-{% block content %}
-<link rel="stylesheet" href="{{ url_for('static',filename='class_test.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static',filename='class_navigation.css') }}" />
 <br><h1>ENTER HEADING HERE</h1>
 <div class="container">  
   <ul class="hList">
-    <!-- <li>
-      <a href="#click" class="menu">
-        <h2 class="menu-title">Maths</h2>
-        <ul class="menu-dropdown">
-          <li>Test 1</li>
-          <li>Test 2</li>
-          
-        </ul>
-      </a>
-    </li> -->
+
     {% for class in classes %}
     <li>
       <div  class="menu">
@@ -41,24 +31,44 @@
       </div>
     </li>
     {% endfor %}
-    <!-- <li>
-      <a href="#click" class="menu">
-        <h2 class="menu-title menu-title_3rd">Science</h2>
-        <ul class="menu-dropdown">
-          <li>Test 1</li>
-          <li>Test 2</li>
-        </ul>
-    </a>
-  </li>
-  <li>
-    <a href="#click" class="menu">
-      <h2 class="menu-title menu-title_4th">History</h2>
-      <ul class="menu-dropdown">
-        <li>Test 1</li>
-        <li>Test 2</li>
-      </ul>
-    </a>
-  </li> -->
+  
 </ul>  
+</div> -->
+
+{% extends "base.html" %} {% block content %}
+
+<h1>YOUR CLASSES</h1>
+<link rel="stylesheet" href="{{ url_for('static',filename='class_navigation.css') }}" />
+<link rel="stylesheet" href="../static/class_navigation.css" />
+
+<div class="cards">
+  {% for class in classes%}
+  <div class="container card">
+             {% for key, value in class.items() %}
+              <div class="items">
+               <div class="items-head">
+                 <p>{{key}} - {{value}}</p>
+                 <hr>
+               </div>
+               
+               <div class="items-body">
+                 <!-- test loop -->
+                 {% for test in test_list %}
+                 <a href="{{url_for('upload_marks_page',  standard=key, subject=value, test_name=test)}}">  
+                 <div class="items-body-content">
+                   <span>{{test}}</span>
+                   <i class="fa fa-angle-right"></i>
+                 </div>
+                 </a>
+ 
+                 {% endfor %}
+                 {% endfor %}
+               </div>
+             </div>
+           </div>
+   
+  {% endfor %}
+ </div>
+ 
 {% endblock %}
-</div>
+

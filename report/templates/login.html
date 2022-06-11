@@ -18,11 +18,11 @@
     </svg>
 
     <h1 class="title-text">Login</h1>
-    <form method="POST" action="">
+    <form method="POST" action="" autocomplete="off">
       {{form.hidden_tag()}}
       <div class="col details">
         {{form.username.label}} {% if form.username.errors %}
-        {{form.username(class="is-invalid")}}
+        {{form.username(class="is-invalid" )}}
         <div class="invalid-feedback">
           {% for error in form.username.errors %}
           <span class="is-invalid error-text"> {{error}} </span>

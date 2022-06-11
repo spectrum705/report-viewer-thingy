@@ -1,14 +1,11 @@
-
+{% block content %}
  
  <!-- make a table -->
 <link rel="stylesheet" href="{{ url_for('static',filename='class_result.css') }}" />
-<style type="text/css">
 
-</style>
+<div style="margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;">
 
-<body style="margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;">
-
-    <h1>{{grade}} Result</h1>
+    <h1>{{standard}} Scores</h1>
     <div class="tableFixHead">
         <table>
            
@@ -37,13 +34,18 @@
                 {% for student in student_list %}
                 <tr>
 
-                    <td>{{student.name}}</td>
-                    <td>{{student.admission_no}}</td>
+                    <td> 
+                            <a href="{{url_for('report_card', id=student.id)}}">
+                            {{student.name}}
+                             </a>    
+                        </td>
+
+                    <td>{{student.id}}</td>
 
 
                     {% for subject in subject_list %}
                     {% for test in test_list %}
-                    <td>{{student['marks'][test][subject]}}</td>
+                    <td>{{student['marks'][subject][test]}}</td>
 
                     {% endfor %}
                     {% endfor %}
@@ -52,5 +54,6 @@
                 </tbody>
         </table>
 
-</body>
+    </div>
 </div>
+{% endblock %}
