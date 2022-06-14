@@ -1,0 +1,126 @@
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="{{ url_for('static',filename='dashboard.css') }}" />
+
+
+{% extends "base.html" %} {% block content %}
+<div class="body">
+  <h1 style="text-align: center; color: black;">Student Dashboard</h1>
+  <div class="student-profile py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent text-center">
+              <img class="profile_img" src={{src}} alt="">
+              <h3 style="color: black;">{{student.name}}</h3>
+            </div>
+            <div class="card-body">
+              <p class="mb-0"><strong class="pr-1">Admission Number:</strong> {{student.id}}</p>
+              <p class="mb-0"><strong class="pr-1">Class:</strong> {{student.standard}}</p>
+              <!-- <p class="mb-0"><strong class="pr-1">Section:</strong></p> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="mb-0"><i class="far fa-clone pr-1"></i>General Information</h3>
+            </div>
+            <div class="card-body pt-0">
+              <table class="table table-bordered">
+                <tr>
+                  <th width="30%">Roll No</th>
+                  <td width="2%">:</td>
+                  <td>{{student.roll_no}}</td>
+                </tr>
+                <tr>
+                  <th width="30%">Academic Year </th>
+                  <td width="2%">:</td>
+                  <td>2020</td>
+                </tr>
+                <tr>
+                    <th width="30%">Mother's name </th>
+                    <td width="2%">:</td>
+                    <td>value</td>
+                </tr>
+                <tr>
+                    <th width="30%">Father's name </th>
+                    <td width="2%">:</td>
+                    <td>value</td>
+                </tr>
+                <tr>
+                    <th width="30%">Contact Number </th>
+                    <td width="2%">:</td>
+                    <td>value</td>
+                </tr>
+
+                <tr>
+                    <th width="30%">Report card </th>
+                    <td width="2%">:</td>
+                    <td>
+                        {% if student.isGraded %}
+                        <a href="{{url_for('report_card', id=student.id)}}"> Report Card </a>
+                        {% else %}
+                        NA 
+                        {% endif %}
+                    </td>
+                </tr>
+
+
+                
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <h3 class=" text-center" style="color: black;">
+    Marks Representation
+  </h3>
+  <div id="outer-grid">
+
+    <div class="row">
+      <div class="col-md-8 text-center">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 text-center">
+            <canvas id="myChart2"></canvas>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8 text-center">
+            <canvas id="myChart3"></canvas>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8 text-center">
+            <canvas id="myChart4"></canvas>
+        </div>
+      </div>
+
+
+      <script src="{{url_for('static', filename='chart.js')}}"></script>
+  </div>
+
+
+
+
+
+
+
+  <div>
+{% endblock %}
+
+
+
+
+

@@ -53,10 +53,27 @@ function makeChart(tags,marks, title, elementId) {
               
 
 }
+fetch('/get_chart_data')
+.then(function (response) {
+    return response.json();
+}).then(function (data) {
+    console.log('GET response:');
+    // console.log(data.chart_1); 
+    // makeChart(tags=["maths","english","science","french"],marks=[20, 30, 50,90], title='Test 1', elementId='myChart');
+    // console.log(">>tags",data.chart_1.tags);
+    // console.log(">>marks",data.chart_1.marks);
+    // console.log(">>title",data.chart_1.title);
+    // console.log(">>elementId",data.chart_1.elementId);
+    makeChart(tags=data.chart_1.tags,marks=data.chart_1.marks, title=data.chart_1.title, elementId=data.chart_1.elementId);
+    makeChart(tags=data.chart_2.tags,marks=data.chart_2.marks, title=data.chart_2.title, elementId=data.chart_2.elementId);
+    makeChart(tags=data.chart_3.tags,marks=data.chart_3.marks, title=data.chart_3.title, elementId=data.chart_3.elementId);
+    makeChart(tags=data.chart_4.tags,marks=data.chart_4.marks, title=data.chart_4.title, elementId=data.chart_4.elementId);
 
-// test ={{ data | tojson }};
-console.log(">>>>",test);
-makeChart(tags=["maths","english","science","french"],marks=[20, 30, 50,90], title='Test 1', elementId='myChart');
+    // makeChart(tags=data.chart_1.tags,marks=data.chart_1.marks, title=data.chart_1.title, elementId=data.chart_1.elementId);
+  });
+  // test ={{ data | tojson }};
+// console.log(">>>>",test);
+// makeChart
 
 // makeChart(tags=["maths","english","science","french"],marks=[10, 20 , 30 , 50], title='Test 2', elementId='myChart2');
 

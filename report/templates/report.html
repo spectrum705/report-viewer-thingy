@@ -53,7 +53,7 @@
             <td> {{student["marks"][subject]["test_4"]}} </td>
             <td> {{student["marks"][subject]["test_3"] + student["marks"][subject]["test_4"]}}  </td>
             <td> {{student["marks"][subject]["test_1"] + student["marks"][subject]["test_2"] +student["marks"][subject]["test_3"] + student["marks"][subject]["test_4"] }} </td>
-            <td> {{student.grade}}</td>
+            <td> {{student["marks"][subject]["grade"]}}</td>
             {% endfor %}
           </tr>
         </tbody>

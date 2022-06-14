@@ -1,3 +1,4 @@
+from crypt import methods
 import json
 from multiprocessing import dummy
 import random
@@ -122,7 +123,7 @@ def admin_navigation():
     
     # print(Teachers.objects(_id =).first().classes)    
     if user.isAdmin:
-        return render_template('admin_navigation.html', classes=subject_list.keys())
+        return render_template('admin.html', classes=subject_list.keys())
     else:
         return redirect(url_for('class_navigation'))
 
@@ -145,23 +146,26 @@ def upload_marks_page(standard, subject, test_name):
            
             student_database.update_one({'_id':student.id}, {"$set":{f"marks.{subject}.{test_name}": int(request.form[str(student.id)])}}, upsert=False)
             # if all the test marks are filled update the student's main grade
-            # if not None in list(student["marks"]["test_4"].values()) and (not student.grade): #(or whatever the last test is)
+           
             #  {"admission_no": 4, "name": "four", "marks": {
                     #                                 "maths":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
                     #                                 "english":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
                     #                                 "science":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
                     #                                 }
                     # }, 
-            if student["marks"][subject].value().count(None)==1:
-                
+            if list(student["marks"][subject].values()).count(None)==1:
+                print(">>> adding grade")
                 test_scores= [student["marks"][subject][test] for test in test_list]
                 student_database.update_one({'_id':student.id}, {"$set":{f"marks.{subject}.grade": grade_calculator(test_scores)}}, upsert=False)
+                if not None in [student["marks"][sub]["grade"] for sub in subject_list[student.standard]]:
+                    student.isGraded=True
                     
                 # student.update(grade="A1") #calculate using the grade funtion, by avegrading the marks of all the tests
                 # print(f">>>>>student grdade updated:{student.name}", student.grade)
             
-        return redirect(url_for('class_result', standard=standard))
-      
+        # return redirect(url_for('class_result', standard=standard))
+        flash("Marks uploaded successfully","info")
+        return redirect(url_for('class_navigation'))
             
     return render_template('upload_marks.html', subject=subject, test_name=test_name, standard=standard, student_list=student_list)
     #return render_template('class_test.html')
@@ -172,16 +176,26 @@ def class_result(standard):
     subjects=list(subject_list[standard])
     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
  
+ 
+@app.route('/test')
+def test():
+    student=Students.objects(_id=1039).first()
+    pic_src=f"https://avatars.dicebear.com/api/bottts/{student.id}.svg"
+    return render_template('test.html', student=student, src=pic_src)
+
+ 
 @app.route('/get_chart_data') 
 def get_chart_data():
-    student=Students.objects(_id=id).first()
+    student=Students.objects(_id=session["id_for_chart"]).first()
     subjects=list(subject_list[student.standard])
     test1_marks=[]
     test2_marks=[]
     test3_marks=[]
     test_4_marks=[]
+    # print(">>>>>API Called",)
     for test in test_list:
         
+        # print(">>>>>test:", test)
         for sub in subjects:
             # maths_ test1, englist_test1, science_test1, 
             if test == "test_1":
@@ -195,62 +209,40 @@ def get_chart_data():
 
     
     data={
-        "chart_1":{"tags":subjects, "marks":test1_marks,"title":"Test 1","elementId":"myChart1"},
+        "chart_1":{"tags":subjects, "marks":test1_marks,"title":"Test 1","elementId":"myChart"},
         "chart_2":{"tags":subjects, "marks":test2_marks,"title":"Test 2","elementId":"myChart2"},
         "chart_3":{"tags":subjects, "marks":test3_marks,"title":"Test 3","elementId":"myChart3"},
         "chart_4":{"tags":subjects, "marks":test_4_marks,"title":"Test 4","elementId":"myChart4"}
         
     }
     
+    
+    # print(">>>>>data:", data)
     return jsonify(data)
     
-@app.route('/chart/<id>')
-def chart(id):
+@app.route('/student_dashboard/<id>')
+def student_dashboard(id):
+    session["id_for_chart"] = id
     student=Students.objects(_id=id).first()
-    subjects=list(subject_list[student.standard])
-    test1_marks=[]
-    test2_marks=[]
-    test3_marks=[]
-    test_4_marks=[]
-    for test in test_list:
-        
-        for sub in subjects:
-            # maths_ test1, englist_test1, science_test1, 
-            if test == "test_1":
-                test1_marks.append(student["marks"][sub][test])
-            if test == "test_2":
-                test2_marks.append(student["marks"][sub][test])
-            if test == "test_3":
-                test3_marks.append(student["marks"][sub][test])
-            if test == "test_4":
-                test_4_marks.append(student["marks"][sub][test])
-
+    pic_src=f"https://avatars.dicebear.com/api/bottts/{student.id}.svg"
+    return render_template('dashboard.html', student=student, src=pic_src)
     
-    data={
-        "chart_1":{"tags":subjects, "marks":test1_marks,"title":"Test 1","elementId":"myChart1"},
-        "chart_2":{"tags":subjects, "marks":test2_marks,"title":"Test 2","elementId":"myChart2"},
-        "chart_3":{"tags":subjects, "marks":test3_marks,"title":"Test 3","elementId":"myChart3"},
-        "chart_4":{"tags":subjects, "marks":test_4_marks,"title":"Test 4","elementId":"myChart4"}
-        
-    }
-    
-    return render_template("chart.html", data=data)
 
   
 @app.route('/report/<id>')
 def report_card(id):
-    session["student_id"]=id
+    session["student_id_for_chart"]=id
     student=Students.objects(_id=id).first()
-    print(">>> grade",student.grade)
+    # print(">>> grade",student.grade)
 
     sub_list=list(subject_list[student.standard])
     # return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
     
-    if not None in [student["marks"][sub]["grade"] for sub in subject_list[student.standard]]:
-        return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
-    else:
-        flash("All the Marks are not entered", "danger")
-        return redirect(url_for('class_result', standard=student.standard))
+    # if not None in [student["marks"][sub]["grade"] for sub in subject_list[student.standard]]:
+    return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
+    # else:
+    #     flash("All the Marks are not entered", "danger")
+    #     return redirect(url_for('class_result', standard=student.standard))
 
 
 
@@ -329,8 +321,8 @@ def login():
     if "user" in session:
         
         if Teachers.objects(_id=session["user"]["id"]).first().isAdmin:
-            return redirect(url_for("admin_navigation"))
             print(">>>user in session:", session["user"])	
+            return redirect(url_for("admin_navigation"))
         else:
             return redirect(url_for("class_navigation"))
     # find why it says none type object wen yser is already logged in   
@@ -367,7 +359,7 @@ def login():
             # print("logged", current_user.username)
             flash("you are logged in ", "success")
             if Teachers.objects(_id=session["user"]["id"]).first().isAdmin:
-                return  render_template("admin_nav.html")
+                return  redirect(url_for("admin_navigation"))
                 print(">>>user in session:", session["user"])	
             else:
                 return redirect(url_for("class_navigation"))            

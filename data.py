@@ -33,7 +33,8 @@ def createDb():
                 marks=Marks()
                 for subject in subject_list[row[2]]:
                     # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
-                    marks[subject]={"test_1":12, "test_2":31, "test_3":32, "test_4":41, "grade":None}
+                    marks[subject]={"test_1":10, "test_2":10, "test_3":10, "test_4":10, "grade":"A2"}
+                    # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
                                         
                 student.marks= marks
 
@@ -51,7 +52,7 @@ createDb()
 teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
 teacher.save()
 
-teacher=Teachers(name="teacher_2",_id=random.randint(1,100000),password="pass#teacher_2",classes=[{"class_9":"maths"}], isAdmin=True)
+teacher=Teachers(name="teacher_2",_id=random.randint(1,100000),password="pass#teacher_2",classes=[{"class_9":"maths"}])
 teacher.save()
 
 teacher=Teachers(name="teacher_3",_id=random.randint(1,100000),password="pass#teacher_3",classes=[{"class_9":"social studies"}])
@@ -63,4 +64,6 @@ teacher.save()
 teacher=Teachers(name="teacher_5",_id=random.randint(1,100000),password="pass#teacher_5",classes=[{"class_9":"Hindi"}])
 teacher.save()
 
+teacher=Teachers(name="admin",_id=random.randint(1,100000),password="admin",isAdmin=True)
+teacher.save()
 
