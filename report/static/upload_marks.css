@@ -1,3 +1,7 @@
+UPLOAD MARKS CSS
+
+
+
 .btn {
     color: black;
 }
@@ -20,11 +24,11 @@ html{
     box-sizing: border-box
 }
 
-body,
+/* body,
 html {
     height: 0%;
     font-family: sans-serif
-}
+} */
 body{
     overflow: hidden;
 }
@@ -67,7 +71,7 @@ li {
 input {
     display: block;
     outline: none;
-    border: none !important
+    /* border: none !important */
 }
 
 textarea {
@@ -105,12 +109,17 @@ iframe {
     opacity: 1 !important;
     right: 5px
 }
+.table100.ver1 .table100-body tr:nth-child(even) {
+    /* background-color: #f8f6ff */
 
+    color:rgb(67, 66, 66);
+    background-color: hsl(218, 63%, 93%);
+}
 .table100 .ps__rail-y::before {
     content: "";
     display: block;
     position: absolute;
-    background-color: #ebebeb;
+    /* background-color: #ebebeb; */
     border-radius: 5px;
     width: 100%;
     height: calc(100% - 30px);
@@ -138,14 +147,14 @@ iframe {
 }
 
 .limiter {
-    width: 1366px;
+    width: 80%;
     margin: 0 auto
 }
 
 .container-table100 {
     width: 100%;
     min-height: 100vh;
-    background: #fff;
+    /* background: #fff; */
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -230,7 +239,8 @@ td {
     font-size: 18px;
     color: #fff;
     line-height: 1.4;
-    background-color: #6c7ae0
+    background-color: #475a81;
+
 }
 
 .table100.ver1 td {
@@ -240,9 +250,9 @@ td {
     line-height: 1.4
 }
 
-.table100.ver1 .table100-body tr:nth-child(even) {
+/* .table100.ver1 .table100-body tr:nth-child(even) {
     background-color: #f8f6ff
-}
+} */
 
 .table100.ver1 {
     border-radius: 10px;
@@ -24781,12 +24791,12 @@ a.text-dark:hover {
     visibility: hidden !important
 }
 
-#input-border{
+/* #input-border{
     border: 5px solid #ccc;
     border-radius: 10px;
     padding: 2px;
     width: 100%;
-}
+} */
 
 /* Works on Firefox */
 * {

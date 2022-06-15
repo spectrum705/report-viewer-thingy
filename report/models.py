@@ -5,8 +5,7 @@ from report import db, login_manager
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Teachers.objects(_id=int(user_id))
-
+    return Teachers.objects(_id=int(user_id)).first()
     #this is our database model of a user, made more changes will upload later
 
 

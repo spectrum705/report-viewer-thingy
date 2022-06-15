@@ -1,19 +1,13 @@
-h1{
+/* h1{
     text-align: center;
     margin-top: 2%;
-    /* margin-bottom: 2%; */
     font-size:25px;
 }
     .tableFixHead tbody {
-        /* display: block; */
         width: 100%;
         overflow: auto;
         height: 450px;
     }
-
-    /* .tableFixHead thead  {
-        display: block;
-    } */
 
     .tableFixHead th,
     .tableFixHead td {
@@ -27,7 +21,6 @@ h1{
     }
 
     table {
-        /* max-height: 500px; */
         table-layout: fixed;
         font-size: 12px;
         border: 1px solid #CCC;
@@ -57,7 +50,6 @@ h1{
    
     tr:hover {background-color: hsl(31, 100%, 94%);
     }
-    /* #EFFFFD; */
 
     thead {
         position: sticky;
@@ -65,4 +57,102 @@ h1{
 a{
     text-decoration : none;
     color : black
+} */
+
+h1 {
+    text-align: center;
+    margin-top: 2%;
+    /* margin-bottom: 2%; */
+    font-size: 25px;
 }
+ 
+.tableFixHead tbody {
+    /* display: block; */
+    width: 100%;
+    overflow: auto;
+    height: 450px;
+}
+ 
+/* .tableFixHead thead  {
+        display: block;
+    } */
+ 
+.tableFixHead th,
+.tableFixHead td {
+    padding: 5px 10px;
+    width: 200px;
+}
+ 
+/* th { */
+/* height: 70px; */
+/* color: white; */
+/* background-color: #6c7ae0; */
+/* } */
+/*  */
+tr:nth-child(even) {
+    color: rgb(67, 66, 66);
+    background-color: hsl(218, 63%, 93%);
+}
+ 
+tr:nth-child(odd) {
+    background-color: white;
+    color: grey;
+}
+ 
+th {
+    color: white;
+    background-color: #475a81;
+}
+ 
+tr:hover {
+    background-color: #6e85b3;
+    color: white;
+}
+ 
+thead {
+    position: sticky;
+    top: 1;
+ 
+    z-index: 1;
+}
+ 
+tr {
+    height: 60px;
+ 
+    /* border: 1px #151841 solid; */
+}
+ 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+ 
+table {
+    /* max-height: 500px; */
+    table-layout: fixed;
+    font-size: 12px;
+    /* border: 1px solid #CCC; */
+    font-family: Arial, Helvetica, sans-serif;
+    border: 3px;
+    width: 100%;
+    padding: 0 50px 0 50px;
+    table-layout: auto;
+    text-align: center;
+ 
+    border-collapse: separate;  
+}
+ 
+td,
+th{
+    /* border: 0.5px hsl(0, 0%, 60%) solid;
+     */
+    border: 0.5px white solid;
+ 
+}
+body{
+    height: fit-content;
+}
+ 
+ 
+ 
+ 

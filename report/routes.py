@@ -176,12 +176,11 @@ def class_result(standard):
     subjects=list(subject_list[standard])
     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
  
- 
+@login_required
 @app.route('/test')
 def test():
-    student=Students.objects(_id=1039).first()
-    pic_src=f"https://avatars.dicebear.com/api/bottts/{student.id}.svg"
-    return render_template('test.html', student=student, src=pic_src)
+    
+    return "hi"
 
  
 @app.route('/get_chart_data') 
@@ -215,8 +214,7 @@ def get_chart_data():
         "chart_4":{"tags":subjects, "marks":test_4_marks,"title":"Test 4","elementId":"myChart4"}
         
     }
-    
-    
+    session.pop("id_for_chart", None)
     # print(">>>>>data:", data)
     return jsonify(data)
     

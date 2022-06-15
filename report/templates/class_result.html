@@ -1,59 +1,63 @@
+
+
+{% extends "base.html" %} 
 {% block content %}
  
  <!-- make a table -->
 <link rel="stylesheet" href="{{ url_for('static',filename='class_result.css') }}" />
-
 <div style="margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;">
-
+ 
     <h1>{{standard}} Scores</h1>
     <div class="tableFixHead">
         <table>
-           
+ 
 <thead>
-    <tr>
+    <tr >
         <th rowspan="2">Name</th>
-        <th rowspan="2">id</th>
+        <th class="xyz" rowspan="2">id</th>
         {% for subject in subject_list %}
-        <th colspan="4"> {{subject}}</th>
+        <th class="xyz"   colspan="4"> {{subject}}</th>
         {% endfor %}
     </tr>
-    
+ 
     <tr >
         {% for subject in subject_list %}
-        <th>Test-1 (50)</th>
-        <th>Test-2 (50)</th>
-        <th>Test-3 (50)</th>
-        <th>Test-4 (50)</th>
+        <th class="xyz"  >Test-1 (50)</th>
+        <th class="xyz"  >Test-2 (50)</th>
+        <th class="xyz"  >Test-3 (50)</th>
+        <th class="xyz"  >Test-4 (50)</th>
         {% endfor %}
     </tr>
 </thead>
-    
-
-
-
+ 
+ 
+ 
+ 
                 {% for student in student_list %}
                 <tr>
-
+ 
                     <td> 
-                            <a href="{{url_for('student_dashboard', id=student.id)}}">
+                        <a href="{{url_for('student_dashboard', id=student.id)}}">
                             {{student.name}}
-                             </a>    
+                             </a>     
                         </td>
-
+ 
                     <td>{{student.id}}</td>
-
-
+ 
+ 
                     {% for subject in subject_list %}
                     {% for test in test_list %}
-                    <td>{{student['marks'][subject][test]}}</td>
-
+                    <td   contenteditable>{{student['marks'][subject][test]}}</td>
+ 
                     {% endfor %}
                     {% endfor %}
                 </tr>
+ 
+ 
                 {% endfor %}
                 </tbody>
         </table>
-
+ 
     </div>
 </div>
 {% endblock %}
