@@ -1,6 +1,7 @@
 from tokenize import String
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField
+
 from wtforms.validators import DataRequired,Length, EqualTo, ValidationError
 from report.models import Teachers
 from flask_wtf.file import FileField,FileAllowed
@@ -11,10 +12,11 @@ class CreateAccount(FlaskForm):
                              validators=[DataRequired(),
                             Length(min = 3, max= 15 ) ])
    
-    theClass =  StringField('class', 
-                            validators = [DataRequired()])
+    theClass =  TextAreaField('class',
+                            validators = [DataRequired()],  render_kw={"placeholder": "write teacher's classes in the following way:         [{'class_9':'english'},{'class_4':'maths'},]"})
     
-    
+    id = IntegerField('id', validators=[DataRequired()])
+
    
     submit = SubmitField('confirm')
     def validate_username(self, username):
@@ -43,7 +45,7 @@ class UploadForm(FlaskForm):
 class UpdateForm(FlaskForm):
     csrf = True
     username = StringField('Username')
-    theClass = StringField('Class')
+    theClass = TextAreaField('Classes')
     userType = StringField('User Type')
 
     submit = SubmitField('Update')

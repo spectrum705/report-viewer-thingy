@@ -20,6 +20,17 @@
     <form method="POST" action="" class="mt-0">
       {{form.hidden_tag()}}
       <div class="col details" s>
+        {{form.id.label}} {% if form.id.errors %}
+        {{form.id(class="is-invalid")}}
+        <div class="invalid-feedback">
+          {% for error in form.id.errors %}
+          <span class="is-invalid"> {{error}} </span>
+          {% endfor %}
+        </div>
+        {% else %} {{form.id}} {% endif %}
+      </div>
+      
+      <div class="col details" s>
         {{form.username.label}} {% if form.username.errors %}
         {{form.username(class="is-invalid")}}
         <div class="invalid-feedback">
@@ -41,7 +52,7 @@
       </div>
       <div class="col align-self-start details">
         <div>
-          <p class="account-type-text">Select user's account type</p>
+          <p class="account-type-text">Select user type</p>
           <div class="d-flex justify-content-evenly">
             <div>
               <input

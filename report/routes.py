@@ -1,21 +1,21 @@
-from crypt import methods
+
 import json
-from multiprocessing import dummy
 import random
 from flask import jsonify, render_template, render_template_string,request,url_for,redirect , session, flash, send_file
-import py
-from sqlalchemy import null
 from report import app, db, bcrypt
 from flask_wtf.csrf import CSRFProtect
 from requests import sessions
 import os
 from io import BytesIO
 from report.forms import CreateAccount, LoginForm, UploadForm, UpdateForm
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import login_user, current_user, logout_user, login_required, user_logged_in
 from fillDb import createDb
+from data import make_student_object, make_teacher_object, create_studentDb
 from report.models import Teachers, Students, Marks
 from report import pymongo_client
 from report.helper import grade_calculator, subject_list
+import ast
+import fuckit
 
 csrf = CSRFProtect(app)
 # create student dummy data json file
@@ -106,29 +106,101 @@ teacher_dummy_data={
 }
 
 
-
 @app.route('/class_navigation')
+@login_required
 def class_navigation():
+
     print(">>>>>>>>",session["user"]["id"])
     username= session["user"]["name"] #get from login idp
     teacher_subjects=Teachers.objects(_id =session["user"]["id"]).first().classes
     # print(Teachers.objects(_id =).first().classes)    
     return render_template('class_navigation.html', classes=teacher_subjects, test_list=test_list)
-
-
-@app.route('/admin_navigation')
-def admin_navigation():
-    print(">>>>>>>>",session["user"]["id"])
-    user=Teachers.objects(_id =session["user"]["id"]).first()
     
-    # print(Teachers.objects(_id =).first().classes)    
-    if user.isAdmin:
-        return render_template('admin.html', classes=subject_list.keys())
+# @app.route('/admin_navigation')
+# @login_required
+# def admin_navigation():
+#     print(">>>>>>>>",session["user"]["id"])
+#     user=Teachers.objects(_id =session["user"]["id"]).first()
+    
+#     # print(Teachers.objects(_id =).first().classes)    
+#     if user.isAdmin:
+#         return render_template('admin.html', classes=subject_list.keys())
+#     else:
+#         flash("Your account does not have admin rights","danger")
+#         return redirect(url_for('class_navigation'))
+
+
+#admin page to edit user data
+@app.route("/admin_navigation", methods = ["POST", "GET"])
+@login_required
+def admin():
+    usr = None
+    form  = UpdateForm()
+    print(">>>>>>>>",session["user"]["id"])
+    user_logged=Teachers.objects(_id =session["user"]["id"]).first()
+    if user_logged.isAdmin:
+        if request.method == "POST":
+            if request.form["admin"]:
+                session['toUpdate'] = request.form["admin"]
+                usr = Teachers.objects(name=(session['toUpdate'])).first() or Students.objects(name=session['toUpdate'].upper()).first() #User.query.filter_by(username = session['toUpdate']).first()
+                print(request.form["admin"])
+                print(">>>>>>>>",usr.name)	
+
+                if usr:
+                    form.username.data = usr.name
+             
+                    try:
+                        form.theClass.data = (usr.classes) 
+                    except:
+                        pass
+                    try:
+                        form.theClass.data= (usr.standard)
+                    except:
+                        pass
+                    # form.userType = usr.userType
+                else:
+                    return render_template("admin.html", result = usr, form = form)
+                # return url_for("admin")
+
+            elif form.validate_on_submit(): 
+                print("valid now")
+                try:
+                    updateUsr =  Teachers.objects(name=session['toUpdate']).first() 
+                    updateUsr.modify(name=form.username.data, classes=ast.literal_eval(form.theClass.data))
+                    print("name_in_form:", form.username.data)
+                except:
+                    pass
+                try:
+                    updateUsr= Students.objects(name=session['toUpdate']).first()
+                    marks=Marks()
+                    for subject in subject_list[form.theClass.data]:
+                    # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
+                        marks[subject]={"test_1":10, "test_2":10, "test_3":10, "test_4":10, "grade":"A2"}
+                                            
+                        # updateUsr.marks= marks
+                    updateUsr.modify(name=form.username.data, standard=form.theClass.data, marks=marks)
+                except:
+                    pass
+                
+                    # for student
+               
+                # updateUsr.theClass = form.theClass.data 
+
+                # print("got user admission_no:", request.form["userId"])
+                flash("Data Updated Successfully", "success")
+
+        classes=subject_list.keys()    
+        return render_template("admin.html", result = usr, form = form, classes=subject_list.keys())
+
     else:
+        flash("Your account does not have admin rights","danger")
         return redirect(url_for('class_navigation'))
 
 
+
+
 @app.route('/marks_entry/<standard>/<subject>/<test_name>', methods=['GET', 'POST'])
+@login_required
 def upload_marks_page(standard, subject, test_name):
     
     # student_list  = student_dummy_data[standard]["students"]
@@ -145,14 +217,6 @@ def upload_marks_page(standard, subject, test_name):
 
            
             student_database.update_one({'_id':student.id}, {"$set":{f"marks.{subject}.{test_name}": int(request.form[str(student.id)])}}, upsert=False)
-            # if all the test marks are filled update the student's main grade
-           
-            #  {"admission_no": 4, "name": "four", "marks": {
-                    #                                 "maths":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
-                    #                                 "english":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
-                    #                                 "science":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
-                    #                                 }
-                    # }, 
             if list(student["marks"][subject].values()).count(None)==1:
                 print(">>> adding grade")
                 test_scores= [student["marks"][subject][test] for test in test_list]
@@ -168,21 +232,21 @@ def upload_marks_page(standard, subject, test_name):
         return redirect(url_for('class_navigation'))
             
     return render_template('upload_marks.html', subject=subject, test_name=test_name, standard=standard, student_list=student_list)
-    #return render_template('class_test.html')
 
 @app.route('/class_result/<standard>')
+@login_required
 def class_result(standard):
     student_list=Students.objects(standard=standard)
     subjects=list(subject_list[standard])
     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
  
-@login_required
 @app.route('/test')
+@login_required
 def test():
     
     return "hi"
 
- 
+
 @app.route('/get_chart_data') 
 def get_chart_data():
     student=Students.objects(_id=session["id_for_chart"]).first()
@@ -217,8 +281,9 @@ def get_chart_data():
     session.pop("id_for_chart", None)
     # print(">>>>>data:", data)
     return jsonify(data)
-    
+
 @app.route('/student_dashboard/<id>')
+@login_required
 def student_dashboard(id):
     session["id_for_chart"] = id
     student=Students.objects(_id=id).first()
@@ -226,8 +291,8 @@ def student_dashboard(id):
     return render_template('dashboard.html', student=student, src=pic_src)
     
 
-  
 @app.route('/report/<id>')
+@login_required
 def report_card(id):
     session["student_id_for_chart"]=id
     student=Students.objects(_id=id).first()
@@ -237,66 +302,37 @@ def report_card(id):
     # return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
     
     # if not None in [student["marks"][sub]["grade"] for sub in subject_list[student.standard]]:
-    return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
-    # else:
-    #     flash("All the Marks are not entered", "danger")
-    #     return redirect(url_for('class_result', standard=student.standard))
+    if student.isGraded:
+        return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
+    else:
+        flash("All the Marks are not entered", "danger")
+        return redirect(url_for('class_result', standard=student.standard))
 
 
-
-#admin page to edit user data
-@app.route("/admin", methods = ["POST", "GET"])
-def admin():
-    usr = None
-    form  = UpdateForm()
-    
-    if request.method == "POST":
-        if request.form["admin"]:
-            session['toUpdate'] = request.form["admin"]
-            usr = User.query.filter_by(username = session['toUpdate']).first()
-            print(request.form["admin"])
-            if usr:
-                form.username.data = usr.username
-                form.theClass.data = usr.theClass
-                form.userType = usr.userType
-            else:
-                return render_template("admin.html", result = usr, form = form)
-            # return url_for("admin")
-
-        elif form.validate_on_submit(): 
-            print("valid now")
-            updateUsr = User.query.filter_by(username = session['toUpdate']).first()
-            print("name_in_form:", form.username.data)
-            updateUsr.username = form.username.data 
-            updateUsr.theClass = form.theClass.data 
-
-            db.session.commit()
-            print("after update:",updateUsr.username)
-            # print("got user admission_no:", request.form["userId"])
-            flash("Data Updated Successfully", "success")
-
-    classes=subject_list.keys()    
-    return render_template("admin.html", result = usr, form = form, classes=classes)
 
 
 #admin can ad dnew user
-@app.route('/create', methods= ["POST", "GET"])      
+@app.route('/create', methods= ["POST", "GET"])    
+@login_required  
 def create():
     form = CreateAccount()
-    if form.validate_on_submit():
+    if current_user.isAdmin:
+        if form.validate_on_submit():
+            # enc_password = bcrypt.generate_password_hash(pwd).decode('utf-8')
+            if request.form["accountType"] == "student":       
+                make_student_object(id=form.id.data, name=form.username.data, standard=form.theClass.data,)
+                flash("New User added to the Database", 'success')
+                # print(f"pass: {pwd}, name:{form.username.data}, class:{form.theClass.data}, type:{request.form['accountType']}")
+            else:
+                make_teacher_object(id=form.id.data, name=form.username.data, classes=ast.literal_eval(form.theClass.data))
+                flash("New User added to the Database", 'success')
+            
+            return  redirect(url_for("create"))
+            
+        return render_template("create.html", title='Register', form = form)
+    else:
+        return redirect(url_for("login"))
         
-        pwd = "pass#" +form.username.data.split(' ')[0]
-        enc_password = bcrypt.generate_password_hash(pwd).decode('utf-8')
-        user = User(username=form.username.data, password = enc_password,
-        userType = request.form["accountType"], theClass = form.theClass.data)
-        db.session.add(user)
-        db.session.commit()
-        flash("New User added to the Database", 'success')
-            # print(f"pass: {pwd}, name:{form.username.data}, class:{form.theClass.data}, type:{request.form['accountType']}")
-        return  redirect(url_for("create"))
-          
-    return render_template("create.html", title='Register', form = form)
-    
     
        
 
@@ -316,11 +352,11 @@ def login():
     #         return redirect(url_for("admin"))
     form = LoginForm()
 
-    if "user" in session:
+    if current_user.is_authenticated:
         
         if Teachers.objects(_id=session["user"]["id"]).first().isAdmin:
             print(">>>user in session:", session["user"])	
-            return redirect(url_for("admin_navigation"))
+            return redirect(url_for("admin"))
         else:
             return redirect(url_for("class_navigation"))
     # find why it says none type object wen yser is already logged in   
@@ -352,12 +388,13 @@ def login():
         if user is not None:
             session["user"] = user.to_json()#form.username.data
             login_user(user)
+            print(">>>>>current user", current_user.classes)
             session.permanent = True
             # set session experition after 4 hours i think
             # print("logged", current_user.username)
             flash("you are logged in ", "success")
             if Teachers.objects(_id=session["user"]["id"]).first().isAdmin:
-                return  redirect(url_for("admin_navigation"))
+                return  redirect(url_for("admin"))
                 print(">>>user in session:", session["user"])	
             else:
                 return redirect(url_for("class_navigation"))            
@@ -473,7 +510,7 @@ def updateDatabase():
 @app.route("/logout")        
 def logout():
     session.pop("user",None)
-    # logout_user()
+    logout_user()
     return redirect(url_for("login"))
 
 @app.route("/delete/<id>")   

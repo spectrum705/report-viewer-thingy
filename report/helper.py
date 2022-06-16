@@ -1,12 +1,9 @@
+# subject_names to be made from enumes
+
+from enum import Enum
 
 
-# subject_list={
-#         "class_8":{"maths": None, "french": None, "japanese": None},
-#         "class_9":{"maths": 40, "english": 10, "science": 20,"french": 30, "japanese": 10},
-#         "class_10":{"maths": None, "english": None, "science": None, "social": None},
-       
-
-# }
+    # sub names to be made from Enums 
 
 subject_list={ "class_9":["maths", "english", "science", "french", "japanese"],
                 "class_8":["maths","ecology","history","geography","social"],
