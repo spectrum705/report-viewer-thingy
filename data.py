@@ -63,6 +63,38 @@ def create_studentDb():
     # os.remove(data_file)
     return True
 
+def create_teacherDb():
+    folder = Path("report/school_data")
+    data_file = folder/"teacher_dummy_data.csv"
+    # data_file = r"C:\Users\SHUBHAM\Desktop\report-viewer-thingy\report\school_data\student_dummy_data.csv"
+    Teachers.drop_collection()
+
+    with open(data_file, 'r') as csvfile:
+        # creating a csv reader object
+        csvreader = csv.reader(csvfile)
+    #    write example of row
+
+        for row in csvreader:
+            if row[0].lower() != 'teacher id':
+                # enc_password = bcrypt.generate_password_hash( "pass#"+row[0].lower()).decode('utf-8')
+                # 
+                    # restructure the db
+                # 
+                # student = Students(_id= int(row[0]), name=row[1], standard=row[2] )
+                # marks=Marks()
+                # for subject in subject_list[row[2]]:
+                #     marks[subject]={"test_1":10, "test_2":10, "test_3":10, "test_4":10, "grade":"A2"}
+                #     # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
+                                        
+                # student.marks= marks
+
+                
+                classes=row[3] #operate
+                make_teacher_object(id=int(row[0]), name=row[1], classes=classes)
+                print(f"name: {row[1]}, class: {row[2]}, added")
+    # os.remove(data_file)
+    return True
+
 # Teachers.drop_collection()
 # create_studentDb()
 

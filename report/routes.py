@@ -15,7 +15,6 @@ from report.models import Teachers, Students, Marks
 from report import pymongo_client
 from report.helper import grade_calculator, subject_list
 import ast
-import fuckit
 
 csrf = CSRFProtect(app)
 # create student dummy data json file
