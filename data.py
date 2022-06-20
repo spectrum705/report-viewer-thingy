@@ -9,7 +9,7 @@ from report import db
 
 
 def make_student_object(id,name, standard):
-    student = Students(_id= int(id), name=name, standard=standard)
+    student = Students(_id= int(id), name=name.upper(), standard=standard)
     marks=Marks()
     for subject in subject_list[standard]:
         # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
@@ -22,7 +22,7 @@ def make_student_object(id,name, standard):
 # teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
 
 def make_teacher_object(id,name, classes, ):
-    teacher = Teachers(_id= int(id), name=name, classes=classes, password="pass#"+name.lower())
+    teacher = Teachers(_id= int(id), name=name.upper(), classes=classes, password="pass#"+name.lower())
 
     teacher.save()
     return True

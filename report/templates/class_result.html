@@ -1,63 +1,106 @@
+{% extends "base.html" %} {% block content %}
 
-
-{% extends "base.html" %} 
-{% block content %}
- 
- <!-- make a table -->
+<!-- make a table -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="{{ url_for('static',filename='class_result.css') }}" />
 <div style="margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;">
- 
-    <h1>{{standard}} Scores</h1>
-    <div class="tableFixHead">
-        <table>
- 
-<thead>
-    <tr >
-        <th rowspan="2">Name</th>
-        <th class="xyz" rowspan="2">id</th>
-        {% for subject in subject_list %}
-        <th class="xyz"   colspan="4"> {{subject}}</th>
-        {% endfor %}
-    </tr>
- 
-    <tr >
-        {% for subject in subject_list %}
-        <th class="xyz"  >Test-1 (50)</th>
-        <th class="xyz"  >Test-2 (50)</th>
-        <th class="xyz"  >Test-3 (50)</th>
-        <th class="xyz"  >Test-4 (50)</th>
-        {% endfor %}
-    </tr>
-</thead>
- 
- 
- 
- 
-                {% for student in student_list %}
+    <div class="heading">
+        <h1>{{standard}} Scores
+            <button onclick="exportData()" class="btn"><i class="fa fa-download"></i> Download</button>
+        </h1>
+    </div>
+    <div id="tableFixHead">
+        <table id="classResult">
+
+            <thead>
                 <tr>
- 
-                    <td> 
-                        <a href="{{url_for('student_dashboard', id=student.id)}}">
-                            {{student.name}}
-                             </a>     
-                        </td>
- 
-                    <td>{{student.id}}</td>
- 
- 
+                    <th rowspan="2">Name</th>
+                    <th class="xyz" rowspan="2">id</th>
                     {% for subject in subject_list %}
-                    {% for test in test_list %}
-                    <td   contenteditable>{{student['marks'][subject][test]}}</td>
- 
-                    {% endfor %}
+                    <th class="xyz" colspan="4"> {{subject}}</th>
                     {% endfor %}
                 </tr>
- 
- 
-                {% endfor %}
-                </tbody>
+
+                <tr>
+                    {% for subject in subject_list %}
+                    <th class="xyz">Test-1 (50)</th>
+                    <th class="xyz">Test-2 (50)</th>
+                    <th class="xyz">Test-3 (50)</th>
+                    <th class="xyz">Test-4 (50)</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+
+
+            {% for student in student_list %}
+            <tr>
+                <td>
+                    <a class="name" href="{{url_for('student_dashboard', id=student.id)}}">
+                        {{student.name}}
+                    </a>
+                </td>
+                <td>{{student.id}}</td>
+
+                {% for subject in subject_list %} {% for test in test_list %}
+                <td contenteditable>{{student['marks'][subject][test]}}</td>
+                {% endfor %} {% endfor %}
+
+            </tr>
+            {% endfor %}
+            </tbody>
         </table>
- 
+
     </div>
 </div>
+
+
+
+
+<script>
+    function exportData() {
+        /* Get the HTML data using Element by Id */
+        var table = document.getElementById("classResult");
+
+        /* Declaring array variable */
+        var rows = [];
+
+        //iterate through rows of table
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            //rows would be accessed using the "row" variable assigned in the for loop
+            //Get each cell value/column from the row
+            column1 = row.cells[0].innerText;
+            column2 = row.cells[1].innerText;
+            column3 = row.cells[2].innerText;
+            column4 = row.cells[3].innerText;
+            column5 = row.cells[4].innerText;
+
+            /* add a new records in the array */
+            rows.push(
+                [
+                    column1,
+                    column2,
+                    column3,
+                    column4,
+                    column5
+                ]
+            );
+
+        }
+        csvContent = "data:text/csv;charset=utf-8,";
+        /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
+        rows.forEach(function(rowArray) {
+            row = rowArray.join(",");
+            csvContent += row + "\r\n";
+        });
+
+        /* create a hidden <a> DOM node and set its download attribute */
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "Class-Result.csv");
+        document.body.appendChild(link);
+        /* download the data file named "Class-Result.csv" */
+        link.click();
+    }
+</script>
 {% endblock %}

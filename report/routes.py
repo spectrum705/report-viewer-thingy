@@ -143,17 +143,20 @@ def admin():
                 session['toUpdate'] = request.form["admin"]
                 usr = Teachers.objects(name=(session['toUpdate'])).first() or Students.objects(name=session['toUpdate'].upper()).first() #User.query.filter_by(username = session['toUpdate']).first()
                 print(request.form["admin"])
-                print(">>>>>>>>",usr.name)	
+                # print(">>>>>>>>",usr.name)	
 
                 if usr:
                     form.username.data = usr.name
              
                     try:
                         form.theClass.data = (usr.classes) 
+                        form.userType="Teacher"
                     except:
                         pass
                     try:
                         form.theClass.data= (usr.standard)
+                        form.userType="Student"
+
                     except:
                         pass
                     # form.userType = usr.userType
@@ -515,11 +518,11 @@ def logout():
 @app.route("/delete/<id>")   
 @login_required     
 def delete(id):
-    if current_user.userType == "admin":
-        User.query.filter_by(id=id).delete()
-        db.session.commit()
+    if current_user.isAdmin:
+        user= Teachers.objects(_id=id).first() or Students.objects(_id=id).first()
+        user.delete()
         # print("usr deleted")
-        flash("User deleted from the Database", "danger")
+        flash("Record deleted from the Database", "danger")
     return redirect(url_for("admin"))
 
     
