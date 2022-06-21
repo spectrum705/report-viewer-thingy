@@ -62,7 +62,7 @@ def create_studentDb():
                 print(f"name: {row[1]}, class: {row[2]}, added")
     # os.remove(data_file)
     return True
-
+# TODO
 def create_teacherDb():
     folder = Path("report/school_data")
     data_file = folder/"teacher_dummy_data.csv"

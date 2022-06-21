@@ -7,6 +7,7 @@ from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 import mongoengine as db
 from pymongo import MongoClient
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -30,7 +31,6 @@ app = Flask(__name__)
 CSRFProtect(app)
 
 app.secret_key  = "key_whatever"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 app.config["WTF_CSRF_ENABLED"] = True
 
 bcrypt = Bcrypt(app)

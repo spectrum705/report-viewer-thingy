@@ -12,3 +12,5 @@ mongoengine
 dnspython
 pymongo
 python-dotenv
+pandas
+flask_weasyprint 

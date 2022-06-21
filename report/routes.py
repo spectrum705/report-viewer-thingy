@@ -1,8 +1,13 @@
 
 import json
+from urllib import response
+import pdfkit
+import pandas as pd
 import random
-from flask import jsonify, render_template, render_template_string,request,url_for,redirect , session, flash, send_file
+from flask import jsonify, make_response, render_template, render_template_string,request,url_for,redirect , session, flash, send_file
 from report import app, db, bcrypt
+from flask_weasyprint import HTML, render_pdf
+ 
 from flask_wtf.csrf import CSRFProtect
 from requests import sessions
 import os
@@ -235,11 +240,36 @@ def upload_marks_page(standard, subject, test_name):
             
     return render_template('upload_marks.html', subject=subject, test_name=test_name, standard=standard, student_list=student_list)
 
-@app.route('/class_result/<standard>')
+
+# @app.route('/class_result/<standard>', methods=["POST"])
+# def class_result(standard):
+#     student_list=Students.objects(standard=standard)
+#     subjects=list(subject_list[standard])
+#     # Making class marksheet download
+#     if request.method=="POST":
+#         url = request.base_url
+#         print(">>>>>url:",url)
+#         table = pd.read_html (url)[ 0 ]
+#         # Save data frame to Excel file
+#         table .to_excel ( "data.xlsx" )
+#         flash("Class_marksheet Downloaded", "info")    
+#     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
+ 
+
+# TODO
+@app.route('/class_result/<standard>', methods=["GET","POST"])
 @login_required
 def class_result(standard):
     student_list=Students.objects(standard=standard)
     subjects=list(subject_list[standard])
+    # Making class marksheet download
+    if request.method=="POST":
+        url = request.base_url
+        print(">>>>>url:",url)
+        table = pd.read_html (url)[ 0 ]
+        # Save data frame to Excel file
+        table .to_excel ( "data.xlsx" )
+        flash("Class_marksheet Downloaded", "info")    
     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
  
 @app.route('/test')
@@ -301,11 +331,21 @@ def report_card(id):
     # print(">>> grade",student.grade)
 
     sub_list=list(subject_list[student.standard])
-    # return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
-    
-    # if not None in [student["marks"][sub]["grade"] for sub in subject_list[student.standard]]:
+   
     if student.isGraded:
-        return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
+      
+        # html = render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
+        # return render_pdf(HTML(string=html))
+        # TODO
+        rendered= render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
+        pdf =pdfkit.from_string(rendered,False)
+        
+        response=make_response(pdf)
+        response.headers['Content-Type']='application/pdf'
+        response.headers['Content-Disposition']=f'inline; {student.name}.pdf'
+        flash("Report Card Downloaded",'info')
+        return response
+        # return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
     else:
         flash("All the Marks are not entered", "danger")
         return redirect(url_for('class_result', standard=student.standard))

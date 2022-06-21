@@ -1,39 +1,4 @@
-<!-- <style>
-  h1 {
-    text-align: center;
-    font-size: 40px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-  }
-</style>  
 
-
-<link rel="stylesheet" href="{{ url_for('static',filename='class_navigation.css') }}" />
-<br><h1>ENTER HEADING HERE</h1>
-<div class="container">  
-  <ul class="hList">
-
-    {% for class in classes %}
-    <li>
-      <div  class="menu">
-        {% for key, value in class.items() %}
-        <h2 class="menu-title menu-title_2nd">{{key }} - {{value}} </h2>
-        <ul class="menu-dropdown">
-          {% for test in test_list %}
-          <a href="{{url_for('upload_marks_page',  standard=key, subject=value, test_name=test)}}">           
-           <li> {{test}}</li>
-
-          </a> 
-          
-          
-          {% endfor %}
-          {% endfor %}
-        </ul>
-      </div>
-    </li>
-    {% endfor %}
-  
-</ul>  
-</div> -->
 
 {% extends "base.html" %} {% block content %}
 
@@ -66,9 +31,9 @@
                </div>
              </div>
            </div>
+           {% endfor %}
    
-  {% endfor %}
- </div>
+          </div>
  
 {% endblock %}
 

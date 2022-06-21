@@ -128,8 +128,8 @@ fetch('/get_chart_data')
     // console.log(">>marks",data.chart_1.marks);
     // console.log(">>title",data.chart_1.title);
     // console.log(">>elementId",data.chart_1.elementId);
-    // makeChart(tags=data.chart_1.tags,marks=data.chart_1.marks, title=data.chart_1.title, elementId=data.chart_1.elementId);
-    stackChart(tags=["english","science","maths"],marks=[11,20,50], title="Test 1", elementId="myChart", average_mark_list=[20,24,11]);
+    // stackChart(tags=["english","science","maths"],marks=[11,20,50], title="Test 1", elementId="myChart", average_mark_list=[20,24,11]);
+    makeChart(tags=data.chart_1.tags,marks=data.chart_1.marks, title=data.chart_1.title, elementId=data.chart_1.elementId);
     makeChart(tags=data.chart_2.tags,marks=data.chart_2.marks, title=data.chart_2.title, elementId=data.chart_2.elementId);
     makeChart(tags=data.chart_3.tags,marks=data.chart_3.marks, title=data.chart_3.title, elementId=data.chart_3.elementId);
     makeChart(tags=data.chart_4.tags,marks=data.chart_4.marks, title=data.chart_4.title, elementId=data.chart_4.elementId);

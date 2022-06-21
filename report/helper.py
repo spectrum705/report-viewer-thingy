@@ -1,17 +1,32 @@
 # subject_names to be made from enumes
 
-from enum import Enum
-
+import enum
 
     # sub names to be made from Enums 
 
-subject_list={ "class_9":["maths", "english", "science", "french", "japanese"],
+class Subjects(str, enum.Enum):
+    eng="English",
+    sci="Sci",
+    
+
+subject_list={ "class_9":["maths", Subjects.eng, "science", "french", "japanese"],
                 "class_8":["maths","ecology","history","geography","social"],
                 "class_10":["maths","english","science","social"]
                 }
 
+class GradeEnum(str, enum.Enum):
+    A = 'A'
+    B = 'B'
+    C = 'C'
+    D = 'D'
+    
+class TestNames(str, enum.Enum):
+    test_1="Test 1"
+    
+
+
 # enumaratetion of grades
-# class Grades(Enum):
+# class Grades(str, enum.Enum):
 #     A1 = "A1"
 #     A2 = "A2"
 #     B1 = "B1"
