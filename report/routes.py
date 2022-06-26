@@ -1,6 +1,8 @@
 
 import json
 from urllib import response
+
+import requests
 import pdfkit
 import pandas as pd
 import random
@@ -14,7 +16,7 @@ import os
 from io import BytesIO
 from report.forms import CreateAccount, LoginForm, UploadForm, UpdateForm
 from flask_login import login_user, current_user, logout_user, login_required, user_logged_in
-from fillDb import createDb
+# from fillDb import createDb
 from data import make_student_object, make_teacher_object, create_studentDb
 from report.models import Teachers, Students, Marks
 from report import pymongo_client
@@ -24,6 +26,7 @@ import ast
 csrf = CSRFProtect(app)
 # create student dummy data json file
 test_list=["test_1","test_2", "test_3", "test_4"]	
+USER_TOKEN =None
 student_dummy_data = {
    "class_1":{ "students": [
                
@@ -48,44 +51,13 @@ student_dummy_data = {
    
      "class_9":{"students": [
          
-                    {"admission_no": 1, "name": "tewo", "marks": {
-                                                    "test_1":{"maths": None, "english": None, "science": None},
-                                                    "test_2":{"maths": None, "english": None, "science": None},
-                                                    "test_3":{"maths": None, "english": None, "science": None},
-                                                    "test_4":{"maths": None, "english": None, "science": None}
-                                                    }
-                    },
-                    
-                    {"admission_no": 2, "name": "naruto", "marks": {
-                                                    "test_1":{"maths": None, "english": None, "science": None},
-                                                    "test_2":{"maths": None, "english": None, "science": None},
-                                                    "test_3":{"maths": None, "english": None, "science": None},
-                                                    "test_4":{"maths": None, "english": None, "science": None}
-                                                    }
-                    },
-                
-                    {"admission_no": 3, "name": "thre", "marks": {
-                                                    "test_1":{"maths": None, "english": None, "science": None},
-                                                    "test_2":{"maths": None, "english": None, "science": None},
-                                                    "test_3":{"maths": None, "english": None, "science": None},
-                                                    "test_4":{"maths": None, "english": None, "science": None}
-                                                    }
-                    },
-                
+                   
                     {"admission_no": 4, "name": "four", "marks": {
-                                                    "test_1":{"maths": None, "english": None, "science": None},
-                                                    "test_2":{"maths": None, "english": None, "science": None},
-                                                    "test_3":{"maths": None, "english": None, "science": None},
-                                                    "test_4":{"maths": None, "english": None, "science": None}
+                                                    "maths":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None}},
+                                                    "english":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},
+                                                    "science":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},
                                                     }
-                    },      
-                    
-                    # {"admission_no": 4, "name": "four", "marks": {
-                    #                                 "maths":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
-                    #                                 "english":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
-                    #                                 "science":{"test_1": None, "test_2": None, "test_3": None, "test_4": None, "grade": None},"},
-                    #                                 }
-                    # },                   
+                                    
                 ]
    },
    
@@ -241,36 +213,37 @@ def upload_marks_page(standard, subject, test_name):
     return render_template('upload_marks.html', subject=subject, test_name=test_name, standard=standard, student_list=student_list)
 
 
-# @app.route('/class_result/<standard>', methods=["POST"])
-# def class_result(standard):
-#     student_list=Students.objects(standard=standard)
-#     subjects=list(subject_list[standard])
-#     # Making class marksheet download
-#     if request.method=="POST":
-#         url = request.base_url
-#         print(">>>>>url:",url)
-#         table = pd.read_html (url)[ 0 ]
-#         # Save data frame to Excel file
-#         table .to_excel ( "data.xlsx" )
-#         flash("Class_marksheet Downloaded", "info")    
-#     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
- 
+
 
 # TODO
-@app.route('/class_result/<standard>', methods=["GET","POST"])
+@app.route(f'/class_result/<standard>', methods=["GET","POST"])
 @login_required
 def class_result(standard):
+    # print("USERTOKEN IN CLS RESLUT:", USER_TOKEN)
+  
     student_list=Students.objects(standard=standard)
     subjects=list(subject_list[standard])
     # Making class marksheet download
     if request.method=="POST":
-        url = request.base_url
-        print(">>>>>url:",url)
-        table = pd.read_html (url)[ 0 ]
-        # Save data frame to Excel file
-        table .to_excel ( "data.xlsx" )
-        flash("Class_marksheet Downloaded", "info")    
+        
+        table = pd.read_html ( render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard))[ 0 ]
+        table .to_excel ( f"{standard}_marsheet.xlsx" )
+        flash("Marksheet downloaded", "info")
     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
+   
+   
+ 
+
+# @app.route(f'/class_result/<standard>/get-data/{Config.objects(name="marksheet_code").first().code}')
+# def marksheet_download(standard, code):
+#     student_list=Students.objects(standard=standard)
+#     subjects=list(subject_list[standard])
+#     print(">>>>download page:", code)
+#     flash("Class marksheet Downloaded", "info")    
+
+#     # Config.objects(name="marksheet_code").first().delete()
+#     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
+   
  
 @app.route('/test')
 @login_required
@@ -333,16 +306,14 @@ def report_card(id):
     sub_list=list(subject_list[student.standard])
    
     if student.isGraded:
-      
-        # html = render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
-        # return render_pdf(HTML(string=html))
+
         # TODO
         rendered= render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
         pdf =pdfkit.from_string(rendered,False)
         
         response=make_response(pdf)
         response.headers['Content-Type']='application/pdf'
-        response.headers['Content-Disposition']=f'inline; {student.name}.pdf'
+        response.headers['Content-Disposition']='attachment; filename=report_card.pdf'
         flash("Report Card Downloaded",'info')
         return response
         # return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
@@ -419,7 +390,7 @@ def login():
         #     else:
         #         return redirect(url_for("studentReport"))
 
-        user = Teachers.objects(name=form.username.data.lower().strip()).first()
+        user = Teachers.objects(name=form.username.data.upper().strip()).first()
        
 
         # print("urs:",form.username.data)
@@ -429,6 +400,7 @@ def login():
         # if user is not None and form.password.data.strip() == user.password:
         if user is not None:
             session["user"] = user.to_json()#form.username.data
+            
             login_user(user)
             print(">>>>>current user", current_user.classes)
             session.permanent = True

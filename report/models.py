@@ -24,8 +24,7 @@ class Teachers(db.Document, UserMixin):
             "id":self._id,
             "classes": self.classes
         }
-    def __repr__(self):
-        return f"User('{self.name}','{self._id}',{self.classes})"
+    
    
 
 class Marks(db.DynamicEmbeddedDocument):
@@ -42,3 +41,4 @@ class Students(db.Document):
     marks=db.EmbeddedDocumentField(Marks)
     isGraded=db.BooleanField
     # roll_number=db.IntField(required=True)
+    

@@ -9,7 +9,7 @@ from report import db
 
 
 def make_student_object(id,name, standard):
-    student = Students(_id= int(id), name=name.upper(), standard=standard)
+    student = Students(_id= int(id), name=name.upper().strip(), standard=standard)
     marks=Marks()
     for subject in subject_list[standard]:
         # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
@@ -21,8 +21,8 @@ def make_student_object(id,name, standard):
 
 # teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
 
-def make_teacher_object(id,name, classes, ):
-    teacher = Teachers(_id= int(id), name=name.upper(), classes=classes, password="pass#"+name.lower())
+def make_teacher_object(id,name, classes=None ):
+    teacher = Teachers(_id= int(id), name=name.upper().strip(), classes=classes, password="pass#"+name.lower())
 
     teacher.save()
     return True
@@ -41,64 +41,58 @@ def create_studentDb():
         csvreader = csv.reader(csvfile)
     #    write example of row
 
-        for row in csvreader:
-            if row[0].lower() != 'admission number':
-                # enc_password = bcrypt.generate_password_hash( "pass#"+row[0].lower()).decode('utf-8')
-                # 
-                    # restructure the db
-                # 
-                # student = Students(_id= int(row[0]), name=row[1], standard=row[2] )
-                # marks=Marks()
-                # for subject in subject_list[row[2]]:
-                #     marks[subject]={"test_1":10, "test_2":10, "test_3":10, "test_4":10, "grade":"A2"}
-                #     # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
-                                        
-                # student.marks= marks
-
-                
-                
+        for index, row in enumerate(csvreader):
+#            if row[0].lower() != 'teacher id':
+            if index != 0:
+      
                 # student.save()
                 make_student_object(id=row[0], name=row[1], standard=row[2])
                 print(f"name: {row[1]}, class: {row[2]}, added")
     # os.remove(data_file)
     return True
-# TODO
+
 def create_teacherDb():
     folder = Path("report/school_data")
     data_file = folder/"teacher_dummy_data.csv"
     # data_file = r"C:\Users\SHUBHAM\Desktop\report-viewer-thingy\report\school_data\student_dummy_data.csv"
     Teachers.drop_collection()
+    admin=Teachers(name="ADMIN", _id=10000, isAdmin=True, password="admin")
+    admin.save()
+    print(">>ADMIN ADDED")
 
     with open(data_file, 'r') as csvfile:
         # creating a csv reader object
+    # csvfile=open(data_file, 'r')
         csvreader = csv.reader(csvfile)
-    #    write example of row
+        #    write example of row
+        for index, row in enumerate(csvreader):
+            # if row[0].lower() != 'teacher id':
+            if index != 0:
+                # class_9:English/class_10:Maths
+                # ["class_9:English","class_10:Maths"]
+                # print(f"row:{row}, index:{index}")
+                teaching_classes=row[2].split('/')
+                # print("classes:{classes}")
 
-        for row in csvreader:
-            if row[0].lower() != 'teacher id':
-                # enc_password = bcrypt.generate_password_hash( "pass#"+row[0].lower()).decode('utf-8')
-                # 
-                    # restructure the db
-                # 
-                # student = Students(_id= int(row[0]), name=row[1], standard=row[2] )
-                # marks=Marks()
-                # for subject in subject_list[row[2]]:
-                #     marks[subject]={"test_1":10, "test_2":10, "test_3":10, "test_4":10, "grade":"A2"}
-                #     # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
-                                        
-                # student.marks= marks
-
-                
-                classes=row[3] #operate
+                classes=[]
+                for cls in teaching_classes:
+                    cls=cls.split(":")
+                    cls={cls[0].strip():cls[1].strip()}
+                    # have to check classes with Enums
+                    classes.append(cls)
+                        
+                    
                 make_teacher_object(id=int(row[0]), name=row[1], classes=classes)
+                # print(">>",classes)
                 print(f"name: {row[1]}, class: {row[2]}, added")
-    # os.remove(data_file)
-    return True
+            # os.remove(data_file)
+        # return True
 
-# Teachers.drop_collection()
+
 # create_studentDb()
+# create_teacherDb()
 
-
+# class_9:English/class_10:Maths
 # teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
 # teacher.save()
 
