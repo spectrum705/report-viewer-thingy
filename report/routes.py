@@ -3,6 +3,7 @@ import json
 from urllib import response
 
 import requests
+from sqlalchemy import true
 import pdfkit
 import pandas as pd
 import random
@@ -309,18 +310,30 @@ def report_card(id):
 
         # TODO
         rendered= render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
-        pdf =pdfkit.from_string(rendered,False)
+        # pdf =pdfkit.from_string(rendered,False)
         
-        response=make_response(pdf)
-        response.headers['Content-Type']='application/pdf'
-        response.headers['Content-Disposition']='attachment; filename=report_card.pdf'
+        # response=make_response(pdf)
+        # response.headers['Content-Type']='application/pdf'
+        # response.headers['Content-Disposition']='attachment; filename=report_card.pdf'
         flash("Report Card Downloaded",'info')
-        return response
+        # return response
+        return send_file((rendered), attachment_filename='output.pdf', as_attachment= True )
+
         # return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
     else:
         flash("All the Marks are not entered", "danger")
         return redirect(url_for('class_result', standard=student.standard))
 
+#secure file upload or just make a function instead of a route
+@app.route('/student_report/<getId>/<attach>', methods=["POST", "GET"])
+@login_required
+def download(getId, attach):
+    # print( request.args.get("attach"))
+    # print("download_stud-admission_no:",request.form["student_id"])
+    user = User.query.filter_by(id = getId).first() 
+    print(attach)
+    print(user)
+    return send_file(BytesIO(user.fileData), attachment_filename=user.fileName, as_attachment= attach )
 
 
 
@@ -423,16 +436,6 @@ def login():
 
 
 
-#secure file upload or just make a function instead of a route
-@app.route('/student_report/<getId>/<attach>', methods=["POST", "GET"])
-@login_required
-def download(getId, attach):
-    # print( request.args.get("attach"))
-    # print("download_stud-admission_no:",request.form["student_id"])
-    user = User.query.filter_by(id = getId).first() 
-    print(attach)
-    print(user)
-    return send_file(BytesIO(user.fileData), attachment_filename=user.fileName, as_attachment= attach )
 
 
 

@@ -6,19 +6,28 @@ import enum
 
 class Subjects(str, enum.Enum):
     eng="English",
+    hindi="Hindi",
+    sans="Sanskrit",
     sci="Sci",
+    maths="Maths",
+    phy="Physics",
+    chem="Chemistry",
+    history="History",
+    geo="Geography",
+    politics="Political Science",
     
-
-subject_list={ "class_9":["maths", Subjects.eng, Subjects.sci, "french", "japanese"],
+    
+subject_list={ "class_9":["maths", Subjects["eng"].value, Subjects["sci"].value, "french", "japanese"],
                 "class_8":["maths","ecology","history","geography","social"],
                 "class_10":["maths","english","science","social"]
                 }
 
-class GradeEnum(str, enum.Enum):
-    A = 'A'
-    B = 'B'
-    C = 'C'
-    D = 'D'
+# GradeEnum[grade].value
+# class GradeEnum(str, enum.Enum):
+#     A = 'A'
+#     B = 'B'
+#     C = 'C'
+#     D = 'D'
     
 class TestNames(str, enum.Enum):
     test_1="Test 1"
@@ -41,22 +50,25 @@ class Grades(str, enum.Enum):
 
 def grade_calculator(marks):
     return "A1->Function to be written"
+    
     # avg = sum(marks)/len(marks)
-    # if avg >= 91:
-    #     return 'A1'
-    # elif avg >= 81:
-    #     return 'A2'
-    # elif avg >= 71:
-    #     return 'B1'
-    # elif avg >= 61:
-    #     return 'B2'
-    # elif avg >= 51:
-    #     return 'C1'
-    # elif avg >= 41:
-    #     return 'C2'
-    # elif avg >= 33:
-    #     return 'D'
-    # elif avg >= 21:
-    #     return 'E1'
+    # if avg>=91:
+    #     return GradeEnum["A1"].value
+    # elif avg>=81:
+    #     return GradeEnum["A2"].value
+    # elif avg>=71:
+    #     return GradeEnum["B1"].value
+    # elif avg>=61:
+    #     return GradeEnum["B2"].value
+    # elif avg>=51:
+    #     return GradeEnum["C1"].value
+    # elif avg>=41:
+    #     return GradeEnum["C2"].value
+    # elif avg>=33:
+    #     return GradeEnum["D1"].value
+    # elif avg>=21:
+    #     return GradeEnum["E1"].value
     # else:
-    #     return 'E2'
+    #     return GradeEnum["E2"].value
+     
+    
