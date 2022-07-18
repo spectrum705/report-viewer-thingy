@@ -18,7 +18,7 @@ from io import BytesIO
 from report.forms import CreateAccount, LoginForm, UploadForm, UpdateForm
 from flask_login import login_user, current_user, logout_user, login_required, user_logged_in
 # from fillDb import createDb
-from data import make_student_object, make_teacher_object, create_studentDb
+from data import create_teacherDb, make_student_object, make_teacher_object, create_studentDb
 from report.models import Teachers, Students, Marks
 from report import pymongo_client
 from report.helper import grade_calculator, subject_list
@@ -199,7 +199,7 @@ def upload_marks_page(standard, subject, test_name):
             student_database.update_one({'_id':student.id}, {"$set":{f"marks.{subject}.{test_name}": int(request.form[str(student.id)])}}, upsert=False)
             if list(student["marks"][subject].values()).count(None)==1:
                 print(">>> adding grade")
-                test_scores= [student["marks"][subject][test] for test in test_list]
+                test_scores= [student["marks"][subject][ test] for test in test_list]
                 student_database.update_one({'_id':student.id}, {"$set":{f"marks.{subject}.grade": grade_calculator(test_scores)}}, upsert=False)
                 if not None in [student["marks"][sub]["grade"] for sub in subject_list[student.standard]]:
                     student.isGraded=True
@@ -247,10 +247,11 @@ def class_result(standard):
    
  
 @app.route('/test')
-@login_required
+@login_required                                                  
 def test():
-    
-    return "hi"
+    form = UploadForm()
+ 
+    return render_template('error.html')
 
 
 @app.route('/get_chart_data') 
@@ -260,7 +261,7 @@ def get_chart_data():
     test1_marks=[]
     test2_marks=[]
     test3_marks=[]
-    test_4_marks=[]
+    test4_marks=[]
     # print(">>>>>API Called",)
     for test in test_list:
         
@@ -274,14 +275,14 @@ def get_chart_data():
             if test == "test_3":
                 test3_marks.append(student["marks"][sub][test])
             if test == "test_4":
-                test_4_marks.append(student["marks"][sub][test])
+                test4_marks.append(student["marks"][sub][test])
 
     
     data={
         "chart_1":{"tags":subjects, "marks":test1_marks,"title":"Test 1","elementId":"myChart"},
         "chart_2":{"tags":subjects, "marks":test2_marks,"title":"Test 2","elementId":"myChart2"},
         "chart_3":{"tags":subjects, "marks":test3_marks,"title":"Test 3","elementId":"myChart3"},
-        "chart_4":{"tags":subjects, "marks":test_4_marks,"title":"Test 4","elementId":"myChart4"}
+        "chart_4":{"tags":subjects, "marks":test4_marks,"title":"Test 4","elementId":"myChart4"}
         
     }
     session.pop("id_for_chart", None)
@@ -493,11 +494,13 @@ def uploadResult():
     except:
         return render_template("error.html")
 
-
+@app.route('/info')
+def info():
+    return render_template('db_info.html')
 
 #function to save file 
-def save_file(result_file):
-    fileToSave = "all_data.csv"
+def save_file(result_file, file_name):
+    fileToSave = file_name
     save_path = os.path.join(app.root_path, 'school_data',fileToSave)
     result_file.save(save_path)
     return fileToSave
@@ -506,21 +509,36 @@ def save_file(result_file):
 #make sure admin data is mentioned
 @app.route("/updateDb", methods=["POST", "GET"])   
 def updateDatabase():
-    form = UploadForm()
+    teacher_data_form = UploadForm()
+    student_data_form = UploadForm()
+    form=UploadForm()
+        
         # try:
-    if form.validate_on_submit():
-        save_file(form.resultFile.data)
-        # flash("Please wait till we comeplete adding everything...", "success")
-        createDb()
-        flash("Database Creation Complete ! ", "success")
-        print("file uploaded:" )
-        return redirect(url_for("admin"))
+    flash("Please select the right file. After uploading it takes a while, So please wait...", "danger")   
+    if request.method == "POST":
+        form_name = request.form['form_name']
+        if form_name == 'teacher_form':
+    # if teacher_data_form.validate_on_submit():
+            save_file(teacher_data_form.resultFile.data, file_name="teacher_data.csv")
+            # flash("Please wait till we comeplete adding everything...", "success")
+            create_teacherDb()
+            flash("Database Creation Complete ! ", "success")
+            print("file uploaded:" )
+            return redirect(url_for("admin"))
+        elif form_name == 'student_form':
+
+    # if student_data_form.validate_on_submit():
+            save_file(student_data_form.resultFile.data, file_name = "student_data.csv")
+            # flash("Please wait till we comeplete adding everything...", "success")
+            create_studentDb()
+            flash("Database Creation Complete ! ", "success")
+            print("file uploaded:" )
+            return redirect(url_for("admin"))
     
-    else:
-        flash("Please select the file. After uploading it takes a while, So please wait...", "danger")   
+    
     # except:
     #     return render_template("error.html")
-    return render_template("updateDatabase.html", form = form)
+    return render_template("updateDatabase.html", student_form = student_data_form, teacher_form=teacher_data_form, form=form)
     
 
 

@@ -15,11 +15,15 @@ class Subjects(str, enum.Enum):
     history="History",
     geo="Geography",
     politics="Political Science",
+    social_sci="Social Science",
     
     
-subject_list={ "class_9":["maths", Subjects["eng"].value, Subjects["sci"].value, "french", "japanese"],
-                "class_8":["maths","ecology","history","geography","social"],
-                "class_10":["maths","english","science","social"]
+subject_list={ "class_9":[Subjects["maths"].value, Subjects["eng"].value, Subjects["sci"].value, ],
+                "class_8":[Subjects["maths"].value,Subjects["history"].value,Subjects["geo"].value],
+                "class_10":[Subjects["maths"].value, Subjects["eng"].value, Subjects["sci"].value, Subjects["social_sci"].value],
+                
+                "class_5":[Subjects["maths"].value,Subjects["history"].value,Subjects["geo"].value],
+
                 }
 
 # GradeEnum[grade].value
@@ -41,10 +45,11 @@ class Grades(str, enum.Enum):
     B1 = 'B1'
     C1 = 'C1'
     C2 = 'C2'
-    D = 'D'
+    D1 = 'D1'
+    D2 = 'D2'
     E1 = 'E1'
     E2 = 'E2'
-    # F = 'F'
+    F = 'F'
  
  
 

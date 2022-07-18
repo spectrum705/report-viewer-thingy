@@ -1,48 +1,58 @@
 {% extends "base.html" %} {% block content %}
-<div class="full-container">
-  <div class="flex flex-column mx-auto text-center list-unstyled mb-5">
-    <h3>Please Make sure the following</h3>
-    <ul class="list-group">
-      <li class="list-group-item">
-        The admin account is presnt in the file(admin's class field can be
-        blank)
-      </li>
-      <li class="list-group-item">
-        The file extension should be "csv" with the follwing fields in order.
-        <ul class="list-group list-group-horizontal" style="justify-content: center;">
-          <li class="list-group-item">Admission Number</li>
-          <li class="list-group-item">Name</li>
-          <li class="list-group-item">Standard</li>
-        </ul>
-      </li>
-      <li class="list-group-item">
-        The details of both students and teachers should be in the same csv
-        file.
-      </li>
-    </ul>
-  </div>
-  <form
-    method="post"
-    action="#"
-    enctype="multipart/form-data"
-    class="d-flex flex-column text-center align-items-center"
-  >
-    {{form.hidden_tag()}}
+<link rel="stylesheet" href="{{ url_for('static',filename='updateDatabase.css') }}" />
 
-    <form method="post" action="#" enctype="multipart/form-data">
-      {{form.hidden_tag()}} {% if form.resultFile.errors %}
-      {{form.resultFile(class="is-invalid")}}
-      <div class="invalid-feedback">
-        {% for error in form.resultFile.errors %}
-        <span class="is-invalid"> {{error}} </span>
-        {% endfor %} {{form.submit(class = "btn btn-primary")}}
+
+  <div class="main" >
+    <div class="row">
+      <div class="column">
+        <!-- student -->
+        <form method="post" action="#" enctype="multipart/form-data"
+          class="d-flex flex-column text-center align-items-center">
+          {{student_form.hidden_tag()}}
+          <input type="hidden" name="form_name" value="student_form">
+          {% if student_form.resultFile.errors %}
+            {{student_form.resultFile(class="is-invalid")}}
+            <div class="invalid-feedback">
+              {% for error in student_form.resultFile.errors %}
+              <span class="is-invalid"> {{error}} </span>
+              {% endfor %} {{student_form.submit(class = "btn btn-primary")}}
+            </div>
+            {% else %}
+
+            <label>Student Database Creation</label>
+            {{student_form.resultFile}} {{student_form.submit(class = "btn btn-primary")}} {% endif %}
+          </form>
+
+        </form>
+
       </div>
-      {% else %}
 
-      <label>Upload the file. (CSV Only)</label>
-      {{form.resultFile}} {{form.submit(class = "btn btn-primary")}} {% endif %}
-    </form>
+      <div class="column">
+        <!-- teacher -->
+        <form method="post" action="#" enctype="multipart/form-data"
+          class="d-flex flex-column text-center align-items-center">
+          <input type="hidden" name="form_name" value="teacher_form">
 
-    {% endblock %}
-  </form>
-</div>
+                      {{teacher_form.hidden_tag()}} {% if teacher_form.resultFile.errors %}
+            {{teacher_form.resultFile(class="is-invalid")}}
+            <div class="invalid-feedback">
+              {% for error in teacher_form.resultFile.errors %}
+              <span class="is-invalid"> {{error}} </span>
+              {% endfor %} {{teacher_form.submit(class = "btn btn-primary")}}
+            </div>
+            {% else %}
+
+            <label>Teacher Database Creation</label>
+            {{teacher_form.resultFile}} {{teacher_form.submit(class = "btn btn-primary")}} {% endif %}
+          </form>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+{% endblock %}

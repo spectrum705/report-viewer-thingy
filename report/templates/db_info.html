@@ -1,0 +1,37 @@
+{% extends "base.html" %} {% block content %}
+<link rel="stylesheet" href="../static/db_info.css" />
+<div style="justify-content:  center;">
+    <!-- white box at the center -->
+    <div class="container">
+        <p>
+        Please Follow the instructions properly:
+        <ul>
+                <li>
+                    The Student and Teacher  Files must be separate and must be in CSV format only.
+                </li>
+                  
+                <li>
+                    The data must be arranged in the same foramt as the csv files (matching attributes)
+                </li>
+                <li>
+                    In Teachers CSV file: the classes field must be  given special attention, see the example.
+                </li>
+                <li>
+
+                </li>
+
+            </ul>
+            
+        </p>
+        <img src="../static/info.jpg">    </div>
+
+<a href="{{url_for('updateDatabase')}}">
+
+    <button type="button" class="slide">
+        <div>Continue</div>
+        <i class="icon-arrow-right"></i>
+      </button>
+</div>    
+
+
+{% endblock %}

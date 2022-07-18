@@ -1,0 +1,14 @@
+.row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
+  }
+
+  .main{
+    padding: 1.8em;
+    justify-content: center;
+    margin: auto;
+    padding: 1.5em;
+  }

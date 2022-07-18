@@ -14,10 +14,9 @@ def make_student_object(id,name, standard):
     for subject in subject_list[standard]:
         # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
         marks[subject]={"test_1":10, "test_2":10, "test_3":10, "test_4":10, "grade":"A2"}
-    # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
+        # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
     student.marks= marks  
     student.save()
-    return True
 
 # teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
 
@@ -25,14 +24,13 @@ def make_teacher_object(id,name, classes=None ):
     teacher = Teachers(_id= int(id), name=name.upper().strip(), classes=classes, password="pass#"+name.lower())
 
     teacher.save()
-    return True
 
 
 # csv file name
 def create_studentDb():
     # learn about relative path and absolute path
     folder = Path("report/school_data")
-    data_file = folder/"student_dummy_data.csv"
+    data_file = folder/"student_data.csv"
     # data_file = r"C:\Users\SHUBHAM\Desktop\report-viewer-thingy\report\school_data\student_dummy_data.csv"
     Students.drop_collection()
 
@@ -53,7 +51,7 @@ def create_studentDb():
 
 def create_teacherDb():
     folder = Path("report/school_data")
-    data_file = folder/"teacher_dummy_data.csv"
+    data_file = folder/"teacher_data.csv"
     # data_file = r"C:\Users\SHUBHAM\Desktop\report-viewer-thingy\report\school_data\student_dummy_data.csv"
     Teachers.drop_collection()
     admin=Teachers(name="ADMIN", _id=10000, isAdmin=True, password="admin")
