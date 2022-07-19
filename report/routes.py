@@ -292,7 +292,7 @@ def report_card(id):
     if student.isGraded:
 
         # TODO
-        rendered= render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
+        # rendered= render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
         # pdf =pdfkit.from_string(rendered,False)
         
         # response=make_response(pdf)
@@ -300,9 +300,9 @@ def report_card(id):
         # response.headers['Content-Disposition']='attachment; filename=report_card.pdf'
         flash("Report Card Downloaded",'info')
         # return response
-        return send_file((rendered), attachment_filename='output.pdf', as_attachment= True )
+        # return send_file((rendered), attachment_filename='output.pdf', as_attachment= True )
 
-        # return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
+        return render_template('report.html', student=student, subject_list=sub_list, standard=student.standard)
     else:
         flash("All the Marks are not entered", "danger")
         return redirect(url_for('class_result', standard=student.standard))
