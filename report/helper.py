@@ -19,11 +19,11 @@ class Subjects(str, enum.Enum):
     social_sci="Social Science",
     
     
-subject_list={ "class_9":[Subjects["maths"].value.lower(), Subjects["eng"].value.lower(), Subjects["sci"].value.lower(), ],
-                "class_8":[Subjects["maths"].value.lower(),Subjects["history"].value.lower(),Subjects["geo"].value.lower()],
-                "class_10":[Subjects["maths"].value.lower(), Subjects["eng"].value.lower(), Subjects["sci"].value.lower(), Subjects["social_sci"].value.lower()],
+subject_list={ "class_9":[Subjects["maths"].value.upper(), Subjects["eng"].value.upper(), Subjects["sci"].value.upper(), ],
+                "class_8":[Subjects["maths"].value.upper(),Subjects["history"].value.upper(),Subjects["geo"].value.upper()],
+                "class_10":[Subjects["maths"].value.upper(), Subjects["eng"].value.upper(), Subjects["sci"].value.upper(), Subjects["social_sci"].value.upper()],
                 
-                "class_5":[Subjects["maths"].value.lower(),Subjects["history"].value.lower(),Subjects["geo"].value.lower()],
+                "class_5":[Subjects["maths"].value.upper(),Subjects["history"].value.upper(),Subjects["geo"].value.upper()],
 
                 }
 

@@ -79,7 +79,7 @@ def create_teacherDb():
                 classes=[]
                 for cls in teaching_classes:
                     cls=cls.split(":")
-                    cls={cls[0].strip():cls[1].strip()}
+                    cls={cls[0].strip():cls[1].strip().upper()}
                     # have to check classes with Enums
                     classes.append(cls)
                         
