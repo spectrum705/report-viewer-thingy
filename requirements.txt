@@ -14,3 +14,4 @@ pymongo
 python-dotenv
 pandas
 flask_weasyprint 
+passlib

@@ -21,7 +21,7 @@ from flask_login import login_user, current_user, logout_user, login_required, u
 from data import create_teacherDb, make_student_object, make_teacher_object, create_studentDb
 from report.models import Teachers, Students, Marks
 from report import pymongo_client
-from report.helper import grade_calculator, subject_list
+from report.helper import grade_calculator, subject_list, Password
 import ast
 
 csrf = CSRFProtect(app)
@@ -29,25 +29,7 @@ csrf = CSRFProtect(app)
 test_list=["test_1","test_2", "test_3", "test_4"]	
 USER_TOKEN =None
 student_dummy_data = {
-   "class_1":{ "students": [
-               
-                    {"admission_no": 1, "name": "tewo", "marks": {
-                                                    "test_1":{"maths": None, "english": None, "science": None},
-                                                    "test_2":{"maths": None, "english": None, "science": None},
-                                                    "test_3":{"maths": None, "english": None, "science": None},
-                                                    "test_4":{"maths": None, "english": None, "science": None}
-                                                    }
-                    },
-                    
-                    {"admission_no": 2, "name": "naruto", "marks": {
-                                                    "test_1":{"maths": None, "english": None, "science": None},
-                                                    "test_2":{"maths": None, "english": None, "science": None},
-                                                    "test_3":{"maths": None, "english": None, "science": None},
-                                                    "test_4":{"maths": None, "english": None, "science": None}
-                                                    }
-                    },
-         ]
-   },
+  
    
    
      "class_9":{"students": [
@@ -390,28 +372,13 @@ def login():
        
 
     if form.validate_on_submit():
-        # user = User.query.filter_by(username=form.username.data).first()
-        # # theClass = User.query.filter_by(username=form.username.data).first()
-        # if user and bcrypt.check_password_hash(user.password, form.password.data):# and theClass.theClass == request.form["theClass"]:
-        #     login_user(user,remember = form.remember.data)
-        #     flash("Logged in Successfully", "success")
-        #     if current_user.userType == "teacher":
-        #         return redirect(url_for("uploadResult"))
-
-        #     elif current_user.userType == "admin":
-        #         return redirect(url_for("admin"))
-        
-        #     else:
-        #         return redirect(url_for("studentReport"))
 
         user = Teachers.objects(name=form.username.data.upper().strip()).first()
        
-
-        # print("urs:",form.username.data)
-        # print("pwd:", form.password.data)
-        # print("userinDb",user)
-        # print("pwd:",user.password)
-        # if user is not None and form.password.data.strip() == user.password:
+        print(f"pwd form:{form.password.data}, pwd usr:{user.password}")
+        # if user is not None and Password.check(pwd_entered=form.password.data.strip(),hashed_pwd= user.password):
+            # print("")
+       
         if user is not None:
             session["user"] = user.to_json()#form.username.data
             
@@ -514,8 +481,8 @@ def updateDatabase():
     form=UploadForm()
         
         # try:
-    flash("Please select the right file. After uploading it takes a while, So please wait...", "danger")   
     if request.method == "POST":
+        flash("Please select the right file. After uploading it takes a while, So please wait...", "danger")   
         form_name = request.form['form_name']
         if form_name == 'teacher_form':
     # if teacher_data_form.validate_on_submit():
@@ -537,6 +504,7 @@ def updateDatabase():
     
     
     # except:
+    flash("Something went wrong, check everything again","danger")
     #     return render_template("error.html")
     return render_template("updateDatabase.html", student_form = student_data_form, teacher_form=teacher_data_form, form=form)
     

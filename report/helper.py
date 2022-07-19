@@ -1,4 +1,5 @@
 # subject_names to be made from enumes
+from passlib.hash import bcrypt
 
 import enum
 
@@ -32,6 +33,19 @@ subject_list={ "class_9":[Subjects["maths"].value, Subjects["eng"].value, Subjec
 #     B = 'B'
 #     C = 'C'
 #     D = 'D'
+    
+    
+class Password:
+    hasher = bcrypt.using(rounds=11)  # Make it slower
+    @classmethod
+    def enc(cls,pwd):
+        hashed_password= Password.hasher.hash(pwd)
+        return hashed_password
+
+    @classmethod
+    def check(cls,pwd_entered, hashed_pwd):
+        return Password.hasher.verify(pwd_entered, hashed_pwd)
+    
     
 class TestNames(str, enum.Enum):
     test_1="Test 1"

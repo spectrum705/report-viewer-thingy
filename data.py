@@ -4,7 +4,7 @@ import csv,os
 from pathlib import Path
 from pytest import mark
 from report.models import Teachers, Students, Marks#, Subjects
-from report.helper import subject_list
+from report.helper import Password, subject_list
 from report import db
 
 
@@ -21,7 +21,11 @@ def make_student_object(id,name, standard):
 # teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
 
 def make_teacher_object(id,name, classes=None ):
-    teacher = Teachers(_id= int(id), name=name.upper().strip(), classes=classes, password="pass#"+name.lower())
+    pwd=f"pass#{name.lower()}"
+    print(f"pwd:{pwd}")
+    enc=Password.enc(pwd)
+    # print("enC:",enc)
+    teacher = Teachers(_id= int(id), name=name.upper().strip(), classes=classes, password=enc)
 
     teacher.save()
 
@@ -54,7 +58,8 @@ def create_teacherDb():
     data_file = folder/"teacher_data.csv"
     # data_file = r"C:\Users\SHUBHAM\Desktop\report-viewer-thingy\report\school_data\student_dummy_data.csv"
     Teachers.drop_collection()
-    admin=Teachers(name="ADMIN", _id=10000, isAdmin=True, password="admin")
+    enc=Password.enc("admin")
+    admin=Teachers(name="ADMIN", _id=10000, isAdmin=True, password=enc)
     admin.save()
     print(">>ADMIN ADDED")
 
@@ -79,10 +84,10 @@ def create_teacherDb():
                     # have to check classes with Enums
                     classes.append(cls)
                         
-                    
+                
                 make_teacher_object(id=int(row[0]), name=row[1], classes=classes)
                 # print(">>",classes)
-                print(f"name: {row[1]}, class: {row[2]}, added")
+                # print(f"name: {row[1]}, class: {row[2]}, pwd:{row[1]}, added")
             # os.remove(data_file)
         # return True
 

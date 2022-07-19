@@ -9,10 +9,10 @@ def load_user(user_id):
     #this is our database model of a user, made more changes will upload later
 
 
-class Teachers(db.Document, UserMixin):
+class Teachers(db.DynamicDocument, UserMixin):
     _id=db.IntField(primary_key=True)
     name=db.StringField(max_length=20, required=True)
-    password = db.StringField(max_length=20, required=True)
+    # password = db.StringField( required=True)
     classes=db.ListField(db.DictField())
     isAdmin=db.BooleanField()
         
