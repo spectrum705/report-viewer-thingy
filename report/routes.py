@@ -529,4 +529,11 @@ def delete(id):
     
     
 
-    
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('error.html'),404
+ 
+#Handling error 500 and displaying relevant web page
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template('error.html'),500
