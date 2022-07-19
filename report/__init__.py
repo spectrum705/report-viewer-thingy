@@ -11,7 +11,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 load_dotenv()
 
-DB_URI = os.getenv('DB_URI')
+DB_URI = os.getenv('DB_URI')  or os.environ["DB_URI"]
 
 # if "DB_URI" in os.environ:
 #     DB_URI = os.environ['DB_URI']
