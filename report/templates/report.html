@@ -125,7 +125,7 @@
                         <td class="boldHeading"> {{student["marks"][subject]["test_4"]}} </td>
                         <td class="boldHeading"> {{student["marks"][subject]["test_3"] + student["marks"][subject]["test_4"]}} </td>
                         <td class="boldHeading"> {{student["marks"][subject]["test_1"] + student["marks"][subject]["test_2"] +student["marks"][subject]["test_3"] + student["marks"][subject]["test_4"] }} </td>
-                        <td class="boldHeading"> {{student.grade}}</td>
+                        <td class="boldHeading"> {{student["marks"][subject]["grade"]}}</td>
                         {% endfor %}
                     </tr>
                 </tbody>
