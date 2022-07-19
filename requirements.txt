@@ -15,4 +15,6 @@ python-dotenv
 pandas
 flask_weasyprint 
 passlib
-gunicorn 
+Werkzeug==2.0.0
+gunicorn
+jinja2==3.0.3
