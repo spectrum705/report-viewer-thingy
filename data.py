@@ -2,7 +2,6 @@ import random
 import os
 import csv,os
 from pathlib import Path
-from pytest import mark
 from report.models import Teachers, Students, Marks#, Subjects
 from report.helper import Password, subject_list
 from report import db
