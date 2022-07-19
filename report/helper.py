@@ -19,11 +19,11 @@ class Subjects(str, enum.Enum):
     social_sci="Social Science",
     
     
-subject_list={ "class_9":[Subjects["maths"].value, Subjects["eng"].value, Subjects["sci"].value, ],
-                "class_8":[Subjects["maths"].value,Subjects["history"].value,Subjects["geo"].value],
-                "class_10":[Subjects["maths"].value, Subjects["eng"].value, Subjects["sci"].value, Subjects["social_sci"].value],
+subject_list={ "class_9":[Subjects["maths"].value.lower(), Subjects["eng"].value.lower(), Subjects["sci"].value.lower(), ],
+                "class_8":[Subjects["maths"].value.lower(),Subjects["history"].value.lower(),Subjects["geo"].value.lower()],
+                "class_10":[Subjects["maths"].value.lower(), Subjects["eng"].value.lower(), Subjects["sci"].value.lower(), Subjects["social_sci"].value.lower()],
                 
-                "class_5":[Subjects["maths"].value,Subjects["history"].value,Subjects["geo"].value],
+                "class_5":[Subjects["maths"].value.lower(),Subjects["history"].value.lower(),Subjects["geo"].value.lower()],
 
                 }
 

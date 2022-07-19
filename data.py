@@ -49,7 +49,7 @@ def create_studentDb():
                 # student.save()
                 make_student_object(id=row[0], name=row[1], standard=row[2])
                 print(f"name: {row[1]}, class: {row[2]}, added")
-    # os.remove(data_file)
+    os.remove(data_file)
     return True
 
 def create_teacherDb():
@@ -87,7 +87,7 @@ def create_teacherDb():
                 make_teacher_object(id=int(row[0]), name=row[1], classes=classes)
                 # print(">>",classes)
                 # print(f"name: {row[1]}, class: {row[2]}, pwd:{row[1]}, added")
-            # os.remove(data_file)
+            os.remove(data_file)
         # return True
 
 
