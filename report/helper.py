@@ -53,7 +53,7 @@ class TestNames(str, enum.Enum):
 
 
 # enumaratetion of grades
-class Grades(str, enum.Enum):
+class GradeEnum(str, enum.Enum):
     A1 = 'A1'
     A2 = 'A2'
     B1 = 'B1'
