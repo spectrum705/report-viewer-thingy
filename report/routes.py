@@ -481,8 +481,8 @@ def updateDatabase():
     form=UploadForm()
         
         # try:
+    flash("Please select the right file. After uploading it takes a while, So please wait...", "danger")   
     if request.method == "POST":
-        flash("Please select the right file. After uploading it takes a while, So please wait...", "danger")   
         form_name = request.form['form_name']
         if form_name == 'teacher_form':
     # if teacher_data_form.validate_on_submit():

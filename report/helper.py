@@ -9,7 +9,7 @@ class Subjects(str, enum.Enum):
     eng="English",
     hindi="Hindi",
     sans="Sanskrit",
-    sci="Sci",
+    sci="Science",
     maths="Maths",
     phy="Physics",
     chem="Chemistry",
