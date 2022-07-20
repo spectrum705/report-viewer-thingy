@@ -11,9 +11,8 @@ def make_student_object(id,name, standard):
     student = Students(_id= int(id), name=name.upper().strip(), standard=standard)
     marks=Marks()
     for subject in subject_list[standard]:
-        # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
-        marks[subject]={"test_1":10, "test_2":10, "test_3":10, "test_4":10, "grade":"A2"}
-        # marks[subject]={"test_1":None, "test_2":None, "test_3":None, "test_4":None, "grade":None}
+        marks[subject]={"test_1":random.randint(1,10), "test_2":random.randint(1,40), "test_3":random.randint(1,10), "test_4":random.randint(1,40), "grade":None}
+        # marks[subject]={"test_1":10, "test_2":10, "test_3":10, "test_4":10, "grade":"A2"}
     student.marks= marks  
     student.save()
 
@@ -87,7 +86,7 @@ def create_teacherDb():
                 make_teacher_object(id=int(row[0]), name=row[1], classes=classes)
                 # print(">>",classes)
                 # print(f"name: {row[1]}, class: {row[2]}, pwd:{row[1]}, added")
-            os.remove(data_file)
+    os.remove(data_file)
         # return True
 
 

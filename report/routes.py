@@ -480,8 +480,8 @@ def updateDatabase():
     student_data_form = UploadForm()
     form=UploadForm()
         
-        # try:
-    flash("Please select the right file. After uploading it takes a while, So please wait...", "danger")   
+    # try:
+    flash("Please select the right file. After uploading it takes a while, So please wait...", "yellow")   
     if request.method == "POST":
         form_name = request.form['form_name']
         if form_name == 'teacher_form':
@@ -504,7 +504,7 @@ def updateDatabase():
     
     
     # except:
-    flash("Something went wrong, check everything again","danger")
+    #     flash("Something went wrong, check everything again","danger")
     #     return render_template("error.html")
     return render_template("updateDatabase.html", student_form = student_data_form, teacher_form=teacher_data_form, form=form)
     

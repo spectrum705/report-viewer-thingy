@@ -19,7 +19,7 @@ class Subjects(str, enum.Enum):
     social_sci="Social Science",
     
     
-subject_list={ "class_9":[Subjects["maths"].value.upper(), Subjects["eng"].value.upper(), Subjects["sci"].value.upper(), ],
+subject_list={ "class_9":[Subjects["maths"].value.upper(), Subjects["eng"].value.upper(), Subjects["sci"].value.upper(), Subjects["phy"].value.upper(), Subjects["chem"].value.upper()],
                 "class_8":[Subjects["maths"].value.upper(),Subjects["history"].value.upper(),Subjects["geo"].value.upper()],
                 "class_10":[Subjects["maths"].value.upper(), Subjects["eng"].value.upper(), Subjects["sci"].value.upper(), Subjects["social_sci"].value.upper()],
                 
