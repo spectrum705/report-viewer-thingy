@@ -479,6 +479,9 @@ def info():
 #function to save file 
 def save_file(result_file, file_name):
     fileToSave = file_name
+    isExist = os.path.exists('report/school_data')
+    if not isExist:
+        os.makedirs('report/school_data')
     save_path = os.path.join(app.root_path, 'school_data',fileToSave)
     result_file.save(save_path)
     return fileToSave

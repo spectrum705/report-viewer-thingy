@@ -31,7 +31,11 @@ def make_teacher_object(id,name, classes=None ):
 # csv file name
 def create_studentDb():
     # learn about relative path and absolute path
+    # isExist = os.path.exists('report/school_data')
+    # if not isExist:
+    #     os.makedirs(folder)
     folder = Path("report/school_data")
+    
     data_file = folder/"student_data.csv"
     # data_file = r"C:\Users\SHUBHAM\Desktop\report-viewer-thingy\report\school_data\student_dummy_data.csv"
     Students.drop_collection()
@@ -52,6 +56,10 @@ def create_studentDb():
     return True
 
 def create_teacherDb():
+
+    # isExist = os.path.exists('report/school_data')
+    # if not isExist:
+    #     os.makedirs(folder)
     folder = Path("report/school_data")
     data_file = folder/"teacher_data.csv"
     # data_file = r"C:\Users\SHUBHAM\Desktop\report-viewer-thingy\report\school_data\student_dummy_data.csv"
