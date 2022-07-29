@@ -6,24 +6,24 @@ import enum
     # sub names to be made from Enums 
 
 class Subjects(str, enum.Enum):
-    eng="English",
-    hindi="Hindi",
-    sans="Sanskrit",
-    sci="Science",
-    maths="Maths",
-    phy="Physics",
-    chem="Chemistry",
-    history="History",
-    geo="Geography",
-    politics="Political Science",
-    social_sci="Social Science",
+    eng="ENGILISH",
+    hindi="HINDI",
+    sans="SANSKRIT",
+    sci="SCIENCE",
+    maths="MATHS",
+    phy="PHYSICS",
+    chem="CHEMISTRY",
+    history="HISTORY",
+    geo="GEOGRAPHY",
+    politics="POLITICS",
+    social_sci="SOCIAL SCIENCE",
     
     
-subject_list={ "class_9":[Subjects["maths"].value.upper(), Subjects["eng"].value.upper(), Subjects["sci"].value.upper(), Subjects["phy"].value.upper(), Subjects["chem"].value.upper()],
-                "class_8":[Subjects["maths"].value.upper(),Subjects["history"].value.upper(),Subjects["geo"].value.upper()],
-                "class_10":[Subjects["maths"].value.upper(), Subjects["eng"].value.upper(), Subjects["sci"].value.upper(), Subjects["social_sci"].value.upper()],
+subject_list={ "class_9":[Subjects["maths"].value, Subjects["eng"].value, Subjects["sci"].value, ],
+                "class_8":[Subjects["maths"].value,Subjects["history"].value,Subjects["geo"].value],
+                "class_10":[Subjects["maths"].value, Subjects["eng"].value, Subjects["sci"].value, Subjects["social_sci"].value],
                 
-                "class_5":[Subjects["maths"].value.upper(),Subjects["history"].value.upper(),Subjects["geo"].value.upper()],
+                "class_5":[Subjects["maths"].value,Subjects["history"].value,Subjects["geo"].value],
 
                 }
 

@@ -1,17 +1,22 @@
-#create flask app
-from flask import Flask, render_template
+from report.models import Teachers, Students, Marks#, Subjects
 
-app=Flask(__name__)
 
-@app.route('/')
-def home():
-    return "<h1> Hewllo humans </h1>"
+data = []
 
-@app.route('/about')
-def about():
-    return "<h3> about humans </h3>"
- 
- 
+students = Students.objects(standard="class_9")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+for each in students:
+    kid = {}
+    marks={}
+    kid["id"]=each.id
+    kid["name"] = each.name
+    for i in (each.marks):
+        marks[i]=each.marks[i]
+    kid["marks"]=marks
+    kid["standard"]=each.standard
+    data.append(kid)
+
+
+
+print(data)
+
