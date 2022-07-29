@@ -19,7 +19,7 @@ def make_student_object(id,name, standard):
 # teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
 
 def make_teacher_object(id,name, classes=None ):
-    pwd=f"pass#{name.lower()}"
+    pwd=f"pass#{name.lower().strip()}"
     print(f"pwd:{pwd}")
     enc=Password.enc(pwd)
     # print("enC:",enc)

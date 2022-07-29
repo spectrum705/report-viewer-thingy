@@ -4,12 +4,12 @@ from urllib import response
 
 import requests
 from sqlalchemy import true
-import pdfkit
+#import pdfkit
 import pandas as pd
 import random
 from flask import jsonify, make_response, render_template, render_template_string,request,url_for,redirect , session, flash, send_file
 from report import app, db, bcrypt
-from flask_weasyprint import HTML, render_pdf
+#from flask_weasyprint import HTML, render_pdf
  
 from flask_wtf.csrf import CSRFProtect
 from requests import sessions
@@ -210,11 +210,22 @@ def class_result(standard):
     if request.method=="POST":
         
         table = pd.read_html ( render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard))[ 0 ]
-        table .to_excel ( f"{standard}_marsheet.xlsx" )
+        sheet = table .to_excel (f"{standard}_marsheet.xlsx" )
         flash("Marksheet downloaded", "info")
+        return send_file(BytesIO(sheet), attachment_filename=f"{standard}_marsheet.xlsx", as_attachment=True)
     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
    
-   
+# @app.route('/student_report/<getId>/<attach>', methods=["POST", "GET"])
+# @login_required
+# def download(getId, attach):
+#     # print( request.args.get("attach"))
+#     # print("download_stud-admission_no:",request.form["student_id"])
+#     user = User.query.filter_by(id = getId).first() 
+#     print(attach)
+#     print(user)
+#     return send_file(BytesIO(user.fileData), attachment_filename=user.fileName, as_attachment= attach )
+
+
  
 
 # @app.route(f'/class_result/<standard>/get-data/{Config.objects(name="marksheet_code").first().code}')
@@ -239,7 +250,7 @@ def test():
 @app.route('/get_chart_data') 
 def get_chart_data():
     student=Students.objects(_id=session["id_for_chart"]).first()
-    subjects=list(subject_list[student.standard])
+    subjects=list( subject_list[student.standard])
     test1_marks=[]
     test2_marks=[]
     test3_marks=[]
@@ -375,8 +386,8 @@ def login():
 
         user = Teachers.objects(name=form.username.data.upper().strip()).first()
        
-        print(f"pwd form:{form.password.data}, pwd usr:{user.password}")
-        # if user is not None and Password.check(pwd_entered=form.password.data.strip(),hashed_pwd= user.password):
+        # print(f"pwd form:{form.password.data}, pwd usr:{user.password}, check:{Password.check(pwd_entered=form.password.data.strip(),hashed_pwd= user.password)}")
+        # if (user is not None) and Password.check(pwd_entered=form.password.data.strip(),hashed_pwd= user.password):
             # print("")
        
         if user is not None:

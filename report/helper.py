@@ -1,6 +1,6 @@
 # subject_names to be made from enumes
-from passlib.hash import bcrypt
-
+# from passlib.hash import bcrypt
+import bcrypt
 import enum
 
     # sub names to be made from Enums 
@@ -34,17 +34,29 @@ subject_list={ "class_9":[Subjects["maths"].value.upper(), Subjects["eng"].value
 #     C = 'C'
 #     D = 'D'
     
-    
+# import bcrypt
+# username = request.form.get("username")
+# password = request.form.get("password").encode("utf-8")
+# hashed = bcrypt.hashpw(password,bcrypt.gensalt())
+# # Look user up in DB using username
+# if bcrypt.checkpw(password, hashed):
+#     print("It matches!")
+# else:
+#     print("Didn't match")
+# ye dkhlena
+
 class Password:
-    hasher = bcrypt.using(rounds=11)  # Make it slower
+    # hasher = bcrypt.using(rounds=11)  # Make it slower
     @classmethod
     def enc(cls,pwd):
-        hashed_password= Password.hasher.hash(pwd)
+        # hashed_password= Password.hasher.hash(pwd)
+        hashed_password = bcrypt.hashpw(pwd.encode("utf-8"),bcrypt.gensalt())
         return hashed_password
 
     @classmethod
     def check(cls,pwd_entered, hashed_pwd):
-        return Password.hasher.verify(pwd_entered, hashed_pwd)
+        return bcrypt.checkpw(pwd_entered.encode("utf-8"), hashed_pwd)
+        # return Password.hasher.verify(pwd_entered, hashed_pwd)
     
     
 class TestNames(str, enum.Enum):

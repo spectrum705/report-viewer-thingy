@@ -1,7 +1,7 @@
 # report-viewer-thingy
 steps:
 
-    pip3 install -r reqirements.txt
+    pip3 install -r requirements.txt
 
 during tests if site.db doesn't exits then create dummy data by
 
