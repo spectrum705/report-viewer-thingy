@@ -14,10 +14,9 @@ pymongo
 python-dotenv
 pandas
 flask_weasyprint 
-passlib
 Werkzeug==2.0.0
 gunicorn
 jinja2==3.0.3
-pdfkit
 lxml
 openpyxl
+xlsxwriter

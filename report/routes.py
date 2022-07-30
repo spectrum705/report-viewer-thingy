@@ -212,13 +212,19 @@ def class_result(standard):
     if request.method=="POST":
         
         table = pd.read_html ( render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard))[ 0 ]
-        # output = path.abspath(f"{standard}_marsheet.xlsx")
-        output = f"../../{standard}_marsheet.xlsx"
-        
-        sheet = table .to_excel (output)
+        # output = f"../../{standard}_marsheet.xlsx"
+        # sheet = table .to_excel (output)
         flash("Marksheet downloaded", "info")
         
-        # return send_file(BytesIO(sheet), attachment_filename=f"{standard}_marsheet.xlsx", as_attachment=True)
+        output = BytesIO()
+        with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
+            table.to_excel(writer, sheet_name=f"{standard}_marsheet.xlsx")
+        output.seek(0)
+        return send_file(output, attachment_filename=f"{standard}_marsheet.xlsx", as_attachment=True)
+        
+        
+        
+        
     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
    
 # @app.route('/student_report/<getId>/<attach>', methods=["POST", "GET"])
