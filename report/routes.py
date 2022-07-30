@@ -14,6 +14,8 @@ from report import app, db, bcrypt
 from flask_wtf.csrf import CSRFProtect
 from requests import sessions
 import os
+from os import path
+
 from io import BytesIO
 from report.forms import CreateAccount, LoginForm, UploadForm, UpdateForm
 from flask_login import login_user, current_user, logout_user, login_required, user_logged_in
@@ -210,9 +212,13 @@ def class_result(standard):
     if request.method=="POST":
         
         table = pd.read_html ( render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard))[ 0 ]
-        sheet = table .to_excel (f"{standard}_marsheet.xlsx" )
+        # output = path.abspath(f"{standard}_marsheet.xlsx")
+        output = f"../../{standard}_marsheet.xlsx"
+        
+        sheet = table .to_excel (output)
         flash("Marksheet downloaded", "info")
-        return send_file(BytesIO(sheet), attachment_filename=f"{standard}_marsheet.xlsx", as_attachment=True)
+        
+        # return send_file(BytesIO(sheet), attachment_filename=f"{standard}_marsheet.xlsx", as_attachment=True)
     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
    
 # @app.route('/student_report/<getId>/<attach>', methods=["POST", "GET"])
@@ -413,64 +419,6 @@ def login():
     
     return render_template("login.html", title='Login', form = form)
 
-
-
-
-
-
-
-@app.route("/student_report", methods=["GET"])   
-@login_required     
-def studentReport():
-    # saving in file system
-    # if current_user.fileName:
-    #     with open(os.getcwd()+'/report/student_results/'+ f"{current_user.fileName}" ,'wb') as pen:
-    #         pen.write(current_user.fileData)
-    
-    try:
-        if current_user.userType == "student":
-            report = User.query.filter_by(id = current_user.id).first()
-            return render_template("student_report.html", file = report.fileName)
-        elif current_user.userType == "teacher":
-            return redirect(url_for("uploadResult"))
-    except:
-        return render_template("error.html")
-
-    
-
-
-@app.route("/upload_result", methods=["POST", "GET"])   
-@login_required     
-def uploadResult():
-    try:
-        form = UploadForm()
-        if form.validate_on_submit():
-            print("form submit validated")
-            if form.resultFile.data:
-                print("file has data rn")
-                studentReport = User.query.filter_by(id = request.form["student_id"]).first()
-                # resultFile = save_file(form.resultFile.data, name = studentReport.username )
-                print("kid Id:", request.form["student_id"])
-                studentReport.fileName = studentReport.username+"_result." + str(form.resultFile.data.filename).split('.')[1]#resultFile
-                studentReport.fileData = form.resultFile.data.read()
-                db.session.commit()
-                flash("File Successfully Uploaded.", "success ")
-                print("file uploaded:" )
-            else:
-                flash("Please select a file.", "danger")
-        studentList = User.query.filter_by(userType="student", theClass = current_user.theClass).all()  
-        if current_user.userType == "teacher":
-            return render_template("upload_result.html", title="upload result", 
-                            student = studentList,form=form)#, filename=filename)
-        elif current_user.userType == "student":
-            flash("huhuhuh, thought you were smarter kid?", "danger")
-            return redirect(url_for("studentReport"))
-        else:
-            studentList = User.query.filter_by(userType="student").all()
-            return render_template("upload_result.html", title="upload result", 
-                            student = studentList,form=form)
-    except:
-        return render_template("error.html")
 
 @app.route('/info')
 def info():
