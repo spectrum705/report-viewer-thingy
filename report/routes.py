@@ -1,13 +1,14 @@
 
+import pdfkit
+
 import json
 from urllib import response
-
 import requests
 from sqlalchemy import true
 #import pdfkit
 import pandas as pd
 import random
-from flask import jsonify, make_response, render_template, render_template_string,request,url_for,redirect , session, flash, send_file
+from flask import Response, jsonify, make_response, render_template, render_template_string,request,url_for,redirect , session, flash, send_file
 from report import app, db, bcrypt
 #from flask_weasyprint import HTML, render_pdf
  
@@ -102,8 +103,8 @@ def admin():
     if user_logged.isAdmin:
         if request.method == "POST":
             if request.form["admin"]:
-                session['toUpdate'] = request.form["admin"]
-                usr = Teachers.objects(name=(session['toUpdate'])).first() or Students.objects(name=session['toUpdate'].upper()).first() #User.query.filter_by(username = session['toUpdate']).first()
+                session['toUpdate'] = request.form["admin"].upper()
+                usr = Teachers.objects(name=(session['toUpdate'])).first() or Students.objects(name=session['toUpdate']).first() #User.query.filter_by(username = session['toUpdate']).first()
                 print(request.form["admin"])
                 # print(">>>>>>>>",usr.name)	
 
@@ -329,6 +330,32 @@ def report_card(id):
     else:
         flash("All the Marks are not entered", "danger")
         return redirect(url_for('class_result', standard=student.standard))
+
+@app.route("/download")
+def route_download():
+    
+    # Get the HTML output
+    out = render_template("test.html")
+    
+    # PDF options
+    options = {
+        "orientation": "landscape",
+        "page-size": "A4",
+        "margin-top": "1.0cm",
+        "margin-right": "1.0cm",
+        "margin-bottom": "1.0cm",
+        "margin-left": "1.0cm",
+        "encoding": "UTF-8",
+    }
+    
+    # Build PDF from HTML 
+    pdf = pdfkit.from_string(out, options=options)
+    
+    # Download the PDF
+    return Response(pdf, mimetype="application/pdf")
+
+
+
 
 #secure file upload or just make a function instead of a route
 @app.route('/student_report/<getId>/<attach>', methods=["POST", "GET"])

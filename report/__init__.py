@@ -13,12 +13,6 @@ load_dotenv()
 
 DB_URI = os.getenv('DB_URI')  or os.environ["DB_URI"]
 
-# if "DB_URI" in os.environ:
-#     DB_URI = os.environ['DB_URI']
-# else:
-#     from report.config import DB_URI
-
-
 app = Flask(__name__)
 
 
