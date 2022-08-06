@@ -75,5 +75,6 @@ Create a .env file inside /report and add URI of your mongodb Database
 ## Screenshots
 
 ![Login Page](/Login.png)
+![Upload Page](/Upload Marks.png)
 ![Class result](/class_result.png)
 ![Dashboard](/dashboard.png)
