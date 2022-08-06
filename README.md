@@ -39,6 +39,12 @@ Go to the project directory
   cd report-viewer-thingy
 ```
 
+Change to Dev branch
+
+```bash
+git checkout dev
+```
+
 Install dependencies
 
 ```bash
