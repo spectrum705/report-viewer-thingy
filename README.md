@@ -33,17 +33,17 @@ Clone the project
 git clone https://github.com/animed705/report-viewer-thingy/
 ```
 
-Change to Dev branch
-
-```bash
-git checkout dev
-```
-
 
 Go to the project directory
 
 ```bash
   cd report-viewer-thingy
+```
+
+Change to Dev branch
+
+```bash
+git checkout dev
 ```
 
 Install dependencies
