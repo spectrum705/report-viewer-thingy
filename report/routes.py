@@ -68,6 +68,10 @@ teacher_dummy_data={
 }
 
 
+@app.route('/attendance')
+def class_attendance():
+    return render_template('attendance.html')
+
 @app.route('/class_navigation')
 @login_required
 def class_navigation():
@@ -201,7 +205,6 @@ def upload_marks_page(standard, subject, test_name):
 
 
 
-# TODO
 @app.route(f'/class_result/<standard>', methods=["GET","POST"])
 @login_required
 def class_result(standard):

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Demo - Capture Photo From Webcam Using Javascript</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<style type="text/css">
+
+button {
+    width: 120px;
+    padding: 10px;
+    display: block;
+    margin: 20px auto;
+    border: 2px solid #111111;
+    cursor: pointer;
+    background-color: white;
+}
+/* 
+#start-camera { 
+    margin-top: 50px;
+}
+
+#video {
+    display: none;
+    margin: 50px auto 0 auto;
+}
+
+#click-photo {
+    display: none;
+}
+
+#dataurl-container {
+    display: none;
+}
+
+#canvas {
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+#dataurl-header {
+    text-align: center;
+    font-size: 15px;
+}
+
+#dataurl {
+    display: block;
+    height: 100px;
+    width: 320px;
+    margin: 10px auto;
+    resize: none;
+    outline: none;
+    border: 1px solid #111111;
+    padding: 5px;
+    font-size: 13px;
+    box-sizing: border-box;
+} */
+
+video  {
+  width: 192px;
+  height: 192px;
+  background: rgba(0,0,0,0.2);
+  -webkit-transform: scaleX(-1); /* mirror effect while using front cam */
+  transform: scaleX(-1);         /* mirror effect while using front cam */
+}
+
+#canvas  {
+  width: 192px;
+  height: 192px;
+  -webkit-transform: scaleX(-1); /* mirror effect while using front cam */
+  transform: scaleX(-1);         /* mirror effect while using front cam */
+}
+</style>
+</head>
+
+<body>
+<!-- 
+<button id="start-camera">Start Camera</button>
+<video id="video" width="320" height="240" autoplay></video>
+<button id="click-photo">Click Photo</button>
+<div>
+    <button id="btn-front">Front</button>
+    <button id="btn-back">Back</button>
+  </div>
+<div id="dataurl-container">
+    <canvas id="canvas" width="320" height="240"></canvas>
+    <div id="dataurl-header">Image Data URL</div>
+    <textarea id="dataurl" readonly></textarea>
+</div> -->
+<div class="container p-5" align="center">
+    <div class="">
+      <b>Your Cam:</b><br>
+      <video id="camera-stream" class="border border-5 border-danger"></video>
+    </div>
+    <div class="">
+      <button disabled id="flip-btn" class="btn btn-sm btn-warning">
+        Flip Camera
+      </button>
+      <button id="capture-camera" class="btn btn-sm btn-primary">
+        Take photo
+      </button>
+    </div>
+    <div class="mt-3">
+      <b>Output:</b>
+      <br>
+      <canvas id="canvas" class="bg-light shadow border border-5 border-success">
+      </canvas>
+    <!-- upload button -->
+      <button id="upload-button" class="btn btn-sm btn-primary" onclick="uploadFile()">
+        SCAN
+      </button>
+    </div>
+  </div>
+<script>
+
+async function uploadFile() {
+    let formData = new FormData();           
+    formData.append("file", fileupload.files[0]);
+    await fetch('http://localhost:5002', {
+      method: "POST", 
+      body: formData
+    });    
+    alert('The file has been uploaded successfully.');
+}
+ let on_stream_video = document.querySelector('#camera-stream');
+  // flip button element
+  let flipBtn = document.querySelector('#flip-btn');
+
+  // default user media options
+  let constraints = { audio: false, video: true }
+  let shouldFaceUser = true;
+
+  // check whether we can use facingMode
+  let supports = navigator.mediaDevices.getSupportedConstraints();
+  if( supports['facingMode'] === true ) {
+    flipBtn.disabled = false;
+  }
+
+  let stream = null;
+
+  function capture() {
+    constraints.video = {
+        width: {
+        min: 192,
+        ideal: 192,
+        max: 192,
+      },
+      height: {
+        min: 192,
+        ideal: 192,
+        max: 192
+      },
+      facingMode: shouldFaceUser ? 'user' : 'environment'
+    }
+    navigator.mediaDevices.getUserMedia(constraints)
+      .then(function(mediaStream) {
+        stream  = mediaStream;
+        on_stream_video.srcObject = stream;
+        on_stream_video.play();
+      })
+      .catch(function(err) {
+        console.log(err)
+      });
+  }
+
+  flipBtn.addEventListener('click', function(){
+    if( stream == null ) return
+    // we need to flip, stop everything
+    stream.getTracks().forEach(t => {
+      t.stop();
+    });
+    // toggle / flip
+    shouldFaceUser = !shouldFaceUser;
+    capture();
+  })
+
+  capture();
+
+  document.getElementById("capture-camera").addEventListener("click", function() {
+    // Elements for taking the snapshot
+      const video = document.querySelector('video');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+  });
+// let camera_button = document.querySelector("#start-camera");
+// let video = document.querySelector("#video");
+// let click_button = document.querySelector("#click-photo");
+// let canvas = document.querySelector("#canvas");
+// let dataurl = document.querySelector("#dataurl");
+// let dataurl_container = document.querySelector("#dataurl-container");
+
+// // const videoElm = document.querySelector('#video');
+// const btnFront = document.querySelector('#btn-front');
+// const btnBack = document.querySelector('#btn-back');
+
+
+
+// camera_button.addEventListener('click', async function() {
+//    	let stream = null;
+
+//     try {
+//     	stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+//     }
+//     catch(error) {
+//     	alert(error.message);
+//     	return;
+//     }
+
+//     video.srcObject = stream;
+
+//     video.style.display = 'block';
+//     camera_button.style.display = 'none';
+//     click_button.style.display = 'block';
+    
+// });
+
+// click_button.addEventListener('click', function() {
+//     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+//    	let image_data_url = canvas.toDataURL('image/jpeg');
+    
+//     dataurl.value = image_data_url;
+//     dataurl_container.style.display = 'block';
+// });
+
+// function handleVideo(cameraFacing) {
+//   const constraints = {
+//     video: {
+//       facingMode: {
+//         exact: cameraFacing
+//       }
+//     }
+//   }
+//   return constraints
+// };
+// let stream;
+
+// const capture = async facingMode => {
+//   const options = {
+//     audio: false,
+//     video: {
+//       facingMode,
+//     },
+//   };
+
+//   try {
+//     if (stream) {
+//       const tracks = stream.getTracks();
+//       tracks.forEach(track => track.stop());
+//     }
+//     stream = await navigator.mediaDevices.getUserMedia(options);
+//   } catch (e) {
+//     alert(e);
+//     return;
+//   }
+//   videoElm.srcObject = null;
+//   videoElm.srcObject = stream;
+//   videoElm.play();
+// }
+
+// btnBack.addEventListener('click', () => {
+//   capture('environment');
+// });
+
+// btnFront.addEventListener('click', () => {
+//   capture('user');
+// });
+</script>
+
+</body>
+</html>
