@@ -6,7 +6,7 @@ import enum
     # sub names to be made from Enums 
 
 class Subjects(str, enum.Enum):
-    eng="ENGILISH",
+    eng="ENGLISH",
     hindi="HINDI",
     sans="SANSKRIT",
     sci="SCIENCE",
