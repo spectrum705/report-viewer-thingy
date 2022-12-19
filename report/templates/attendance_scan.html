@@ -60,9 +60,13 @@ video  {
   width: 192px;
   height: 192px;
   background: rgba(0,0,0,0.2);
-  -webkit-transform: scaleX(-1); /* mirror effect while using front cam */
-  transform: scaleX(-1);         /* mirror effect while using front cam */
-}
+  /* -webkit-transform: scaleX(-1); mirror effect while using front cam */
+  /* transform: scaleX(-1);         mirror effect while using front cam */
+
+
+
+ }
+
 
 #canvas  {
   width: 192px;
@@ -89,7 +93,6 @@ video  {
 </div> -->
 
 <div class="container p-5" align="center">
-<h1>This is From Github Deta Deployment And the changes are getting refleted  ! Yay !</h1>
   <div class="">
       <b>Your Cam:</b><br>
       <video id="camera-stream" class="border border-5 border-danger"></video>
@@ -108,22 +111,14 @@ video  {
       <canvas id="canvas" class="bg-light shadow border border-5 border-success">
       </canvas>
     <!-- upload button -->
-      <button id="upload-button" class="btn btn-sm btn-primary" onclick="uploadFile()">
+      <button id="scan-button" class="btn btn-sm btn-primary" onclick="">
         SCAN
       </button>
     </div>
   </div>
 <script>
 
-async function uploadFile() {
-    let formData = new FormData();           
-    formData.append("file", fileupload.files[0]);
-    await fetch('http://localhost:5002', {
-      method: "POST", 
-      body: formData
-    });    
-    alert('The file has been uploaded successfully.');
-}
+
  let on_stream_video = document.querySelector('#camera-stream');
   // flip button element
   let flipBtn = document.querySelector('#flip-btn');
@@ -137,7 +132,7 @@ async function uploadFile() {
   if( supports['facingMode'] === true ) {
     flipBtn.disabled = false;
   }
-
+  
   let stream = null;
 
   function capture() {
@@ -184,7 +179,53 @@ async function uploadFile() {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       canvas.getContext('2d').drawImage(video, 0, 0);
+      video.srcObject = stream;
+      // const context = canvas.getContext('2d');
   });
+
+  document.getElementById("capture-camera").addEventListener("click", async function()
+  {
+    const canvas = document.getElementById('canvas');
+
+    canvas.toBlob(function(blob) {
+        // Create a FormData object and append the Blob object to it
+        const formData = new FormData();
+        formData.append('image', blob, 'image.png');
+
+        // Send the FormData object to the Python Flask server endpoint
+        fetch('http://172.29.3.111:5002/', {
+            method: 'POST',
+            body: formData
+        }) 
+        .then((response) => response.text())
+        .then((message) => {
+            // console.log(message); 
+          alert(message)
+          // let qr_data=message
+          
+          // fetch('/test', {
+          //   method: 'POST',
+          //   body: {"data":"heyy"}
+          // }).then(function (res){return 200} );
+        }) 
+        });
+
+          
+          });
+    
+
+ 
+  // document.getElementById("scan-button").addEventListener("click",async function(){
+  // fetch('/attendance', {
+  //   method: 'POST',
+  //   body: {"data":qr_data}
+  //   }).then(function (res){return 200} );
+  // });
+ 
+
+
+
+
 // let camera_button = document.querySelector("#start-camera");
 // let video = document.querySelector("#video");
 // let click_button = document.querySelector("#click-photo");
@@ -197,76 +238,6 @@ async function uploadFile() {
 // const btnBack = document.querySelector('#btn-back');
 
 
-
-// camera_button.addEventListener('click', async function() {
-//    	let stream = null;
-
-//     try {
-//     	stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-//     }
-//     catch(error) {
-//     	alert(error.message);
-//     	return;
-//     }
-
-//     video.srcObject = stream;
-
-//     video.style.display = 'block';
-//     camera_button.style.display = 'none';
-//     click_button.style.display = 'block';
-    
-// });
-
-// click_button.addEventListener('click', function() {
-//     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-//    	let image_data_url = canvas.toDataURL('image/jpeg');
-    
-//     dataurl.value = image_data_url;
-//     dataurl_container.style.display = 'block';
-// });
-
-// function handleVideo(cameraFacing) {
-//   const constraints = {
-//     video: {
-//       facingMode: {
-//         exact: cameraFacing
-//       }
-//     }
-//   }
-//   return constraints
-// };
-// let stream;
-
-// const capture = async facingMode => {
-//   const options = {
-//     audio: false,
-//     video: {
-//       facingMode,
-//     },
-//   };
-
-//   try {
-//     if (stream) {
-//       const tracks = stream.getTracks();
-//       tracks.forEach(track => track.stop());
-//     }
-//     stream = await navigator.mediaDevices.getUserMedia(options);
-//   } catch (e) {
-//     alert(e);
-//     return;
-//   }
-//   videoElm.srcObject = null;
-//   videoElm.srcObject = stream;
-//   videoElm.play();
-// }
-
-// btnBack.addEventListener('click', () => {
-//   capture('environment');
-// });
-
-// btnFront.addEventListener('click', () => {
-//   capture('user');
-// });
 </script>
 
 </body>

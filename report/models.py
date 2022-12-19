@@ -15,6 +15,7 @@ class Teachers(db.DynamicDocument, UserMixin):
     # password = db.StringField( required=True)
     classes=db.ListField(db.DictField())
     isAdmin=db.BooleanField()
+    isStudent=db.BooleanField()
         
   
     def to_json(self):
@@ -41,4 +42,3 @@ class Students(db.Document):
     marks=db.EmbeddedDocumentField(Marks)
     isGraded=db.BooleanField
     # roll_number=db.IntField(required=True)
-    

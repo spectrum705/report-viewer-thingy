@@ -22,7 +22,7 @@ Demo Accounts:
 
 `Admin`
 
-[Deployed Demo Link](https://student-report-thingy.herokuapp.com)
+[Deployed Demo Link](https://studentreport.deta.dev)
 
 
 ## Run Locally
@@ -30,7 +30,7 @@ Demo Accounts:
 Clone the project
 
 ```bash
-git clone https://github.com/animed705/report-viewer-thingy/
+git clone https://github.com/spectrum705/report-viewer-thingy/
 ```
 
 
@@ -55,7 +55,7 @@ pip install -r requirements.txt
 Start the server
 
 ```bash
-python run.py
+python main.py
 ```
 
 

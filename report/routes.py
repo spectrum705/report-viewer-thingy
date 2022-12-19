@@ -68,9 +68,36 @@ teacher_dummy_data={
 }
 
 
-@app.route('/attendance')
-def class_attendance():
-    return render_template('attendance.html')
+@app.route('/attendance',  methods = ["POST", "GET"])
+def attendance():
+    pload = {'blood':'O+'}
+    requests.post('http://172.21.35.187:5002/', data=pload)
+    
+    if request.method=="POST":
+        # pass    
+        print("HEY !!")
+        
+        print(request.forms["data"])
+        # result=d.json() 
+        # qr_data=result.json["0"]["data"]
+        # # print(qr_data)
+        # final_dictionary = json.loads(qr_data)
+        # print(final_dictionary['name'])  
+ 
+    name = Teachers.objects(_id=session["user"]["id"]).first().name
+    return render_template('attendance_scan.html', name=name)
+
+
+
+@app.route('/attendance_list',  methods = [ "GET"])
+def attendance_list():
+    
+    if current_user.isAdmin:
+        return render_template('attendance_list.html')
+    return render_template(redirect(url_for('home')))
+
+
+
 
 @app.route('/class_navigation')
 @login_required
@@ -255,12 +282,13 @@ def class_result(standard):
 #     return render_template('class_result.html', student_list=student_list, test_list=test_list, subject_list=subjects, standard=standard)
    
  
-@app.route('/test')
+@app.route('/test',methods=["POST","GET"])
 @login_required                                                  
 def test():
-    form = UploadForm()
+    if request.method=="POST":
+        print("GOT IT !!")
  
-    return render_template('error.html')
+    return render_template('test.html')
 
 
 @app.route('/get_chart_data') 
@@ -419,6 +447,8 @@ def login():
         if Teachers.objects(_id=session["user"]["id"]).first().isAdmin:
             print(">>>user in session:", session["user"])	
             return redirect(url_for("admin"))
+        elif Teachers.objects(_id=session["user"]["id"]).first().isStudent:
+            return redirect(url_for("attendance"))
         else:
             return redirect(url_for("class_navigation"))
     # find why it says none type object wen yser is already logged in   
