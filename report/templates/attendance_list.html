@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+ {% block content %}
+
+<!-- make a table -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ url_for('static',filename='class_result.css') }}" />
+<div style="margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;">
+    <div class="heading">
+        <h1>Class Attendance
+        </h1>
+        <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+            <button onclick=""  type="submit" class="btn"><i class="fa fa-download"></i> Download</button>
+
+        </form>
+            
+    </div>
+    <div id="tableFixHead">
+        <table id="classResult">
+
+            <thead>
+                <tr>
+                    <th rowspan="2">Name</th>
+                    <th rowspan="2">Semester</th>
+                    <th rowspan="2">Class</th>
+                    <th rowspan="2">Date</th>
+                    <th rowspan="2">Time</th>
+
+
+                <!-- <tr>
+                    {% for subject in subject_list %}
+                    <th class="xyz">Test-1 (50)</th>
+                    <th class="xyz">Test-2 (50)</th>
+                    <th class="xyz">Test-3 (50)</th>
+                    <th class="xyz">Test-4 (50)</th>
+                    {% endfor %}
+                </tr> -->
+            </thead>
+
+
+<!-- start for loop here -->
+            <tr>
+                <td>boruto</td>
+                <td>3</td>
+                <td>English</td>
+                <td>14.12.22</td>
+                <td>11:30</td>
+
+            </tr>
+
+            <tr>
+                <td>boruto</td>
+                <td>3</td>
+                <td>English</td>
+                <td>14.12.22</td>
+                <td>11:30</td>
+
+            </tr>
+
+            <tr>
+                <td>Adam</td>
+                <td>3</td>
+                <td>English</td>
+                <td>14.12.22</td>
+                <td>11:33</td>
+
+            </tr>
+
+            
+            <tr>
+                <td>Hoyo</td>
+                <td>3</td>
+                <td>English</td>
+                <td>14.12.22</td>
+                <td>11:35</td>
+
+            </tr>
+
+
+            
+            <tr>
+                <td>Tim</td>
+                <td>3</td>
+                <td>English</td>
+                <td>14.12.22</td>
+                <td>11:40</td>
+
+            </tr>
+
+
+
+            <!-- end for loop here -->
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}
