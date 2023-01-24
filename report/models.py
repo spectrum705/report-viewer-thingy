@@ -42,3 +42,9 @@ class Students(db.Document):
     marks=db.EmbeddedDocumentField(Marks)
     isGraded=db.BooleanField
     # roll_number=db.IntField(required=True)
+    
+class Attendance(db.DynamicDocument):
+    _id=db.IntField(primary_key=True)
+    name=db.StringField(max_length=20, required=True)
+    school=db.StringField(max_length=20, required=True)
+    semester=db.IntField(required=True)

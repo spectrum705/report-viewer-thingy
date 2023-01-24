@@ -22,7 +22,7 @@ from report.forms import CreateAccount, LoginForm, UploadForm, UpdateForm
 from flask_login import login_user, current_user, logout_user, login_required, user_logged_in
 # from fillDb import createDb
 from data import create_teacherDb, make_student_object, make_teacher_object, create_studentDb
-from report.models import Teachers, Students, Marks
+from report.models import Teachers, Students, Marks, Attendance
 from report import pymongo_client
 from report.helper import grade_calculator, subject_list, Password
 import ast
@@ -70,8 +70,8 @@ teacher_dummy_data={
 
 @app.route('/attendance',  methods = ["POST", "GET"])
 def attendance():
-    pload = {'blood':'O+'}
-    requests.post('http://172.21.35.187:5002/', data=pload)
+    # pload = {'blood':'O+'}
+    # requests.post('http://172.18.166.83:5002/', data=pload)
     
     if request.method=="POST":
         # pass    
@@ -91,9 +91,11 @@ def attendance():
 
 @app.route('/attendance_list',  methods = [ "GET"])
 def attendance_list():
-    
-    if current_user.isAdmin:
-        return render_template('attendance_list.html')
+    # attendance_list= Attendance.objects()
+    payload= {"organization":"apbs"}
+    attendance_list= requests.get('http://172.28.67.178:5002/attendance_list')
+    if current_user.isAdmin :#and attendance_list:
+        return render_template('attendance_list.html', all=attendance_list)
     return render_template(redirect(url_for('home')))
 
 

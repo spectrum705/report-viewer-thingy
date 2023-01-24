@@ -183,7 +183,7 @@ video  {
       // const context = canvas.getContext('2d');
   });
 
-  document.getElementById("capture-camera").addEventListener("click", async function()
+  document.getElementById("scan-button").addEventListener("click", async function()
   {
     const canvas = document.getElementById('canvas');
 
@@ -193,7 +193,7 @@ video  {
         formData.append('image', blob, 'image.png');
 
         // Send the FormData object to the Python Flask server endpoint
-        fetch('http://172.29.3.111:5002/', {
+        fetch('http://172.28.67.178:5002/', {
             method: 'POST',
             body: formData
         }) 

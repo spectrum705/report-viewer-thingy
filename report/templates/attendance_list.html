@@ -23,8 +23,8 @@
                 <tr>
                     <th rowspan="2">Name</th>
                     <th rowspan="2">Semester</th>
-                    <th rowspan="2">Class</th>
-                    <th rowspan="2">Date</th>
+                    <!-- <th rowspan="2">Class</th> -->
+                    <!-- <th rowspan="2">Date</th> -->
                     <th rowspan="2">Time</th>
 
 
@@ -40,57 +40,19 @@
 
 
 <!-- start for loop here -->
+{% for data in all %}
             <tr>
-                <td>boruto</td>
-                <td>3</td>
-                <td>English</td>
-                <td>14.12.22</td>
-                <td>11:30</td>
-
-            </tr>
-
-            <tr>
-                <td>boruto</td>
-                <td>3</td>
-                <td>English</td>
-                <td>14.12.22</td>
-                <td>11:30</td>
-
-            </tr>
-
-            <tr>
-                <td>Adam</td>
-                <td>3</td>
-                <td>English</td>
-                <td>14.12.22</td>
-                <td>11:33</td>
+                <td>{{data.name}}</td>
+                <td>{{data.semester}}</td>
+                <!-- <td>English</td> -->
+                <td>{{data.time}}</td>
 
             </tr>
 
             
-            <tr>
-                <td>Hoyo</td>
-                <td>3</td>
-                <td>English</td>
-                <td>14.12.22</td>
-                <td>11:35</td>
-
-            </tr>
-
-
-            
-            <tr>
-                <td>Tim</td>
-                <td>3</td>
-                <td>English</td>
-                <td>14.12.22</td>
-                <td>11:40</td>
-
-            </tr>
-
-
 
             <!-- end for loop here -->
+{% endfor %}
             </tbody>
         </table>
 
