@@ -22,7 +22,7 @@ from report.forms import CreateAccount, LoginForm, UploadForm, UpdateForm
 from flask_login import login_user, current_user, logout_user, login_required, user_logged_in
 # from fillDb import createDb
 from data import create_teacherDb, make_student_object, make_teacher_object, create_studentDb
-from report.models import Teachers, Students, Marks, Attendance
+from report.models import Teachers, Students, Marks, Account, Attendance
 from report import pymongo_client
 from report.helper import grade_calculator, subject_list, Password
 import ast
@@ -458,7 +458,8 @@ def login():
 
     if form.validate_on_submit():
 
-        user = Teachers.objects(name=form.username.data.upper().strip()).first()
+        # user = Teachers.objects(name=form.username.data.upper().strip()).first()
+        user = Account.objects(name=form.username.data.upper().strip()).first()
        
         # print(f"pwd form:{form.password.data}, pwd usr:{user.password}, check:{Password.check(pwd_entered=form.password.data.strip(),hashed_pwd= user.password)}")
         # if (user is not None) and Password.check(pwd_entered=form.password.data.strip(),hashed_pwd= user.password):

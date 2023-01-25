@@ -10,6 +10,12 @@ def load_user(user_id):
 
 
 
+class Marks(db.DynamicEmbeddedDocument):
+    pass
+    # test_1=db.DictField()
+    # test_2=db.DictField()
+    # test_3=db.DictField()
+    # test_4=db.DictField()
 class Account(db.DynamicDocument, UserMixin):
     _id=db.IntField(primary_key=True)
     name=db.StringField(max_length=20, required=True)
@@ -17,11 +23,11 @@ class Account(db.DynamicDocument, UserMixin):
     classes=db.ListField(db.DictField())
     isAdmin=db.BooleanField()
     isStudent=db.BooleanField()
-    accountType=db.StringField()    
-
-
-
-class Teachers(Account):      
+    standard = db.StringField()
+    marks=db.EmbeddedDocumentField(Marks)
+    isGraded=db.BooleanField
+    roll_number=db.IntField(required=True)
+        
   
     def to_json(self):
         return {
@@ -31,18 +37,8 @@ class Teachers(Account):
             "classes": self.classes
         }
     
+  
 
-class Marks(db.DynamicEmbeddedDocument):
-    pass
-    # test_1=db.DictField()
-    # test_2=db.DictField()
-    # test_3=db.DictField()
-    # test_4=db.DictField()
-
-class Students(db.Document):
-    standard = db.StringField(required=True)
-    marks=db.EmbeddedDocumentField(Marks)
-    isGraded=db.BooleanField
 
 
 class Attendance(db.DynamicDocument):
@@ -51,7 +47,10 @@ class Attendance(db.DynamicDocument):
     school=db.StringField(max_length=20, required=True)
     semester=db.IntField(required=True)
 
-
+class Teachers:
+    pass
+class Students:
+    pass
 
 # class Teachers(db.DynamicDocument, UserMixin):
 #     _id=db.IntField(primary_key=True)
@@ -72,12 +71,6 @@ class Attendance(db.DynamicDocument):
     
    
 
-# class Marks(db.DynamicEmbeddedDocument):
-#     pass
-#     # test_1=db.DictField()
-#     # test_2=db.DictField()
-#     # test_3=db.DictField()
-#     # test_4=db.DictField()
 
 # class Students(db.Document):
 #     _id=db.IntField(primary_key=True) #enter admission no here
@@ -85,5 +78,5 @@ class Attendance(db.DynamicDocument):
 #     standard = db.StringField(required=True)
 #     marks=db.EmbeddedDocumentField(Marks)
 #     isGraded=db.BooleanField
-    # roll_number=db.IntField(required=True)
+#     roll_number=db.IntField(required=True)
     
