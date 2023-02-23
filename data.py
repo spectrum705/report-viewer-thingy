@@ -26,6 +26,22 @@ def make_teacher_object(id,name, classes=None ):
     teacher = Teachers(_id= int(id), name=name.upper().strip(), classes=classes, password=enc)
 
     teacher.save()
+    
+def make_account_objects(id,name, accountType,classes=None, standard=None, ):
+    pwd=f"pass#{name.lower().strip()}"
+    print(f"pwd:{pwd}")
+    enc=Password.enc(pwd)
+    # print("enC:",enc)
+    if accountType.lower().stri() == "teacher": 
+        account = Account(_id= int(id), name=name.upper().strip(), classes=classes, password=enc, acccountType=accountType)    
+    else:
+        account = Account(_id= int(id), name=name.upper().strip(), classes=classes, password=enc, acccountType=accountType, standard=standard)
+        marks=Marks()
+        for subject in subject_list[standard]:
+            marks[subject]={"test_1":random.randint(1,10), "test_2":random.randint(1,40), "test_3":random.randint(1,10), "test_4":random.randint(1,40), "grade":None}
+            # marks[subject]={"test_1":10, "test_2":10, "test_3":10, "test_4":10, "grade":"A2"}
+        account.marks= marks   
+    account.save()
 
 
 # csv file name

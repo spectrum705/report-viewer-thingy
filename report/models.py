@@ -19,14 +19,14 @@ class Marks(db.DynamicEmbeddedDocument):
 class Account(db.DynamicDocument, UserMixin):
     _id=db.IntField(primary_key=True)
     name=db.StringField(max_length=20, required=True)
-    # password = db.StringField( required=True)
+    password = db.StringField( required=True)
     classes=db.ListField(db.DictField())
     isAdmin=db.BooleanField()
-    isStudent=db.BooleanField()
     standard = db.StringField()
     marks=db.EmbeddedDocumentField(Marks)
     isGraded=db.BooleanField
-    roll_number=db.IntField(required=True)
+    roll_number=db.IntField()
+    accountType=db.StringField()
         
   
     def to_json(self):
