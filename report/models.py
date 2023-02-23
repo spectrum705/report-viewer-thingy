@@ -16,26 +16,27 @@ class Marks(db.DynamicEmbeddedDocument):
     # test_2=db.DictField()
     # test_3=db.DictField()
     # test_4=db.DictField()
-class Account(db.DynamicDocument, UserMixin):
-    _id=db.IntField(primary_key=True)
-    name=db.StringField(max_length=20, required=True)
-    # password = db.StringField( required=True)
-    classes=db.ListField(db.DictField())
-    isAdmin=db.BooleanField()
-    isStudent=db.BooleanField()
-    standard = db.StringField()
-    marks=db.EmbeddedDocumentField(Marks)
-    isGraded=db.BooleanField
-    roll_number=db.IntField(required=True)
+    
+# class Account(db.DynamicDocument, UserMixin):
+#     _id=db.IntField(primary_key=True)
+#     name=db.StringField(max_length=20, required=True)
+#     # password = db.StringField( required=True)
+#     classes=db.ListField(db.DictField())
+#     isAdmin=db.BooleanField()
+#     isStudent=db.BooleanField()
+#     standard = db.StringField()
+#     marks=db.EmbeddedDocumentField(Marks)
+#     isGraded=db.BooleanField
+#     roll_number=db.IntField(required=True)
         
   
-    def to_json(self):
-        return {
-            "name":self.name,
-            "password":self.password,
-            "id":self._id,
-            "classes": self.classes
-        }
+#     def to_json(self):
+#         return {
+#             "name":self.name,
+#             "password":self.password,
+#             "id":self._id,
+#             "classes": self.classes
+#         }
     
   
 
@@ -47,36 +48,36 @@ class Attendance(db.DynamicDocument):
     school=db.StringField(max_length=20, required=True)
     semester=db.IntField(required=True)
 
-class Teachers:
-    pass
-class Students:
-    pass
+# class Teachers:
+#     pass
+# class Students:
+#     pass
 
-# class Teachers(db.DynamicDocument, UserMixin):
-#     _id=db.IntField(primary_key=True)
-#     name=db.StringField(max_length=20, required=True)
-#     # password = db.StringField( required=True)
-#     classes=db.ListField(db.DictField())
-#     isAdmin=db.BooleanField()
-#     isStudent=db.BooleanField()
+class Teachers(db.DynamicDocument, UserMixin):
+    _id=db.IntField(primary_key=True)
+    name=db.StringField(max_length=20, required=True)
+    # password = db.StringField( required=True)
+    classes=db.ListField(db.DictField())
+    isAdmin=db.BooleanField()
+    isStudent=db.BooleanField()
         
   
-#     def to_json(self):
-#         return {
-#             "name":self.name,
-#             "password":self.password,
-#             "id":self._id,
-#             "classes": self.classes
-#         }
+    def to_json(self):
+        return {
+            "name":self.name,
+            "password":self.password,
+            "id":self._id,
+            "classes": self.classes
+        }
     
    
 
 
-# class Students(db.Document):
-#     _id=db.IntField(primary_key=True) #enter admission no here
-#     name=db.StringField( required=True)
-#     standard = db.StringField(required=True)
-#     marks=db.EmbeddedDocumentField(Marks)
-#     isGraded=db.BooleanField
-#     roll_number=db.IntField(required=True)
+class Students(db.Document):
+    _id=db.IntField(primary_key=True) #enter admission no here
+    name=db.StringField( required=True)
+    standard = db.StringField(required=True)
+    marks=db.EmbeddedDocumentField(Marks)
+    isGraded=db.BooleanField
+    roll_number=db.IntField(required=True)
     

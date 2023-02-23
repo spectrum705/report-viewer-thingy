@@ -97,26 +97,26 @@ def create_teacherDb():
     os.remove(data_file)
         # return True
 
-
-# create_studentDb()
-# create_teacherDb()
-
 # class_9:English/class_10:Maths
-# teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
-# teacher.save()
 
-# teacher=Teachers(name="teacher_2",_id=random.randint(1,100000),password="pass#teacher_2",classes=[{"class_9":"maths"}])
-# teacher.save()
+create_studentDb()
+create_teacherDb()
 
-# teacher=Teachers(name="teacher_3",_id=random.randint(1,100000),password="pass#teacher_3",classes=[{"class_9":"social studies"}])
-# teacher.save()
+teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
+teacher.save()
 
-# teacher=Teachers(name="teacher_4",_id=random.randint(1,100000),password="pass#teacher_4",classes=[{"class_9":"science"}])
-# teacher.save()
+teacher=Teachers(name="teacher_2",_id=random.randint(1,100000),password="pass#teacher_2",classes=[{"class_9":"maths"}])
+teacher.save()
 
-# teacher=Teachers(name="teacher_5",_id=random.randint(1,100000),password="pass#teacher_5",classes=[{"class_9":"Hindi"}])
-# teacher.save()
+teacher=Teachers(name="teacher_3",_id=random.randint(1,100000),password="pass#teacher_3",classes=[{"class_9":"social studies"}])
+teacher.save()
 
-# teacher=Teachers(name="admin",_id=random.randint(1,100000),password="admin",isAdmin=True)
-# teacher.save()
+teacher=Teachers(name="teacher_4",_id=random.randint(1,100000),password="pass#teacher_4",classes=[{"class_9":"science"}])
+teacher.save()
+
+teacher=Teachers(name="teacher_5",_id=random.randint(1,100000),password="pass#teacher_5",classes=[{"class_9":"Hindi"}])
+teacher.save()
+
+teacher=Teachers(name="admin",_id=random.randint(1,100000),password="admin",isAdmin=True)
+teacher.save()
 
