@@ -94,10 +94,14 @@ def create_teacherDb():
                 make_teacher_object(id=int(row[0]), name=row[1], classes=classes)
                 # print(">>",classes)
                 # print(f"name: {row[1]}, class: {row[2]}, pwd:{row[1]}, added")
-    # os.remo.ve(data_file)
-        # return True
+
+
+    # os.remove(data_file)
+        return True
+
 
 # class_9:English/class_10:Maths
+#pass   
 
 # create_teacherDb()
 # create_studentDb()
