@@ -79,5 +79,5 @@ class Students(db.Document):
     standard = db.StringField(required=True)
     marks=db.EmbeddedDocumentField(Marks)
     isGraded=db.BooleanField
-    roll_number=db.IntField(required=True)
+    # roll_number=db.IntField(required=True)
     

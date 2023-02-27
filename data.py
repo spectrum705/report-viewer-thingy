@@ -2,7 +2,7 @@ import random
 import os
 import csv,os
 from pathlib import Path
-from report.models import Teachers, Students, Marks, Account#, Subjects
+from report.models import Teachers, Students, Marks#, Account#, Subjects
 from report.helper import Password, subject_list
 from report import db
 
@@ -52,7 +52,7 @@ def create_studentDb():
                 # student.save()
                 make_student_object(id=row[0], name=row[1], standard=row[2])
                 print(f"name: {row[1]}, class: {row[2]}, added")
-    os.remove(data_file)
+    # os.remove(data_file)
     return True
 
 def create_teacherDb():
@@ -94,29 +94,29 @@ def create_teacherDb():
                 make_teacher_object(id=int(row[0]), name=row[1], classes=classes)
                 # print(">>",classes)
                 # print(f"name: {row[1]}, class: {row[2]}, pwd:{row[1]}, added")
-    os.remove(data_file)
+    # os.remo.ve(data_file)
         # return True
 
 # class_9:English/class_10:Maths
 
-create_studentDb()
-create_teacherDb()
+# create_teacherDb()
+# create_studentDb()
 
-teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
-teacher.save()
+# teacher=Teachers(name="teacher_1",_id=random.randint(1,100000),password="pass#teacher_1",classes=[{"class_9":"english"},{"class_4":"maths"},{"class_2":"hindi"}],)
+# teacher.save()
 
-teacher=Teachers(name="teacher_2",_id=random.randint(1,100000),password="pass#teacher_2",classes=[{"class_9":"maths"}])
-teacher.save()
+# teacher=Teachers(name="teacher_2",_id=random.randint(1,100000),password="pass#teacher_2",classes=[{"class_9":"maths"}])
+# teacher.save()
 
-teacher=Teachers(name="teacher_3",_id=random.randint(1,100000),password="pass#teacher_3",classes=[{"class_9":"social studies"}])
-teacher.save()
+# teacher=Teachers(name="teacher_3",_id=random.randint(1,100000),password="pass#teacher_3",classes=[{"class_9":"social studies"}])
+# teacher.save()
 
-teacher=Teachers(name="teacher_4",_id=random.randint(1,100000),password="pass#teacher_4",classes=[{"class_9":"science"}])
-teacher.save()
+# teacher=Teachers(name="teacher_4",_id=random.randint(1,100000),password="pass#teacher_4",classes=[{"class_9":"science"}])
+# teacher.save()
 
-teacher=Teachers(name="teacher_5",_id=random.randint(1,100000),password="pass#teacher_5",classes=[{"class_9":"Hindi"}])
-teacher.save()
+# teacher=Teachers(name="teacher_5",_id=random.randint(1,100000),password="pass#teacher_5",classes=[{"class_9":"Hindi"}])
+# teacher.save()
 
-teacher=Teachers(name="admin",_id=random.randint(1,100000),password="admin",isAdmin=True)
-teacher.save()
+# teacher=Teachers(name="admin",_id=random.randint(1,100000),password="admin",isAdmin=True)
+# teacher.save()
 
