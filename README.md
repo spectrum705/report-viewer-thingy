@@ -22,7 +22,7 @@ Demo Accounts:
 
 `Admin`
 
-[Deployed Demo Link](https://studentreport.deta.dev)
+[Deployed Demo Link](https://reportviewer-1-d5680934.deta.app)
 
 
 ## Run Locally
