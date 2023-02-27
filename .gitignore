@@ -9,7 +9,6 @@ __pycache__/
 node_modules
 # C extensions
 *.so
-/report/school_data
 # Distribution / packaging
 .Python
 build/
